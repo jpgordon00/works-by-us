@@ -1,0 +1,87 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import worker from '../dist/server/index.js';
+
+const origin = 'https://works.example';
+const fetchSite = (path, options) => worker.fetch(new Request(origin + path, options));
+
+async function rpc(method, params, headers = {}, id = 1) {
+  return fetchSite('/api/mcp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...headers },
+    body: JSON.stringify({ jsonrpc: '2.0', id, method, params })
+  });
+}
+
+test('catalog links resolve and category filtering and search agree', async () => {
+  const catalog = await (await fetchSite('/api/problems')).json();
+  assert.equal(catalog.categories.length, 6);
+  assert.ok(catalog.problems.length >= 10);
+  const paths = [...catalog.problems.map(p => '/problems/' + p.id + '/'), ...catalog.categories.map(c => '/categories/' + c.id + '/')];
+  for (const path of paths) assert.equal((await fetchSite(path)).status, 200, path);
+  const software = await (await fetchSite('/categories/software/?q=PSD')).text();
+  assert.match(software, /aria-current="page">Software/);
+  assert.match(software, /1 result for “PSD”/);
+  assert.match(software, /Render outer glows/);
+  assert.doesNotMatch(software, /Make browser subtitle tests/);
+  assert.equal((await fetchSite('/problems/unknown/')).status, 404);
+});
+
+test('query parameters remain text, and a brief offers both contribution routes', async () => {
+  const search = await (await fetchSite('/problems/?q=%3Cscript%3E')).text();
+  assert.match(search, /&lt;script&gt;/);
+  assert.doesNotMatch(search, /<script>/);
+  const problem = await (await fetchSite('/problems/open-psd-outer-glow/')).text();
+  assert.match(problem, /Copy problem brief/);
+  assert.match(problem, /How to check it/);
+  assert.match(problem, /https:\/\/github\.com\/jpgordon00\/works-by-us\/issues\/new/);
+  const connect = await (await fetchSite('/connect/')).text();
+  assert.match(connect, /codex mcp add works-by-us --url https:\/\/works\.example\/api\/mcp/);
+});
+
+test('MCP modern discovery and legacy negotiation expose the same four tools', async () => {
+  const discover = await (await rpc('server/discover')).json();
+  assert.deepEqual(discover.result.supportedVersions, ['2026-07-28']);
+  const legacy = await (await rpc('initialize', { protocolVersion: '2025-06-18' })).json();
+  assert.equal(legacy.result.protocolVersion, '2025-06-18');
+  const listing = await (await rpc('tools/list')).json();
+  assert.deepEqual(listing.result.tools.map(tool => tool.name), [
+    'list_categories', 'list_problems', 'get_problem', 'prepare_contribution'
+  ]);
+  const notification = await fetchSite('/api/mcp', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: '{"jsonrpc":"2.0","method":"notifications/initialized"}'
+  });
+  assert.equal(notification.status, 202);
+});
+
+test('MCP searches, reads sourced briefs and creates a preview-only GitHub draft', async () => {
+  const call = async (name, args) => (await (await rpc('tools/call', { name, arguments: args })).json()).result;
+  const search = await call('list_problems', { category: 'software', query: 'PSD' });
+  const [problem] = search.structuredContent.problems;
+  assert.equal(search.structuredContent.problems.length, 1);
+  assert.equal(problem.id, 'open-psd-outer-glow');
+  const brief = (await call('get_problem', { id: problem.id })).structuredContent.problem;
+  assert.equal(brief.url, origin + '/problems/' + problem.id + '/');
+  assert.match(brief.brief, /Review criteria:/);
+  assert.match(brief.sources[0].url, /issues\/382$/);
+  const draft = (await call('prepare_contribution', {
+    id: problem.id, title: 'Synthetic fixture plan', summary: 'Compare a shape with a glow and a negative control.', evidence: 'Record both alpha profiles and the renderer version.'
+  })).structuredContent;
+  assert.equal(draft.published, false);
+  const url = new URL(draft.github_issue_url);
+  assert.equal(url.origin, 'https://github.com');
+  assert.equal(url.pathname, '/jpgordon00/works-by-us/issues/new');
+  assert.equal(url.searchParams.get('body'), draft.body);
+  assert.equal((await call('list_problems', { category: 'invalid' })).isError, true);
+  assert.equal((await call('get_problem', { id: 'missing' })).isError, true);
+});
+
+test('MCP bounds request size and validates origin, media type and methods', async () => {
+  assert.equal((await rpc('tools/list', {}, { Origin: 'https://other.example' })).status, 403);
+  assert.equal((await fetchSite('/api/mcp')).status, 405);
+  assert.equal((await rpc('tools/list', {}, { 'Content-Type': 'application/jsonx' })).status, 415);
+  assert.equal((await rpc('tools/list', { oversized: 'a'.repeat(16001) })).status, 413);
+  assert.equal((await rpc('tools/list', {}, { 'Mcp-Method': 'tools/call' })).status, 400);
+  assert.equal((await rpc('tools/list', {}, { 'Mcp-Protocol-Version': '1900-01-01' })).status, 400);
+});

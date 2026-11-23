@@ -1,0 +1,295 @@
+{
+  "featured": "open-psd-outer-glow",
+  "categories": [
+    {
+      "id": "software",
+      "title": "Software",
+      "description": "Open tools, interoperable files, and browser behavior."
+    },
+    {
+      "id": "data",
+      "title": "Data",
+      "description": "Ways to make public datasets easier to use and combine."
+    },
+    {
+      "id": "civic",
+      "title": "Civic",
+      "description": "Public infrastructure and the data people rely on to use it."
+    },
+    {
+      "id": "culture",
+      "title": "Culture",
+      "description": "Better ways to find and share public collections."
+    },
+    {
+      "id": "science",
+      "title": "Science",
+      "description": "Small investigations with public data and reproducible methods."
+    },
+    {
+      "id": "math",
+      "title": "Math",
+      "description": "Unsolved questions and small steps a second person can check."
+    }
+  ],
+  "problems": [
+    {
+      "id": "open-psd-outer-glow",
+      "category": "software",
+      "track": "Open PSD",
+      "title": "Render outer glows in layered PSDs",
+      "summary": "Keep a layer’s glow visible when an open-source renderer rebuilds the image.",
+      "context": "A PSD stores layers and can also store a finished preview. The psd-tools issue tracks a gap where rebuilt images can lose the Outer Glow effect that appears in the preview. A small test file would let different tools compare their rendering.",
+      "task": "Create a tiny PSD with one original shape and an Outer Glow layer effect. Add a reference PNG and a second PSD with the glow off. Record the versions and commands you used to render them.",
+      "review": "Another person can recreate the comparison. Show the alpha and color falloff outside the shape, quantify the difference from the reference, and confirm the no-glow control stays clear.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "photoshop",
+        "file format",
+        "interoperability",
+        "composite"
+      ],
+      "sources": [
+        {
+          "title": "psd-tools issue #382",
+          "url": "https://github.com/psd-tools/psd-tools/issues/382"
+        },
+        {
+          "title": "Adobe Photoshop file format specification",
+          "url": "https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/"
+        }
+      ]
+    },
+    {
+      "id": "transit-feed-notices",
+      "category": "civic",
+      "track": "Public transit",
+      "title": "Give each transit feed notice an agency",
+      "summary": "Help operators see which findings in a shared timetable belong to them.",
+      "context": "A single GTFS feed can serve more than one operator. A combined validation report makes it harder for each agency to find the notices it can act on. MobilityData is discussing how to attribute notices to agencies.",
+      "task": "Build a tiny synthetic feed with two agencies and draft the shape of a per-agency report. Include at least one notice that involves the whole feed.",
+      "review": "Show the fixture and command. The expected report assigns each attributable finding to the right agency and handles feed-wide findings explicitly.",
+      "kind": "Open upstream discussion",
+      "keywords": [
+        "GTFS",
+        "bus",
+        "agency",
+        "validator"
+      ],
+      "sources": [
+        {
+          "title": "MobilityData issue #2201",
+          "url": "https://github.com/MobilityData/gtfs-validator/issues/2201"
+        },
+        {
+          "title": "GTFS Schedule reference",
+          "url": "https://gtfs.org/documentation/schedule/reference/"
+        }
+      ]
+    },
+    {
+      "id": "p-versus-np",
+      "category": "math",
+      "title": "P versus NP",
+      "summary": "If an answer is quick to check, is there always a quick way to find it?",
+      "context": "The Clay Mathematics Institute lists P versus NP as a Millennium Prize Problem. A shared library of small, clearly specified reductions can help readers examine the ideas used in attempted solutions.",
+      "task": "Write a small Lean formalization of an existing reduction, such as 3-SAT to CLIQUE, or improve a documented lemma in a current public formalization effort. State the precise claim you are proving.",
+      "review": "Pin the repository and toolchain. Supply the theorem, build command, and result. Use no new axioms or unfinished proofs. State exactly what the result implies for the broader question.",
+      "kind": "Open conjecture",
+      "keywords": [
+        "P=NP",
+        "complexity",
+        "Lean",
+        "proof"
+      ],
+      "sources": [
+        {
+          "title": "Clay Mathematics Institute, P versus NP",
+          "url": "https://www.claymath.org/millennium/p-vs-np/"
+        },
+        {
+          "title": "P = NP? public research project",
+          "url": "https://pequalnp.com/"
+        }
+      ]
+    },
+    {
+      "id": "join-datasets-openrefine",
+      "category": "data",
+      "title": "Join two messy datasets without a formula",
+      "summary": "Make a common data-cleaning operation easier to inspect and repeat.",
+      "context": "An open OpenRefine proposal asks for a clearer way to join data across projects. Duplicate keys and unmatched rows are where a seemingly simple join can produce misleading results.",
+      "task": "Create two small CSVs with a duplicate key, a missing match, and fields someone might want to keep. Prototype how a person selects keys and fields and previews the result.",
+      "review": "Publish the input and expected output. Show how duplicates and unmatched rows are represented and how the choices could be recorded in project history for replay.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "OpenRefine",
+        "join",
+        "CSV",
+        "data cleaning"
+      ],
+      "sources": [
+        {
+          "title": "OpenRefine issue #7761",
+          "url": "https://github.com/OpenRefine/OpenRefine/issues/7761"
+        }
+      ]
+    },
+    {
+      "id": "link-to-manuscript-page",
+      "category": "culture",
+      "track": "Digital collections",
+      "title": "Share a link to a single manuscript page",
+      "summary": "Open a digitized book at the page someone actually meant to share.",
+      "context": "IIIF Content State describes a portable way to open an object at a particular place. Mirador tracks support for importing that state. A single-page example is a small, useful piece of the wider proposal.",
+      "task": "Choose an openly accessible IIIF manifest and create a Content State link for one page. Prototype loading it in a fresh Mirador session.",
+      "review": "Publish the manifest and target canvas URLs. Show that a new session selects the intended page. Include what happens when the manifest or canvas identifier is invalid.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "IIIF",
+        "Mirador",
+        "archive",
+        "books"
+      ],
+      "sources": [
+        {
+          "title": "Mirador issue #4386",
+          "url": "https://github.com/ProjectMirador/mirador/issues/4386"
+        },
+        {
+          "title": "IIIF Content State API",
+          "url": "https://iiif.io/api/content-state/1.0/"
+        }
+      ]
+    },
+    {
+      "id": "phoenix-night-heat",
+      "category": "science",
+      "track": "Climate",
+      "title": "Which Phoenix neighborhoods stay hottest after sunset?",
+      "summary": "Compare observed land-surface heat across neighborhoods using public satellite data.",
+      "context": "NASA’s ECOSTRESS captures land-surface temperature at different times of day. Phoenix has published a tree-canopy study layer. This is a proposed analysis of how nighttime surface temperature and canopy vary across the city.",
+      "task": "Choose clear scenes that cover Phoenix, document their local acquisition times, and join quality-filtered temperatures to tracts and the public tree-canopy layer.",
+      "review": "Publish scene IDs, quality masks, a tract-level table, and coverage and missingness. Repeat with a different scene or coverage threshold, and explain how your conclusion depends on the choice.",
+      "kind": "Proposed investigation",
+      "keywords": [
+        "Phoenix",
+        "satellite",
+        "trees",
+        "urban heat",
+        "NASA",
+        "Civic"
+      ],
+      "sources": [
+        {
+          "title": "NASA ECOSTRESS data",
+          "url": "https://ecostress.jpl.nasa.gov/data"
+        },
+        {
+          "title": "City of Phoenix tree-canopy study layer",
+          "url": "https://maps.phoenix.gov/pub/rest/services/Public/Shade_Study_Data_CMO_OHR/MapServer/1"
+        }
+      ]
+    },
+    {
+      "id": "repeatable-browser-subtitles",
+      "category": "software",
+      "track": "Web accessibility",
+      "title": "Make browser subtitle tests repeatable",
+      "summary": "Check timed text without letting a moving playhead change the comparison.",
+      "context": "Web Platform Tests tracks a WebVTT snapshot mismatch. Native controls can display different playback states when the screenshots are taken at different moments.",
+      "task": "Contribute a test fixture that seeks to a fixed playback time and waits for the intended cue before capture. Run it repeatedly in two browser engines.",
+      "review": "Include the test command, engine versions, and representative artifacts. The target cue is present during the expected time and repeated captures have stable relevant content.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "WebVTT",
+        "caption",
+        "accessibility",
+        "WPT"
+      ],
+      "sources": [
+        {
+          "title": "Web Platform Tests issue #65396",
+          "url": "https://github.com/web-platform-tests/wpt/issues/65396"
+        }
+      ]
+    },
+    {
+      "id": "historic-newspaper-ocr",
+      "category": "culture",
+      "track": "Archives",
+      "title": "Make a historic newspaper page searchable",
+      "summary": "Correct one column from a public scan and record exactly what changed.",
+      "context": "The Library of Congress is reprocessing Chronicling America to improve searchable text. Public scans and word-level machine transcriptions make it possible to document improvements page by page.",
+      "task": "Choose one column on a pre-1920 page. Create a TSV with stable line references, the original OCR, corrected text, and flags for uncertain readings.",
+      "review": "Link the original scan and machine text. A second reader can compare every line with the source image and identify remaining uncertainty.",
+      "kind": "Proposed contribution",
+      "keywords": [
+        "OCR",
+        "Chronicling America",
+        "newspaper",
+        "transcription"
+      ],
+      "sources": [
+        {
+          "title": "Library of Congress OCR reprocessing",
+          "url": "https://blogs.loc.gov/thesignal/2026/08/yarasavage-new-ocr-reprocessing/"
+        },
+        {
+          "title": "Library of Congress text services",
+          "url": "https://www.loc.gov/apis/micro-services/text-services/"
+        }
+      ]
+    },
+    {
+      "id": "overlapping-galaxies",
+      "category": "science",
+      "track": "Astronomy",
+      "title": "Build a test set for overlapping galaxies",
+      "summary": "Create a small public benchmark from released catalogs and telescope images.",
+      "context": "Images of overlapping galaxies are useful for studying dust. Galaxy Zoo has published accepted and rejected candidate catalogs, and the Legacy Surveys provide public image cutouts.",
+      "task": "Build an independent manifest of 20 accepted and 20 rejected coordinates from the released catalogs. Use a documented scale and release for their image cutouts.",
+      "review": "Include the input releases, coordinates, source labels, cutout locations, and excluded records. Publish enough code to reproduce the selection and summarize ambiguities in the labels.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "Galaxy Zoo",
+        "DESI",
+        "space",
+        "images",
+        "catalog"
+      ],
+      "sources": [
+        {
+          "title": "Galaxy Zoo public data",
+          "url": "https://static.zooniverse.org/data.galaxyzoo.org/"
+        },
+        {
+          "title": "NOIRLab Legacy Surveys",
+          "url": "https://datalab.noirlab.edu/data/legacy-surveys"
+        }
+      ]
+    },
+    {
+      "id": "hodge-conjecture",
+      "category": "math",
+      "title": "The Hodge conjecture",
+      "summary": "Identify which topological features of algebraic varieties come from algebraic cycles.",
+      "context": "The Clay Mathematics Institute lists the Hodge conjecture as a Millennium Prize Problem. Concrete examples can help distinguish cases where a statement is already known from the general conjecture.",
+      "task": "Work through a known low-dimensional case or explicit projective example. Identify the relevant rational cohomology class, give a candidate algebraic cycle, and explain how their relationship is checked.",
+      "review": "Cite the exact theorem used and state its hypotheses. A second reader can follow the calculation, reproduce any computations, and identify the limits of the example.",
+      "kind": "Open conjecture",
+      "keywords": [
+        "Hodge",
+        "algebraic geometry",
+        "cycles",
+        "cohomology"
+      ],
+      "sources": [
+        {
+          "title": "Clay Mathematics Institute, Hodge conjecture",
+          "url": "https://www.claymath.org/millennium/hodge-conjecture/"
+        }
+      ]
+    }
+  ]
+}
