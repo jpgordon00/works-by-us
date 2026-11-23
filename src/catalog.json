@@ -1,10 +1,10 @@
 {
-  "featured": "open-psd-outer-glow",
+  "featured": "free-photoshop-alternative",
   "categories": [
     {
       "id": "software",
       "title": "Software",
-      "description": "Open tools, interoperable files, and browser behavior."
+      "description": "Build free, open-source alternatives to the paid apps people use every day."
     },
     {
       "id": "data",
@@ -34,29 +34,63 @@
   ],
   "problems": [
     {
-      "id": "open-psd-outer-glow",
+      "id": "free-photoshop-alternative",
       "category": "software",
-      "track": "Open PSD",
-      "title": "Render outer glows in layered PSDs",
-      "summary": "Keep a layer’s glow visible when an open-source renderer rebuilds the image.",
-      "context": "A PSD stores layers and can also store a finished preview. The psd-tools issue tracks a gap where rebuilt images can lose the Outer Glow effect that appears in the preview. A small test file would let different tools compare their rendering.",
-      "task": "Create a tiny PSD with one original shape and an Outer Glow layer effect. Add a reference PNG and a second PSD with the glow off. Record the versions and commands you used to render them.",
-      "review": "Another person can recreate the comparison. Show the alpha and color falloff outside the shape, quantify the difference from the reference, and confirm the no-glow control stays clear.",
-      "kind": "Open upstream issue",
+      "track": "Photoshop alternative",
+      "title": "Build a free layered image editor",
+      "summary": "Create a browser editor for everyday photo compositing and retouching, free to use and open to inspect.",
+      "context": "Photoshop’s layers, masks and blending make a composite editable after it is assembled. This project starts with that workflow in an original browser interface, using files from the person’s device. GIMP is an existing open-source precedent.",
+      "task": "Build a small prototype that opens two PNGs as layers and lets someone reorder them, adjust opacity and paint a mask. Save a reopenable project and export a transparent PNG. Use original interface code and sample artwork.",
+      "review": "Supply two redistributable PNGs, a short demo and a pixel comparison for the expected export. Reopening the project preserves the layer order, opacity and mask. The workflow runs locally with no account or subscription.",
+      "kind": "Open-source project brief",
       "keywords": [
-        "photoshop",
-        "file format",
-        "interoperability",
-        "composite"
+        "Adobe",
+        "Photoshop",
+        "photo editor",
+        "image editing",
+        "layers",
+        "masking",
+        "GIMP",
+        "free software"
       ],
       "sources": [
         {
-          "title": "psd-tools issue #382",
-          "url": "https://github.com/psd-tools/psd-tools/issues/382"
+          "title": "Adobe Photoshop core capabilities",
+          "url": "https://www.adobe.com/products/photoshop.html"
         },
         {
-          "title": "Adobe Photoshop file format specification",
-          "url": "https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/"
+          "title": "GIMP open-source editor",
+          "url": "https://www.gimp.org/release-notes/gimp-3.0.html"
+        }
+      ]
+    },
+    {
+      "id": "free-monarch-money-alternative",
+      "category": "software",
+      "track": "Monarch Money alternative",
+      "title": "Build a free household budget app",
+      "summary": "Turn downloaded bank CSVs into a monthly budget that people can keep on their own device.",
+      "context": "Monarch combines transaction categorization and monthly planning. This project starts with a local budgeting workflow using file import. Actual Budget already demonstrates open-source budgeting and transaction imports.",
+      "task": "Prototype a screen for importing CSVs from two accounts. Preview the column mapping, let someone categorize spending, and show a planned-versus-actual monthly view. Use synthetic data and provide a local export.",
+      "review": "Reimporting the same files keeps totals unchanged. Two real purchases of the same amount remain distinct, transfers cancel without adding to spending, and refunds are handled explicitly. Show the expected totals in integer cents and how a reviewer can reproduce them.",
+      "kind": "Open-source project brief",
+      "keywords": [
+        "Monarch",
+        "budgeting",
+        "personal finance",
+        "CSV",
+        "YNAB",
+        "Actual Budget",
+        "free software"
+      ],
+      "sources": [
+        {
+          "title": "Monarch budgeting features",
+          "url": "https://www.monarch.com/features/budgeting"
+        },
+        {
+          "title": "Actual Budget transaction imports",
+          "url": "https://actualbudget.org/docs/transactions/importing/"
         }
       ]
     },
@@ -136,6 +170,36 @@
       ]
     },
     {
+      "id": "free-acrobat-pro-alternative",
+      "category": "software",
+      "track": "Acrobat Pro alternative",
+      "title": "Compare PDFs without uploading them",
+      "summary": "Build a free tool that shows what changed between two versions of a document on your own device.",
+      "context": "Acrobat Pro can compare two PDF revisions and produce a report. Existing open-source projects such as diff-pdf demonstrate visual comparison. This project proposes a simple local workflow for matching pages and sharing a review report.",
+      "task": "Prototype a workflow that accepts two PDFs locally and marks added, removed and changed pages. Export a small report with page references and a visual difference for edited pages.",
+      "review": "Provide original fixture PDFs with an inserted page, a deleted page and one edit. Confirm that an insertion does not mark every following page as changed, that accessible text labels identify each difference, and that an unchanged pair produces no differences.",
+      "kind": "Open-source project brief",
+      "keywords": [
+        "Adobe",
+        "Acrobat",
+        "PDF",
+        "compare files",
+        "document",
+        "diff",
+        "free software"
+      ],
+      "sources": [
+        {
+          "title": "Adobe Acrobat Pro Compare Files",
+          "url": "https://helpx.adobe.com/acrobat/using/compare-documents.html"
+        },
+        {
+          "title": "Open-source diff-pdf project",
+          "url": "https://github.com/vslavik/diff-pdf"
+        }
+      ]
+    },
+    {
       "id": "link-to-manuscript-page",
       "category": "culture",
       "track": "Digital collections",
@@ -188,29 +252,6 @@
         {
           "title": "City of Phoenix tree-canopy study layer",
           "url": "https://maps.phoenix.gov/pub/rest/services/Public/Shade_Study_Data_CMO_OHR/MapServer/1"
-        }
-      ]
-    },
-    {
-      "id": "repeatable-browser-subtitles",
-      "category": "software",
-      "track": "Web accessibility",
-      "title": "Make browser subtitle tests repeatable",
-      "summary": "Check timed text without letting a moving playhead change the comparison.",
-      "context": "Web Platform Tests tracks a WebVTT snapshot mismatch. Native controls can display different playback states when the screenshots are taken at different moments.",
-      "task": "Contribute a test fixture that seeks to a fixed playback time and waits for the intended cue before capture. Run it repeatedly in two browser engines.",
-      "review": "Include the test command, engine versions, and representative artifacts. The target cue is present during the expected time and repeated captures have stable relevant content.",
-      "kind": "Open upstream issue",
-      "keywords": [
-        "WebVTT",
-        "caption",
-        "accessibility",
-        "WPT"
-      ],
-      "sources": [
-        {
-          "title": "Web Platform Tests issue #65396",
-          "url": "https://github.com/web-platform-tests/wpt/issues/65396"
         }
       ]
     },

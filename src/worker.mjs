@@ -164,7 +164,7 @@ function renderConnect(origin) {
 <section><h2>Add it to your client</h2><p>In a client with remote MCP support, add a Streamable HTTP server named <strong>Works by Us</strong>. Use the URL above. For Codex, run this command.</p>
 <pre id="codex-command"><code>codex mcp add works-by-us --url ${escape(endpoint)}</code></pre>
 ${copyButton('codex-command', 'Copy command')}</section>
-<section><h2>Try it</h2><p>Ask your AI to find a software problem you could work on today. It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
+<section><h2>Try it</h2><p>Ask your AI to find the free Photoshop alternative and suggest a small contribution. It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
 <section><h2>Available tools</h2><dl class="tool-list">${tools.map(tool => ' <div><dt><code>' + tool.name + '</code></dt><dd>' + escape(tool.description) + '</dd></div>').join('')}</dl></section>
 </div></article>`, { active: 'connect' });
 }
@@ -174,9 +174,9 @@ const schema = (properties = {}, required = []) => ({ type: 'object', properties
 const readOnly = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 const tools = [
   { name: 'list_categories', title: 'List categories', description: 'See the subject areas and how many problems each contains.', inputSchema: schema(), annotations: readOnly },
-  { name: 'list_problems', title: 'Find problems', description: 'Search open problems by keywords, category, or both. Use the returned ID to fetch the full brief.', inputSchema: schema({
+  { name: 'list_problems', title: 'Find problems', description: 'Search open problems and free software projects by keywords, category, or both. Use the returned ID to fetch the full brief.', inputSchema: schema({
     category: { type: 'string', enum: catalog.categories.map(category => category.id), description: 'Subject area ID. Omit for all areas.' },
-    query: string('Keywords, such as PSD or transit.', 100)
+    query: string('Keywords, such as Photoshop, Monarch or transit.', 100)
   }), annotations: readOnly },
   { name: 'get_problem', title: 'Read a problem brief', description: 'Get a problem’s scope, primary sources, review criteria, and a copyable contribution brief.', inputSchema: schema({
     id: string('Problem ID returned by list_problems.', 100, 1)

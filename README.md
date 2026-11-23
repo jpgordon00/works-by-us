@@ -2,7 +2,11 @@
 
 Works by Us is a public catalog of open problems. Pick a small contribution, work on it yourself or with your own AI, then share evidence that another person can check.
 
-Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
+Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify open-source project briefs, upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
+
+## Free software projects
+
+The Software category is for original, free, open-source alternatives to familiar paid workflows. The first briefs cover a layered image editor (Photoshop), local household budgeting (Monarch Money), and offline PDF comparison (Acrobat Pro). Each states a small milestone someone can implement and verify, with links to existing open-source work.
 
 ## Use MCP
 
@@ -14,7 +18,7 @@ For Codex:
 
     codex mcp add works-by-us --url https://works-by-us.jacob-gordon255689.chatgpt.site/api/mcp
 
-An example request is “Find an Open PSD problem I can help with and tell me what evidence to collect.”
+An example request is “Find the free Monarch Money alternative and suggest one thing I can contribute.”
 
 | Tool | Use |
 | --- | --- |

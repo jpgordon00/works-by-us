@@ -19,11 +19,15 @@ test('catalog links resolve and category filtering and search agree', async () =
   assert.ok(catalog.problems.length >= 10);
   const paths = [...catalog.problems.map(p => '/problems/' + p.id + '/'), ...catalog.categories.map(c => '/categories/' + c.id + '/')];
   for (const path of paths) assert.equal((await fetchSite(path)).status, 200, path);
-  const software = await (await fetchSite('/categories/software/?q=PSD')).text();
+  const software = await (await fetchSite('/categories/software/?q=Photoshop')).text();
   assert.match(software, /aria-current="page">Software/);
-  assert.match(software, /1 result for “PSD”/);
-  assert.match(software, /Render outer glows/);
-  assert.doesNotMatch(software, /Make browser subtitle tests/);
+  assert.match(software, /1 result for “Photoshop”/);
+  assert.match(software, /Build a free layered image editor/);
+  assert.doesNotMatch(software, /Build a free household budget app/);
+  const softwareIndex = await (await fetchSite('/categories/software/')).text();
+  assert.match(softwareIndex, /Photoshop alternative/);
+  assert.match(softwareIndex, /Monarch Money alternative/);
+  assert.match(softwareIndex, /Acrobat Pro alternative/);
   assert.equal((await fetchSite('/problems/unknown/')).status, 404);
 });
 
@@ -31,7 +35,7 @@ test('query parameters remain text, and a brief offers both contribution routes'
   const search = await (await fetchSite('/problems/?q=%3Cscript%3E')).text();
   assert.match(search, /&lt;script&gt;/);
   assert.doesNotMatch(search, /<script>/);
-  const problem = await (await fetchSite('/problems/open-psd-outer-glow/')).text();
+  const problem = await (await fetchSite('/problems/free-photoshop-alternative/')).text();
   assert.match(problem, /Copy problem brief/);
   assert.match(problem, /How to check it/);
   assert.match(problem, /https:\/\/github\.com\/jpgordon00\/works-by-us\/issues\/new/);
@@ -57,16 +61,16 @@ test('MCP modern discovery and legacy negotiation expose the same four tools', a
 
 test('MCP searches, reads sourced briefs and creates a preview-only GitHub draft', async () => {
   const call = async (name, args) => (await (await rpc('tools/call', { name, arguments: args })).json()).result;
-  const search = await call('list_problems', { category: 'software', query: 'PSD' });
+  const search = await call('list_problems', { category: 'software', query: 'Photoshop' });
   const [problem] = search.structuredContent.problems;
   assert.equal(search.structuredContent.problems.length, 1);
-  assert.equal(problem.id, 'open-psd-outer-glow');
+  assert.equal(problem.id, 'free-photoshop-alternative');
   const brief = (await call('get_problem', { id: problem.id })).structuredContent.problem;
   assert.equal(brief.url, origin + '/problems/' + problem.id + '/');
   assert.match(brief.brief, /Review criteria:/);
-  assert.match(brief.sources[0].url, /issues\/382$/);
+  assert.match(brief.sources[0].url, /adobe\.com\/products\/photoshop\.html$/);
   const draft = (await call('prepare_contribution', {
-    id: problem.id, title: 'Synthetic fixture plan', summary: 'Compare a shape with a glow and a negative control.', evidence: 'Record both alpha profiles and the renderer version.'
+    id: problem.id, title: 'Synthetic fixture plan', summary: 'Compare the exported composite against a reference.', evidence: 'Record the pixel comparison and show reopen preserves layers.'
   })).structuredContent;
   assert.equal(draft.published, false);
   const url = new URL(draft.github_issue_url);
