@@ -44,8 +44,19 @@ test('query parameters remain text, and a brief offers both contribution routes'
 });
 
 test('MCP modern discovery and legacy negotiation expose the same four tools', async () => {
-  const discover = await (await rpc('server/discover')).json();
-  assert.deepEqual(discover.result.supportedVersions, ['2026-07-28']);
+  const version = '2026-07-28';
+  const meta = { 'io.modelcontextprotocol/protocolVersion': version };
+  const discover = await (await rpc('server/discover', { _meta: meta }, {
+    'Mcp-Protocol-Version': version, 'Mcp-Method': 'server/discover'
+  })).json();
+  assert.deepEqual(discover.result.supportedVersions, [version]);
+  assert.equal(discover.result.resultType, 'complete');
+  assert.equal(discover.result._meta['io.modelcontextprotocol/serverInfo'].name, 'works-by-us');
+  const modernListing = await (await rpc('tools/list', { _meta: meta }, {
+    'Mcp-Protocol-Version': version, 'Mcp-Method': 'tools/list'
+  })).json();
+  assert.equal(modernListing.result.cacheScope, 'public');
+  assert.ok(modernListing.result.ttlMs > 0);
   const legacy = await (await rpc('initialize', { protocolVersion: '2025-06-18' })).json();
   assert.equal(legacy.result.protocolVersion, '2025-06-18');
   const listing = await (await rpc('tools/list')).json();
@@ -87,5 +98,10 @@ test('MCP bounds request size and validates origin, media type and methods', asy
   assert.equal((await rpc('tools/list', {}, { 'Content-Type': 'application/jsonx' })).status, 415);
   assert.equal((await rpc('tools/list', { oversized: 'a'.repeat(16001) })).status, 413);
   assert.equal((await rpc('tools/list', {}, { 'Mcp-Method': 'tools/call' })).status, 400);
-  assert.equal((await rpc('tools/list', {}, { 'Mcp-Protocol-Version': '1900-01-01' })).status, 400);
+  const unsupported = await rpc('tools/list', {}, { 'Mcp-Protocol-Version': '1900-01-01' });
+  assert.equal(unsupported.status, 400);
+  assert.equal((await unsupported.json()).error.code, -32022);
+  const missingHeaders = await rpc('server/discover');
+  assert.equal(missingHeaders.status, 400);
+  assert.equal((await missingHeaders.json()).error.code, -32020);
 });

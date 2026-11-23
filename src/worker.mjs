@@ -1,5 +1,8 @@
 const legacyVersions = ['2025-11-25', '2025-06-18', '2025-03-26'];
 const modernVersion = '2026-07-28';
+const supportedVersions = [modernVersion, ...legacyVersions];
+const protocolVersionKey = 'io.modelcontextprotocol/protocolVersion';
+const serverInfoKey = 'io.modelcontextprotocol/serverInfo';
 const serverInfo = { name: 'works-by-us', title: 'Works by Us', version: '1.0.0' };
 const instructions = 'Find an open problem, fetch its brief, then prepare a contribution with reproducible evidence for human review on GitHub.';
 const problemsById = new Map(catalog.problems.map(problem => [problem.id, problem]));
@@ -214,13 +217,22 @@ function runTool(name, args, origin) {
   return draftContribution(problem, origin, args.title.trim().replace(/\s+/g, ' '), args.summary.trim(), args.evidence.trim());
 }
 
+function decodeRoutingName(name) {
+  const encoded = /^=\?base64\?(.+)\?=$/.exec(name ?? '');
+  if (!encoded) return name;
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(atob(encoded[1]), char => char.charCodeAt(0)));
+  } catch {
+    return '';
+  }
+}
+
 async function rpc(request, origin) {
   const source = request.headers.get('origin');
   if (source && source !== origin) return send(null, 403);
   if (request.method !== 'POST') return send(null, 405, { Allow: 'POST' });
   const version = request.headers.get('mcp-protocol-version');
-  if (version && ![modernVersion, ...legacyVersions].includes(version)) return send('Unsupported MCP protocol version', 400);
-  if (!(request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() === 'application/json')) return send('Use application/json', 415);
+  if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') return send('Use application/json', 415);
   let message;
   try {
     const reader = request.body.getReader();
@@ -242,23 +254,37 @@ async function rpc(request, origin) {
     return json({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'Invalid JSON' } }, 400);
   }
   const id = message?.id ?? null;
-  const result = value => json({ jsonrpc: '2.0', id, result: value });
-  const error = (code, message, status = 200) => json({ jsonrpc: '2.0', id, error: { code, message } }, status);
+  const { method, params } = message ?? {};
+  const messageVersion = params?._meta?.[protocolVersionKey];
+  const modern = version === modernVersion || messageVersion === modernVersion || method === 'server/discover';
+  const cache = ['server/discover', 'tools/list'].includes(method) ? { ttlMs: 60000, cacheScope: 'public' } : {};
+  const result = value => json({ jsonrpc: '2.0', id, result: modern ? { resultType: 'complete', ...cache, ...value } : value });
+  const error = (code, message, status = 200, data) => json({ jsonrpc: '2.0', id, error: { code, message, data } }, status);
   if (message?.jsonrpc !== '2.0' || typeof message.method !== 'string'
       || (message.id !== undefined && typeof id !== 'string' && typeof id !== 'number')) {
     return error(-32600, 'Invalid request', 400);
   }
   if (!Object.hasOwn(message, 'id')) return send(null, 202);
-  const { method, params } = message;
-  const routedMethod = request.headers.get('mcp-method');
-  const routedName = request.headers.get('mcp-name');
-  if ((routedMethod && routedMethod !== method) || (routedName && routedName !== params?.name)) {
-    return error(-32600, 'MCP routing headers do not match the request', 400);
+  const requested = version ?? messageVersion;
+  if (requested && !supportedVersions.includes(requested)) {
+    return error(-32022, 'Unsupported protocol version', 400, { requested, supported: supportedVersions });
   }
-  if (method === 'server/discover') return result({ supportedVersions: [modernVersion], capabilities: { tools: {} }, serverInfo, instructions });
+  const routedMethod = request.headers.get('mcp-method');
+  const routedName = decodeRoutingName(request.headers.get('mcp-name'));
+  if ((version && messageVersion && version !== messageVersion)
+      || (routedMethod !== null && routedMethod !== method)
+      || (routedName !== null && routedName !== (params?.name ?? params?.uri))
+      || (modern && (version !== modernVersion || messageVersion !== modernVersion || !routedMethod
+        || (['tools/call', 'prompts/get', 'resources/read'].includes(method) && !routedName)))) {
+    return error(-32020, 'MCP routing headers do not match the request', 400);
+  }
+  if (method === 'server/discover') return result({
+    supportedVersions: [modernVersion], capabilities: { tools: {} }, instructions,
+    _meta: { [serverInfoKey]: serverInfo }
+  });
   if (method === 'initialize') {
-    const requested = params?.protocolVersion;
-    return result({ protocolVersion: legacyVersions.includes(requested) ? requested : legacyVersions[0], capabilities: { tools: {} }, serverInfo, instructions });
+    const offered = params?.protocolVersion;
+    return result({ protocolVersion: legacyVersions.includes(offered) ? offered : legacyVersions[0], capabilities: { tools: {} }, serverInfo, instructions });
   }
   if (method === 'ping') return result({});
   if (method === 'tools/list') return result({ tools });
