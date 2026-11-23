@@ -31,6 +31,19 @@ test('catalog links resolve and category filtering and search agree', async () =
   assert.equal((await fetchSite('/problems/unknown/')).status, 404);
 });
 
+test('the home gallery and project list together link the full catalog', async () => {
+  const home = await (await fetchSite('/')).text();
+  const catalog = await (await fetchSite('/api/problems')).json();
+  for (const project of catalog.problems) assert.ok(home.includes('href="/problems/' + project.id + '/"'));
+  assert.match(home, /Build a free layered photo editor/);
+  assert.match(home, /Build a free household budget app/);
+  assert.match(home, /Compare two PDFs offline/);
+  const photo = await fetchSite('/media/richat.jpg');
+  assert.equal(photo.headers.get('content-type'), 'image/jpeg');
+  assert.deepEqual([...new Uint8Array(await photo.arrayBuffer()).slice(0, 3)], [255, 216, 255]);
+  assert.match(home, /%23%23\+Problem%0A%0A%23%23\+Primary\+source/);
+});
+
 test('query parameters remain text, and a brief offers both contribution routes', async () => {
   const search = await (await fetchSite('/problems/?q=%3Cscript%3E')).text();
   assert.match(search, /&lt;script&gt;/);

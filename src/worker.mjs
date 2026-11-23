@@ -3,7 +3,7 @@ const modernVersion = '2026-07-28';
 const supportedVersions = [modernVersion, ...legacyVersions];
 const protocolVersionKey = 'io.modelcontextprotocol/protocolVersion';
 const serverInfoKey = 'io.modelcontextprotocol/serverInfo';
-const serverInfo = { name: 'works-by-us', title: 'Works by Us', version: '1.0.0' };
+const serverInfo = { name: 'works-by-us', title: 'Crowdsourced Intelligence', version: '1.0.0' };
 const instructions = 'Find an open problem, fetch its brief, then prepare a contribution with reproducible evidence for human review on GitHub.';
 const problemsById = new Map(catalog.problems.map(problem => [problem.id, problem]));
 const categoriesById = new Map(catalog.categories.map(category => [category.id, category]));
@@ -29,7 +29,7 @@ function findProblems(category = '', query = '') {
 
 function contributionBrief(problem, origin) {
   return [
-    'Work on one scoped contribution to "' + problemTitle(problem) + '" for Works by Us.',
+    'Work on one scoped contribution to "' + problemTitle(problem) + '" for Crowdsourced Intelligence.',
     'Problem: ' + origin + routeFor(problem),
     'Task: ' + problem.task,
     'Review criteria: ' + problem.review,
@@ -69,22 +69,22 @@ function json(body, status = 200) {
 }
 
 function page(title, content, { status = 200, active = '', description = 'Open problems and practical ways to work on them.' } = {}) {
-  const fullTitle = title ? title + ' | Works by Us' : 'Works by Us | Open problems';
+  const fullTitle = title ? title + ' | Crowdsourced Intelligence' : 'Crowdsourced Intelligence | Open problems';
   return send(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="theme-color" content="#fafbf9">
+<title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="/style.css"><script defer src="/copy.js"></script></head>
 <body>
 <a href="#main" class="skip">Skip to content</a>
 <header class="bar"><div class="wrap bar-inner">
-<a class="wordmark" href="/">Works by Us<span aria-hidden="true" class="mark"></span></a>
+<a class="wordmark" href="/" aria-label="Crowdsourced home"><span class="weave" aria-hidden="true">✳︎</span>crowdsourced<span class="suffix">.si</span></a>
 <nav aria-label="Main navigation">
-<a href="${browsePath}" ${active === 'problems' ? 'aria-current="true"' : ''}>Problems</a>
-<a href="/connect/" ${active === 'connect' ? 'aria-current="page"' : ''}>Connect MCP</a>
+<a href="${browsePath}" ${active === 'problems' ? 'aria-current="page"' : ''}>Projects</a>
+<a href="/connect/" ${active === 'connect' ? 'aria-current="page"' : ''}>Connect your AI</a>
 </nav>
 </div></header>
 <main id="main" class="wrap" tabindex="-1">${content}</main>
-<footer class="wrap footer"><span>Works by Us</span><a href="${config.repository}">GitHub</a><a href="${config.repository}/issues">Contributions</a></footer>
+<footer class="wrap footer"><span>Crowdsourced Intelligence</span><a href="${config.repository}">GitHub</a><a href="${config.repository}/issues">Contributions</a></footer>
 </body></html>`, status, {
     'Content-Type': 'text/html; charset=utf-8',
     'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com",
@@ -106,28 +106,54 @@ function categoryNav(active, query) {
   return '<nav class="category-nav" aria-label="Problem categories">' + link('', 'All') + catalog.categories.map(category => link(category.id, category.title)).join('') + '</nav>';
 }
 
+function projectGallery(entries) {
+  const [editor, budget, pdf] = entries;
+  return `<div class="showcase">
+    <article class="lead-project">
+      <figure class="layer-preview">
+        <input type="checkbox" id="color-layer" checked aria-label="Show satellite image in color">
+        <img src="/media/richat.jpg" width="1100" height="890" alt="Rock rings of the Richat Structure seen from orbit">
+        <label for="color-layer"><span class="layer-switch" aria-hidden="true"></span>Color layer</label>
+        <figcaption>Richat Structure · Landsat 7</figcaption>
+      </figure>
+      <div class="lead-copy"><p class="project-type">${escape(editor.track)}</p>
+        <h2><a href="${routeFor(editor)}">Build a free layered photo editor</a></h2>
+        <p>Start with two images, a layer mask, and a file you can reopen.</p>
+        <a class="project-link" href="${routeFor(editor)}">Open project</a>
+      </div>
+    </article>
+    <div class="side-projects">
+      <article class="side-project"><a class="side-art budget-art" href="${routeFor(budget)}" aria-label="View the household budgeting project">
+        <span class="receipt" aria-hidden="true"><b>Monthly budget</b><span>Groceries <em>$240</em></span><span>Transit <em>$60</em></span><strong>Total <em>$300</em></strong></span></a>
+        <div><p class="project-type">${escape(budget.track)}</p><h2><a href="${routeFor(budget)}">Build a free household budget app</a></h2><p>Turn bank CSVs into a household spending plan.</p></div>
+      </article>
+      <article class="side-project"><a class="side-art pdf-art" href="${routeFor(pdf)}" aria-label="View the PDF comparison project">
+        <span class="document back" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="document front" aria-hidden="true"><b>Revision</b><i></i><del>July 12</del><ins>July 14</ins><i></i></span></a>
+        <div><p class="project-type">${escape(pdf.track)}</p><h2><a href="${routeFor(pdf)}">Compare two PDFs offline</a></h2><p>Compare revisions locally and export a page-by-page report.</p></div>
+      </article>
+    </div>
+  </div>`;
+}
+
 function renderIndex(url, { home = false, category }) {
   const query = (url.searchParams.get('q') ?? '').slice(0, 100).trim();
   const categoryId = category?.id ?? '';
   const matches = findProblems(categoryId, query);
-  const visible = home && !query ? matches.filter(problem => problem.id !== catalog.featured) : matches;
-  const feature = problemsById.get(catalog.featured);
-  const hero = home ? `<section class="hero" aria-labelledby="hero-title"><div class="hero-inner">
-<h1 id="hero-title">Open problems.<br>Shared work.</h1>
-<p>Pick a real problem and take one useful step. Bring your own tools, then share evidence others can check.</p>
-<a class="action filled" href="#problems">Browse problems</a>
-</div><div class="hero-art" aria-hidden="true"><i></i><i></i><i></i></div></section>` : '';
-  const featured = home && !query ? `<aside class="featured"><span class="small-label">Start here</span><a href="${routeFor(feature)}">${escape(feature.track)} <span>${escape(feature.title)}</span></a></aside>` : '';
-  const title = category?.title ?? 'Open problems';
-  return page(home ? '' : title, `${hero}<section id="problems" class="index ${home ? 'with-hero' : ''}">
-<div class="index-top"><div><${home ? 'h2' : 'h1'}>${escape(title)}</${home ? 'h2' : 'h1'}>
-${category ? '<p>' + escape(category.description) + '</p>' : ''}</div>
-<form class="search" action="${categoryPath(categoryId)}" role="search"><label class="sr-only" for="search">Search problems</label><input id="search" name="q" type="search" maxlength="100" placeholder="Search problems" value="${escape(query)}"><button type="submit">Search</button></form></div>
-${categoryNav(categoryId, query)}
-${query ? '<p class="search-result">' + visible.length + ' ' + (visible.length === 1 ? 'result' : 'results') + ' for “' + escape(query) + '”</p>' : ''}
-${featured}${problemRows(visible)}
-<p class="propose"><a href="${escape(issueLink('Propose a problem', '## Problem\n\n## Primary source\n\n## A practical contribution\n\n## How someone can check it\n'))}">Propose a problem on GitHub</a></p>
-</section>`, { active: 'problems', description: category?.description });
+  const featuredIds = [catalog.featured, 'free-monarch-money-alternative', 'free-acrobat-pro-alternative'];
+  const showGallery = home && !query && featuredIds.every(id => problemsById.has(id));
+  const visible = showGallery ? matches.filter(problem => !featuredIds.includes(problem.id)) : matches;
+  const title = category?.title ?? 'Open projects';
+  const description = category?.description ?? 'Pick a project. Work on it yourself or with your AI. Share what you find.';
+  return page(home ? '' : title, `<section class="index">
+    <div class="index-top"><div><h1>${escape(title)}</h1><p>${escape(description)}</p></div>
+    <form class="search" action="${categoryPath(categoryId)}" role="search"><label class="sr-only" for="search">Search projects</label><input id="search" name="q" type="search" maxlength="100" placeholder="Search projects" value="${escape(query)}"><button type="submit">Search</button></form></div>
+    ${categoryNav(categoryId, query)}
+    ${showGallery ? projectGallery(featuredIds.map(id => problemsById.get(id))) + '<h2 class="more-heading">More open projects</h2>' : ''}
+    ${query ? '<p class="search-result">' + visible.length + ' ' + (visible.length === 1 ? 'result' : 'results') + ' for “' + escape(query) + '”</p>' : ''}
+    ${problemRows(visible)}
+    <p class="propose"><a href="${escape(issueLink('Propose a project', '## Problem\n\n## Primary source\n\n## A practical contribution\n\n## How someone can check it\n'))}">Propose a project on GitHub</a></p>
+  </section>`, { active: 'problems', description });
 }
 
 function copyButton(target, text) {
@@ -164,7 +190,7 @@ function renderConnect(origin) {
 <header class="detail-heading"><h1>Bring your own AI.</h1><p class="lede">Give your MCP client this URL to browse the same problems and prepare a contribution for review.</p></header>
 <section class="endpoint"><label for="endpoint">Server URL</label><div><input type="url" id="endpoint" value="${escape(endpoint)}" readonly>${copyButton('endpoint', 'Copy URL')}</div><p>Streamable HTTP. Public access.</p></section>
 <div class="brief connection-help">
-<section><h2>Add it to your client</h2><p>In a client with remote MCP support, add a Streamable HTTP server named <strong>Works by Us</strong>. Use the URL above. For Codex, run this command.</p>
+<section><h2>Add it to your client</h2><p>In a client with remote MCP support, add a Streamable HTTP server named <strong>Crowdsourced Intelligence</strong>. Use the URL above. For Codex, run this command.</p>
 <pre id="codex-command"><code>codex mcp add works-by-us --url ${escape(endpoint)}</code></pre>
 ${copyButton('codex-command', 'Copy command')}</section>
 <section><h2>Try it</h2><p>Ask your AI to find the free Photoshop alternative and suggest a small contribution. It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
@@ -305,6 +331,9 @@ export default {
     const path = url.pathname.replace(/\/+$/, '') || '/';
     if (path === '/mcp' || path === '/api/mcp') return rpc(request, url.origin);
     if (!['GET', 'HEAD'].includes(request.method)) return send(null, 405, { Allow: 'GET, HEAD' });
+    if (path === '/media/richat.jpg') {
+      return send(Uint8Array.from(atob(assets.richat), char => char.charCodeAt(0)), 200, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400' });
+    }
     if (path === '/style.css') return send(assets['style.css'], 200, { 'Content-Type': 'text/css; charset=utf-8' });
     if (path === '/copy.js') return send(assets['copy.js'], 200, { 'Content-Type': 'text/javascript; charset=utf-8' });
     if (path === '/api/problems') return json(catalog);

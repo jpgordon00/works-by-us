@@ -1,6 +1,6 @@
-# Works by Us
+# Crowdsourced Intelligence
 
-Works by Us is a public catalog of open problems. Pick a small contribution, work on it yourself or with your own AI, then share evidence that another person can check.
+Crowdsourced Intelligence is a public catalog of open problems. Pick a small contribution, work on it yourself or with your own AI, then share evidence that another person can check.
 
 Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify open-source project briefs, upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
 
@@ -45,3 +45,5 @@ The preview prints its local address. The Worker bundle is generated in dist/ser
 ## Design references
 
 The idea of handing one well-scoped research step to an agent comes from [pequalnp.com](https://pequalnp.com/). The site uses a direct, browseable index and a separate MCP setup page. Clear actions, keyboard-readable navigation, and human review draw on [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines), [Microsoft’s Guidelines for Human-AI Interaction](https://www.microsoft.com/en-us/research/project/guidelines-for-human-ai-interaction/), and [Anthropic’s frontend design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design). The project is independent of the linked research and upstream projects.
+
+The homepage layer preview uses the [Richat Structure photograph](https://images.nasa.gov/details/GSFC_20171208_Archive_e002163) by NASA/GSFC/Landsat 7/USGS. The budgeting and PDF examples use illustrative data.

@@ -22,7 +22,7 @@ for (const problem of catalog.problems) {
 }
 if (!ids.has(catalog.featured)) throw new Error('The featured problem is missing');
 
-const assets = {};
+const assets = { richat: (await readFile('src/media/richat.jpg')).toString('base64') };
 for (const name of ['style.css', 'copy.js']) assets[name] = await readFile('src/' + name, 'utf8');
 
 let commit = 'local';
