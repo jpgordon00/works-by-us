@@ -110,16 +110,13 @@ pre code { font-size: .89rem; }
   .category-nav a { padding-block: .55rem .6rem; }
   .problem-row { padding: .9rem .4rem .9rem .15rem; grid-template-columns: minmax(0, 1fr) .4rem; gap: .15rem .5rem; }
   .row-topic { padding: 0; grid-column: 1; }
+  .row-content { grid-column: 1; grid-row: 2; min-width: 0; }
   .chevron { grid-column: 2; grid-row: 2; }
   .detail { padding-block: 1.5rem 3.2rem; }
   .detail-heading { margin-block: 1.5rem 1.55rem; }
   .detail-grid { grid-template-columns: 1fr; }
   .contribution { max-width: 28rem; }
   .endpoint > div { flex-wrap: wrap; }
-}
-@media (max-width: 350px) {
-  .bar nav { gap: .55rem; }
-
 }
 .wordmark { gap: 0; font-size: 1.4rem; letter-spacing: -.045em; }
 .weave { margin-right: .45rem; color: var(--brand); font-size: 1.6em; line-height: 1; }
@@ -185,6 +182,7 @@ pre code { font-size: .89rem; }
   .wrap { width: calc(100% - 2rem); }
   .wordmark { font-size: 1.13rem; }
   .bar nav { gap: .8rem; }
+  .category-nav { column-gap: .62rem; }
   .index { padding-top: 1.35rem; }
   .index-top { gap: .6rem; }
   .index h1 { font-size: 2.65rem; }
@@ -195,4 +193,7 @@ pre code { font-size: .89rem; }
   .side-project h2 { font-size: 1.35rem; }
   .side-projects { gap: .85rem; }
   .index .more-heading { margin-top: 1.75rem; }
+}
+@media (max-width: 375px) {
+  .bar nav a:first-child { display: none; }
 }
