@@ -56,8 +56,8 @@ function initHero(hero) {
     hovered = false;
     schedule();
   });
-  hero.addEventListener('focusin', () => {
-    focused = true;
+  hero.addEventListener('focusin', event => {
+    focused = event.target.matches(':focus-visible');
     schedule();
   });
   hero.addEventListener('focusout', event => {
