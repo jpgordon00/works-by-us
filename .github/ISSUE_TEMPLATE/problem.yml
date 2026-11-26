@@ -1,5 +1,5 @@
 name: Propose a problem
-description: Share a question or project for Crowdsourced Intelligence.
+description: Share a question or project for the community to work on.
 labels: [problem-proposal]
 body:
   - type: markdown
@@ -28,6 +28,7 @@ body:
         - Civic & accessibility
         - Culture & archives
         - Science & energy
+        - Robotics simulation
         - Other or unsure
     validations:
       required: true
