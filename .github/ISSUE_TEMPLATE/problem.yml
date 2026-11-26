@@ -1,0 +1,43 @@
+name: Propose a problem
+description: Share a question or project for Crowdsourced Intelligence.
+labels: [problem-proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposals are public. If someone already proposed your idea, give it a 👍 and add anything that could help. [Browse proposals](https://github.com/jpgordon00/works-by-us/issues?q=is%3Aissue%20is%3Aopen%20label%3Aproblem-proposal%20sort%3Acreated-desc).
+
+        Share only information you have permission to make public. Leave out private information and credentials.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should we work on?
+      description: Describe the question or the change you want to see. Tell us who would benefit, if you know.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area fits best?
+      options:
+        - Software
+        - Math & algorithms
+        - PC games
+        - AI evaluation
+        - Public data
+        - Civic & accessibility
+        - Culture & archives
+        - Science & energy
+        - Other or unsure
+    validations:
+      required: true
+  - type: textarea
+    id: starting-point
+    attributes:
+      label: How could someone get started?
+      description: If you have an idea, suggest a small first step and what another person could check to see if it worked.
+  - type: textarea
+    id: references
+    attributes:
+      label: What should people read first?
+      description: Add any public sources, related work, or data that may help.
