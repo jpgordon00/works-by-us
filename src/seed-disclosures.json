@@ -1,0 +1,111 @@
+{
+  "3sat-to-clique": [
+    {
+      "agent": "math_starter (Codex)",
+      "work": "Wrote the two directions of the reduction proof and the executable checker.",
+      "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+      "paths": [
+        "contributions/3sat-clique/README.md",
+        "contributions/3sat-clique/check.mjs"
+      ]
+    }
+  ],
+  "audacity-spectrum-parity": [
+    {
+      "agent": "research_ports (Codex)",
+      "work": "Wrote the WAV fixture generator and the spectrum export checker.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/audacity-spectrum/README.md",
+        "contributions/audacity-spectrum/spectrum_fixture.py"
+      ]
+    }
+  ],
+  "godot-msaa-pipeline-stutter": [
+    {
+      "agent": "research_ports (Codex)",
+      "work": "Wrote the frame-timing protocol, analyzer and synthetic sample. This copy provides a shared starter for the GTA VI release tracker and this project.",
+      "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+      "paths": [
+        "contributions/pc-portability/README.md",
+        "contributions/pc-portability/analyze_frame_times.py",
+        "contributions/pc-portability/sample.synthetic.csv"
+      ]
+    }
+  ],
+  "gta-vi-pc-release": [
+    {
+      "agent": "research_ports (Codex)",
+      "work": "Wrote the release source ledger, frame-timing analyzer and synthetic sample. The same starter is also available in the Godot project.",
+      "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+      "paths": [
+        "contributions/pc-portability/README.md",
+        "contributions/pc-portability/analyze_frame_times.py",
+        "contributions/pc-portability/sample.synthetic.csv"
+      ]
+    }
+  ],
+  "mujoco-box-edge-contact": [
+    {
+      "agent": "math_starter (Codex)",
+      "work": "Wrote the contact fixture and measurement program, then recorded the resulting observations.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/mujoco-edge-contact/README.md",
+        "contributions/mujoco-edge-contact/measure.py",
+        "contributions/mujoco-edge-contact/scene.xml",
+        "contributions/mujoco-edge-contact/observations-macos-arm64.json"
+      ]
+    }
+  ],
+  "sat-competition-comparison": [
+    {
+      "agent": "catalog expansion (Codex)",
+      "work": "Wrote the comparison harness, pinned the published instances and recorded the timed runs. math_starter independently reviewed the checker.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/sat-competition/README.md",
+        "contributions/sat-competition/compare.py",
+        "contributions/sat-competition/instances.csv",
+        "contributions/sat-competition/results.csv"
+      ],
+      "scope": "hub"
+    }
+  ],
+  "unrestricted-circuit-lower-bound": [
+    {
+      "agent": "math_starter (Codex)",
+      "work": "Wrote the restricted parity DNF proof and finite-range checker.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/parity-dnf/README.md",
+        "contributions/parity-dnf/check.mjs"
+      ],
+      "scope": "hub"
+    }
+  ],
+  "usgs-daily-api-parity": [
+    {
+      "agent": "research_frontiers (Codex)",
+      "work": "Wrote the API comparison and recorded the live parity check.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/usgs-daily-api/README.md",
+        "contributions/usgs-daily-api/check.py",
+        "contributions/usgs-daily-api/result.json"
+      ]
+    }
+  ],
+  "zarr-chunk-layout-benchmark": [
+    {
+      "agent": "catalog expansion (Codex)",
+      "work": "Wrote the chunk layout benchmark and recorded the measured reads.",
+      "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+      "paths": [
+        "contributions/zarr-chunk-layout/README.md",
+        "contributions/zarr-chunk-layout/benchmark.py",
+        "contributions/zarr-chunk-layout/observations-macos-arm64.json"
+      ]
+    }
+  ]
+}

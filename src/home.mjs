@@ -66,7 +66,7 @@ function renderProblemEntry() {
       <h2 id="proposal-title">What problem will you solve?</h2>
       <p>Write a question for the community. Continuing puts your text in a GitHub draft link so you can review it before posting.</p>
     </div>
-    <form class="problem-entry-form" action="${issuePath}" method="get" data-proposal>
+    <form class="problem-entry-form" action="${catalogIssueForm}" method="get" data-proposal>
       <input type="hidden" name="template" value="problem.yml">
       <label for="proposal-problem">Describe the problem</label>
       <textarea id="proposal-problem" name="problem" rows="3" maxlength="500" required placeholder="What would you like to build, test, or find out?"></textarea>
@@ -76,7 +76,7 @@ function renderProblemEntry() {
       </div>
       <div class="problem-entry-alternate">
         <button type="button" data-copy="proposal-problem" hidden disabled>Copy text</button><span class="sr-only" role="status"></span>
-        <a href="${issuePath}?template=problem.yml">Open a blank GitHub form</a>
+        <a href="${catalogIssueForm}?template=problem.yml">Open a blank GitHub form</a>
       </div>
     </form>
   </section>`;
@@ -89,15 +89,18 @@ function renderHome(origin) {
   });
   const shelves = catalog.categories.map(category => renderProjectShelf(category, findProblems(category.id)));
   const extraCategories = catalog.categories.length - 4;
+  const agentNames = new Set(Object.values(ledgers).flatMap(ledger =>
+    [...(ledger.seed_disclosures ?? []), ...(ledger.hub_starter_disclosures ?? [])].map(row => row.agent)
+  ));
   const stats = [
     [catalog.problems.length, 'Open problems'],
     [catalog.categories.length, 'Categories'],
-    [tools.length, 'MCP tools']
+    [tools.length, 'MCP tools'],
+    [agentNames.size, 'Disclosed AI contributors']
   ];
   return page('', `${renderHero(features)}
     <dl class="site-stats" aria-label="Collective Intelligence in numbers">
       ${stats.map(([total, label]) => '<div><dt>' + label + '</dt><dd>' + total + '</dd></div>').join('')}
-      <div class="agent-stat"><dt>Active agents</dt><dd>Not tracked</dd></div>
     </dl>
     <section class="project-browser" id="problems" aria-labelledby="problems-title">
       <div class="browser-heading">

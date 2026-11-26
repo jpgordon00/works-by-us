@@ -33,6 +33,12 @@ Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) o
 
 The Software category is for original, free, open-source alternatives to familiar paid workflows. The first briefs cover a layered image editor (Photoshop), local household budgeting (Monarch Money), and offline PDF comparison (Acrobat Pro). Each states a small milestone someone can implement and verify, with links to existing open-source work.
 
+## Collaborate with people and agents
+
+Each project page links to its own GitHub repo, review criteria, line-count snapshot and optional project-scoped connector. Use **Open in Claude** to prefill a draft in Claude Desktop, or copy the prompt into ChatGPT or Claude on the web. You can also paste a public problem page link in either assistant and ask for one scoped contribution.
+
+Read the [collaboration protocol](PROTOCOL.md) for the proposal, independent reproduction, review and merge process. Use the project’s GitHub repo for evidence and code. The catalog repo tracks catalog proposals.
+
 ## Watch a run
 
 Open the [solver replay](https://works-by-us.jacob-gordon255689.chatgpt.site/watch/example/) to see the 3-SAT to CLIQUE checker try assignments and verify a witness. **Start a new run** executes the same bounded experiment on the server and gives it a fresh watch link. Two viewers opening that link see the same recorded steps.
@@ -49,24 +55,39 @@ For Codex:
 
     codex mcp add works-by-us --url https://works-by-us.jacob-gordon255689.chatgpt.site/api/mcp
 
-An example request is “Find the free Monarch Money alternative and suggest one thing I can contribute.”
+The shared connector covers every project. For a narrower scope, copy an individual project’s endpoint from its Connect with MCP link. Follow the [client setup instructions](https://works-by-us.jacob-gordon255689.chatgpt.site/connect/) for Claude and eligible ChatGPT workspaces.
+
+An example request is “Find the free Monarch Money alternative, read the brief, and give me a reproducible first contribution.”
 
 | Tool | Use |
 | --- | --- |
 | list_categories | List categories, counts and links. |
 | list_problems | Search by category ID, keywords, or both. |
 | get_problem | Read a problem's source links, task and review criteria. |
-| prepare_contribution | Format evidence as a draft and return a link to review it on GitHub. |
+| prepare_contribution | Format public evidence for review and return a link to the project’s issue form. |
 
 The catalog and MCP require no credentials. Publishing an issue or pull request uses GitHub and your own account. Drafts are prepared in the response and are not published by the server. A GitHub contribution is a proposal until someone else reviews its evidence.
 
 ## Contribute
 
-Open a [GitHub issue](https://github.com/jpgordon00/works-by-us/issues) with a problem link, evidence, and reproduction steps. For a catalog addition, propose a description, primary source, small task and checkable acceptance criteria. Check the upstream project’s own contribution guidelines before sending it a patch.
+Open an issue or pull request in the problem’s dedicated repo with a problem link, public evidence, and reproduction steps. To suggest a catalog entry, open a [catalog issue](https://github.com/jpgordon00/works-by-us/issues) with a description, primary source, small task and checkable acceptance criteria. Check any upstream project’s contribution guidelines before sending it a patch.
+
+## Maintain project repos and contribution records
+
+Use a trusted catalog revision from the hub’s published `main`. From the repository root, review the dry run. An authenticated maintainer can then provision and verify the GitHub repos.
+
+    node scripts/provision-project-repositories.mjs --revision <hub-sha>
+    node scripts/provision-project-repositories.mjs --revision <hub-sha> --apply
+    node scripts/project-receipts.mjs
+    npm test
+
+The provisioning command seeds new repos from the selected revision and verifies each repo’s protections before updating the registry. Any new starter folder needs an explicit regular-file list. Commit the verified registry, receipt snapshot and any reviewed seed disclosures before deploying the hub. After deployment, `npm run test:live` checks the exact local release against the public site and every scoped MCP endpoint.
+
+The receipt snapshot counts GitHub diff additions and deletions on recognized source paths. It includes comments and blank lines. Hidden, dependency, generated, fixture, data and lock paths are excluded according to the [source classification rule](scripts/project-receipts.mjs). Each snapshot records the PR-opening account or linked seed author. Named agent rows show disclosed work and verified source counts for the pinned files. Hub-only starters are reported separately from project-repo totals. Imported starter code can appear in more than one project, so totals across repos may include the same code. See the [commit-level audit guide](docs/contribution-audit.md) for individual commit counts and disclosure evidence.
 
 ## Run locally
 
-Use a current Node.js release. There are no application dependencies.
+Use Node.js 24 and Git 2.45 or later. There are no application dependencies.
 
     npm test
     npm run dev

@@ -1,0 +1,154 @@
+{
+  "free-photoshop-alternative": {
+    "repository": "https://github.com/jpgordon00/ci-free-photoshop-alternative",
+    "seed": "54322824e8cce11f231116efec26193a0ad15589"
+  },
+  "free-monarch-money-alternative": {
+    "repository": "https://github.com/jpgordon00/ci-free-monarch-money-alternative",
+    "seed": "c08fc4c4e654599a3a435dd7e91b75fd51891a8b"
+  },
+  "free-acrobat-pro-alternative": {
+    "repository": "https://github.com/jpgordon00/ci-free-acrobat-pro-alternative",
+    "seed": "d15066b2bd7846090e77023ba1500edf9c29b066"
+  },
+  "p-versus-np": {
+    "repository": "https://github.com/jpgordon00/ci-p-versus-np",
+    "seed": "2e95072b495b6073d0fe2bc33223ce37efd98724"
+  },
+  "gta-vi-pc-release": {
+    "repository": "https://github.com/jpgordon00/ci-gta-vi-pc-release",
+    "seed": "d8a36d0bff05ff24537e2f326d725517d2ea7c37"
+  },
+  "sparse-permanent-check": {
+    "repository": "https://github.com/jpgordon00/ci-sparse-permanent-check",
+    "seed": "1f3af297b68067612a20faf1fb0137302ab87226"
+  },
+  "godot-msaa-pipeline-stutter": {
+    "repository": "https://github.com/jpgordon00/ci-godot-msaa-pipeline-stutter",
+    "seed": "bcdc27cb5df3d2274a24ad488268691ba93d7f09"
+  },
+  "sat-competition-comparison": {
+    "repository": "https://github.com/jpgordon00/ci-sat-competition-comparison",
+    "seed": "2bc637e771f02f5dc12b4399745c1c37a91bd70c"
+  },
+  "windows-linux-proton-compatibility": {
+    "repository": "https://github.com/jpgordon00/ci-windows-linux-proton-compatibility",
+    "seed": "ba60bb494f35f94ef93bf24fbcb4dff1361fc9bf"
+  },
+  "3sat-to-clique": {
+    "repository": "https://github.com/jpgordon00/ci-3sat-to-clique",
+    "seed": "8f7ecd37a18d9652e43e353daa102bbfd5534363"
+  },
+  "unrestricted-circuit-lower-bound": {
+    "repository": "https://github.com/jpgordon00/ci-unrestricted-circuit-lower-bound",
+    "seed": "e4d505fa77df1da188f1c0c43a4b4a8754a24800"
+  },
+  "arc-agi-memory": {
+    "repository": "https://github.com/jpgordon00/ci-arc-agi-memory",
+    "seed": "70b4e1adc18f57fbd37aa809a3ad6d73ac252665"
+  },
+  "mmlu-answer-order": {
+    "repository": "https://github.com/jpgordon00/ci-mmlu-answer-order",
+    "seed": "53c2b90d54c7376e9d29ebc2b9852aa62bb3c0d0"
+  },
+  "join-datasets-openrefine": {
+    "repository": "https://github.com/jpgordon00/ci-join-datasets-openrefine",
+    "seed": "bdf7a284a5cd7650ad9fcbf0fc4cd85140da2b77"
+  },
+  "transit-feed-notices": {
+    "repository": "https://github.com/jpgordon00/ci-transit-feed-notices",
+    "seed": "c0562f63aa45087beaf1dda1cea91a45e9f91ef5"
+  },
+  "seattle-accessible-transit-routes": {
+    "repository": "https://github.com/jpgordon00/ci-seattle-accessible-transit-routes",
+    "seed": "490e6f12060a4e9c6e26dabcfa623cf149997747"
+  },
+  "link-to-manuscript-page": {
+    "repository": "https://github.com/jpgordon00/ci-link-to-manuscript-page",
+    "seed": "72f665d7b4c1701eb3ab7d3d0a017a5cb8179997"
+  },
+  "historic-newspaper-ocr": {
+    "repository": "https://github.com/jpgordon00/ci-historic-newspaper-ocr",
+    "seed": "954fd33d46ca911d1df37d95a5463ca415b9e148"
+  },
+  "phoenix-night-heat": {
+    "repository": "https://github.com/jpgordon00/ci-phoenix-night-heat",
+    "seed": "661edbb3de692bcfb5a444a3d0b4009beae77147"
+  },
+  "batch-job-electricity-emissions": {
+    "repository": "https://github.com/jpgordon00/ci-batch-job-electricity-emissions",
+    "seed": "b0c19cf78f599de5a4f92ba778742186fa5122c9"
+  },
+  "overlapping-galaxies": {
+    "repository": "https://github.com/jpgordon00/ci-overlapping-galaxies",
+    "seed": "50eed6a21a97b257cb6b655992e0e535ff92d515"
+  },
+  "hodge-conjecture": {
+    "repository": "https://github.com/jpgordon00/ci-hodge-conjecture",
+    "seed": "b33e74d5b6d22c14b2cc46091e9914c787ce2501"
+  },
+  "matrix-multiplication-proof-scope": {
+    "repository": "https://github.com/jpgordon00/ci-matrix-multiplication-proof-scope",
+    "seed": "e5793df9b19d4a95c9d8423ab967bcd12955da40"
+  },
+  "maximum-agreement-forest-tiny": {
+    "repository": "https://github.com/jpgordon00/ci-maximum-agreement-forest-tiny",
+    "seed": "27b3e64532f2c6f16a5c6f0c5610ea87437458da"
+  },
+  "time-horizon-task-family": {
+    "repository": "https://github.com/jpgordon00/ci-time-horizon-task-family",
+    "seed": "15c85accc651359b43c48307efa984b0e455e126"
+  },
+  "frontiermath-statement-review": {
+    "repository": "https://github.com/jpgordon00/ci-frontiermath-statement-review",
+    "seed": "39b70e01126473c23e419ad21cfe2d21df2a313d"
+  },
+  "usgs-daily-api-parity": {
+    "repository": "https://github.com/jpgordon00/ci-usgs-daily-api-parity",
+    "seed": "cf8fa81a40b5b6bdb5d0ce8e076793f299130a7a"
+  },
+  "geoparquet-measure-crs-roundtrip": {
+    "repository": "https://github.com/jpgordon00/ci-geoparquet-measure-crs-roundtrip",
+    "seed": "3de3b3d1517c935492b251b46a8e325d004c0c6b"
+  },
+  "lake-powell-elevation-agreement": {
+    "repository": "https://github.com/jpgordon00/ci-lake-powell-elevation-agreement",
+    "seed": "d6bb69f85b1dedc799c1bb5bd3911d1315cea0b7"
+  },
+  "zarr-chunk-layout-benchmark": {
+    "repository": "https://github.com/jpgordon00/ci-zarr-chunk-layout-benchmark",
+    "seed": "929218c72a4f693b1a5f83ae4a473834be17895f"
+  },
+  "audacity-spectrum-parity": {
+    "repository": "https://github.com/jpgordon00/ci-audacity-spectrum-parity",
+    "seed": "c0f295f7f225bfe8b11ddcc5556513119d48dafd"
+  },
+  "blender-gltf-camera-orientation": {
+    "repository": "https://github.com/jpgordon00/ci-blender-gltf-camera-orientation",
+    "seed": "d48cf256289320a106a518b9097ed7798882fb01"
+  },
+  "godot-static-texture-streaming": {
+    "repository": "https://github.com/jpgordon00/ci-godot-static-texture-streaming",
+    "seed": "267350528c203694505f7c18d957ca820693f5df"
+  },
+  "gamescope-launch-exit-code": {
+    "repository": "https://github.com/jpgordon00/ci-gamescope-launch-exit-code",
+    "seed": "aea16029e7edbe2f89df529e352f23e4eff870b3"
+  },
+  "archived-load-more-capture": {
+    "repository": "https://github.com/jpgordon00/ci-archived-load-more-capture",
+    "seed": "184c8909d6ba22d80147d2459e8e528518501290"
+  },
+  "nav2-path-pruning-cost": {
+    "repository": "https://github.com/jpgordon00/ci-nav2-path-pruning-cost",
+    "seed": "403ace948e6db780e387e5112acbe9bd53ea7630"
+  },
+  "gazebo-actor-scripted-pose": {
+    "repository": "https://github.com/jpgordon00/ci-gazebo-actor-scripted-pose",
+    "seed": "c057c8795850627dac2a682a9a33f3a3a373dc03"
+  },
+  "mujoco-box-edge-contact": {
+    "repository": "https://github.com/jpgordon00/ci-mujoco-box-edge-contact",
+    "seed": "696710ca95d9c6a917f10554599fa7dd21dde83b"
+  }
+}

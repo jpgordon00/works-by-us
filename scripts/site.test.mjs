@@ -4,10 +4,13 @@ import { test } from 'node:test';
 import worker from '../dist/server/index.js';
 
 const origin = 'https://works.example';
+const canonical = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const catalog = await (await worker.fetch(new Request(origin + '/api/problems'))).json();
+const projectEndpoint = id => '/api/mcp/projects/' + id;
 const fetchSite = (path, options) => worker.fetch(new Request(origin + path, options));
 
-async function rpc(method, params, headers = {}, id = 1) {
-  return fetchSite('/api/mcp', {
+async function rpc(method, params, headers = {}, id = 1, path = '/api/mcp') {
+  return fetchSite(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...headers },
     body: JSON.stringify({ jsonrpc: '2.0', id, method, params })
@@ -83,7 +86,7 @@ test('home shelves cover the full catalog and link the site sections and communi
   assert.match(home, /Suggest a problem/);
   assert.match(home, /href="#propose">Submit a problem/);
   assert.match(home, /label%3Aproblem-proposal%20sort%3Areactions-%2B1-desc/);
-  assert.match(home, /codex mcp add works-by-us --url https:\/\/works\.example\/api\/mcp/);
+  assert.match(home, /codex mcp add works-by-us --url https:\/\/works-by-us\.jacob-gordon255689\.chatgpt\.site\/api\/mcp/);
   assert.match(home, /linkedin\.com\/in\/jacob-gordon-6ab482215/);
 });
 
@@ -92,11 +95,11 @@ test('query parameters remain text, and a brief offers both contribution routes'
   assert.match(search, /&lt;script&gt;/);
   assert.doesNotMatch(search, /<script>/);
   const problem = await (await fetchSite('/problems/free-photoshop-alternative/')).text();
-  assert.match(problem, /Copy problem brief/);
+  assert.match(problem, /Copy prompt for ChatGPT/);
   assert.match(problem, /How to check it/);
-  assert.match(problem, /https:\/\/github\.com\/jpgordon00\/works-by-us\/issues\/new/);
+  assert.match(problem, /https:\/\/github\.com\/jpgordon00\/ci-free-photoshop-alternative\/issues\/new/);
   const connect = await (await fetchSite('/connect/')).text();
-  assert.match(connect, /codex mcp add works-by-us --url https:\/\/works\.example\/api\/mcp/);
+  assert.match(connect, /codex mcp add works-by-us --url https:\/\/works-by-us\.jacob-gordon255689\.chatgpt\.site\/api\/mcp/);
 });
 
 test('MCP modern discovery and legacy negotiation expose the same four tools', async () => {
@@ -133,7 +136,7 @@ test('MCP searches, reads sourced briefs and creates a preview-only GitHub draft
   assert.equal(search.structuredContent.problems.length, 1);
   assert.equal(problem.id, 'free-photoshop-alternative');
   const brief = (await call('get_problem', { id: problem.id })).structuredContent.problem;
-  assert.equal(brief.url, origin + '/problems/' + problem.id + '/');
+  assert.equal(brief.url, canonical + '/problems/' + problem.id + '/');
   assert.match(brief.brief, /Review criteria:/);
   assert.match(brief.sources[0].url, /adobe\.com\/products\/photoshop\.html$/);
   const draft = (await call('prepare_contribution', {
@@ -142,8 +145,9 @@ test('MCP searches, reads sourced briefs and creates a preview-only GitHub draft
   assert.equal(draft.published, false);
   const url = new URL(draft.github_issue_url);
   assert.equal(url.origin, 'https://github.com');
-  assert.equal(url.pathname, '/jpgordon00/works-by-us/issues/new');
-  assert.equal(url.searchParams.get('body'), draft.body);
+  assert.equal(url.pathname, '/jpgordon00/ci-free-photoshop-alternative/issues/new');
+  assert.equal(url.search, '');
+  assert.match(draft.body, /    Compare the exported composite against a reference\./);
   assert.equal((await call('list_problems', { category: 'invalid' })).isError, true);
   assert.equal((await call('get_problem', { id: 'missing' })).isError, true);
 });
@@ -160,4 +164,121 @@ test('MCP bounds request size and validates origin, media type and methods', asy
   const missingHeaders = await rpc('server/discover');
   assert.equal(missingHeaders.status, 400);
   assert.equal((await missingHeaders.json()).error.code, -32020);
+});
+
+async function callAt(path, name, args, headers) {
+  const response = await rpc('tools/call', { name, arguments: args }, headers, 1, path);
+  assert.equal(response.status, 200);
+  return (await response.json()).result;
+}
+
+for (const problem of catalog.problems) {
+  test('project connects and stays within its scope: ' + problem.id, async () => {
+    const path = projectEndpoint(problem.id);
+    const page = await (await fetchSite('/problems/' + problem.id + '/')).text();
+    assert.ok(page.includes('href="' + problem.repository + '"'));
+    assert.ok(page.includes('href="' + problem.repository + '/issues/new"'));
+    assert.ok(page.includes('href="' + problem.repository + '/issues"'));
+    assert.ok(page.includes('href="' + problem.repository + '/pulls"'));
+    const claude = new URL(page.match(/href="(claude:\/\/[^"]+)"/)[1]);
+    assert.equal(claude.protocol, 'claude:');
+    assert.equal(claude.host, 'claude.ai');
+    assert.equal(claude.pathname, '/new');
+    assert.ok(claude.searchParams.get('q').includes(problem.url));
+    assert.ok(claude.searchParams.get('q').includes(problem.repository));
+    assert.match(page, /href="https:\/\/chatgpt\.com\//);
+    assert.ok(page.includes('href="/connect/?project=' + problem.id + '"'));
+    assert.match(page, /Project seed/);
+    if (problem.starter) {
+      const starter = new URL(problem.starter_url);
+      assert.equal(starter.origin, 'https://github.com');
+      assert.match(starter.pathname, /^\/jpgordon00\/works-by-us\/blob\/(?:[0-9a-f]{40}|main)\//);
+      assert.ok(starter.pathname.endsWith('/' + problem.starter.path));
+      assert.ok(page.includes(problem.starter_url));
+    }
+    const setup = await (await fetchSite('/connect/?project=' + problem.id)).text();
+    assert.ok(setup.includes('value="' + canonical + path + '"'));
+    const ledger = await (await fetchSite('/api/problems/' + problem.id + '/contributions')).json();
+    assert.equal(ledger.seed.commit, problem.seed);
+    const categories = await callAt(path, 'list_categories', {});
+    assert.deepEqual(categories.structuredContent.categories.map(x => [x.id, x.count]), [[problem.category, 1]]);
+    const list = await callAt(path, 'list_problems', {});
+    assert.deepEqual(list.structuredContent.problems.map(x => x.id), [problem.id]);
+    const detail = await callAt(path, 'get_problem', { id: problem.id });
+    assert.equal(detail.structuredContent.problem.repository, problem.repository);
+    assert.equal(detail.structuredContent.problem.open_work_url, problem.repository + '/issues');
+    assert.equal(detail.structuredContent.problem.review_queue_url, problem.repository + '/pulls');
+    if (problem.workroom_issue) {
+      const workroom = problem.repository + '/issues/' + problem.workroom_issue;
+      assert.ok(page.includes('href="' + workroom + '"'));
+      assert.equal(detail.structuredContent.problem.workroom_url, workroom);
+      assert.ok(detail.structuredContent.problem.brief.includes(workroom));
+    }
+    assert.equal(detail.structuredContent.problem.mcp_url, canonical + path);
+    assert.equal(detail.structuredContent.problem.contributions_url, canonical + '/api/problems/' + problem.id + '/contributions');
+    const second = catalog.problems.find(candidate => candidate.id !== problem.id);
+    assert.equal((await callAt(path, 'get_problem', { id: second.id })).isError, true);
+    assert.equal((await callAt(path, 'prepare_contribution', {
+      id: second.id, title: 'Draft', summary: 'Evidence', evidence: 'A public source'
+    })).isError, true);
+    const draft = await callAt(path, 'prepare_contribution', { id: problem.id, title: 'Draft', summary: 'Evidence', evidence: 'A public source' });
+    assert.equal(draft.structuredContent.github_issue_url, problem.repository + '/issues/new');
+  });
+}
+
+test('unknown scopes fail closed and main aliases expose only read tools', async () => {
+  assert.equal((await rpc('tools/list', {}, {}, 1, projectEndpoint('not-a-project'))).status, 404);
+  assert.equal((await fetchSite('/api/problems/not-a-project/contributions')).status, 404);
+  for (const endpoint of ['/mcp', '/api/mcp', projectEndpoint(catalog.problems[0].id)]) {
+    const listing = await (await rpc('tools/list', {}, {}, 1, endpoint)).json();
+    assert.ok(listing.result.tools.every(tool => tool.annotations.readOnlyHint && !tool.annotations.destructiveHint));
+    const result = await callAt(endpoint, 'publish_contribution', {});
+    assert.equal(result.isError, true);
+  }
+});
+
+test('draft data stays plain text and outside URLs, with stable public origin', async () => {
+  const id = catalog.problems[0].id;
+  const evidence = '# Synthetic result\n@example-reviewer & https://example.com/markers';
+  const result = await callAt('/api/mcp', 'prepare_contribution', {
+    id, title: 'Test route', summary: 'Plain notes', evidence
+  }, { 'X-Forwarded-Host': 'untrusted.example' });
+  const draft = result.structuredContent;
+  assert.match(draft.body, /    # Synthetic result\n    @example-reviewer/);
+  assert.ok(draft.body.includes(canonical + '/problems/' + id + '/'));
+  assert.ok(!draft.body.includes(origin));
+  assert.equal(draft.github_issue_url, 'https://github.com/jpgordon00/ci-' + id + '/issues/new');
+  assert.equal(draft.published, false);
+  assert.ok(!draft.github_issue_url.includes('example'));
+});
+
+test('MCP rejects malformed tool arguments, non-text, and untrusted routing overrides', async () => {
+  const id = catalog.problems[0].id;
+  for (const args of [null, [], { id, extra: 'strict' }, { id: false }, { id: 'a'.repeat(101) }]) {
+    assert.equal((await callAt('/api/mcp', 'get_problem', args)).isError, true);
+  }
+  const malformed = await fetchSite('/api/mcp', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: new Uint8Array([0x22, 0xff, 0x22])
+  });
+  assert.equal(malformed.status, 400);
+  assert.equal((await malformed.json()).error.code, -32700);
+  const draft = await callAt('/api/mcp', 'prepare_contribution', {
+    id, title: 'Hidden character \u202e', summary: 'Plain description', evidence: 'Public fixture'
+  });
+  assert.equal(draft.isError, true);
+  assert.equal((await rpc('tools/call', { name: 'get_problem', arguments: { id } }, { 'Mcp-Name': 'list_problems' })).status, 400);
+});
+
+test('RPC treats a forged request origin and malformed correlation ID as invalid', async () => {
+  const competingOrigin = await rpc('tools/list', {}, { Origin: origin });
+  assert.equal(competingOrigin.status, 403);
+  const badId = await rpc('tools/list', {}, {}, { unusual: 'value' });
+  assert.equal(badId.status, 400);
+  assert.equal((await badId.json()).id, null);
+  const modernVersion = '2026-07-28';
+  const unknown = await rpc('unknown/method', { _meta: { 'io.modelcontextprotocol/protocolVersion': modernVersion } }, {
+    'Mcp-Protocol-Version': modernVersion, 'Mcp-Method': 'unknown/method'
+  });
+  assert.equal(unknown.status, 404);
+  assert.equal((await unknown.json()).error.code, -32601);
 });

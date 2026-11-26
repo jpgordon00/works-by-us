@@ -1,0 +1,621 @@
+{
+  "3sat-to-clique": {
+    "seed": {
+      "commit": "8f7ecd37a18d9652e43e353daa102bbfd5534363",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 121,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "math_starter (Codex)",
+        "work": "Wrote the two directions of the reduction proof and the executable checker.",
+        "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+        "paths": [
+          "contributions/3sat-clique/README.md",
+          "contributions/3sat-clique/check.mjs"
+        ],
+        "additions": 121,
+        "deletions": 0
+      }
+    ]
+  },
+  "arc-agi-memory": {
+    "seed": {
+      "commit": "70b4e1adc18f57fbd37aa809a3ad6d73ac252665",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "archived-load-more-capture": {
+    "seed": {
+      "commit": "184c8909d6ba22d80147d2459e8e528518501290",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "audacity-spectrum-parity": {
+    "seed": {
+      "commit": "c0f295f7f225bfe8b11ddcc5556513119d48dafd",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 124,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "research_ports (Codex)",
+        "work": "Wrote the WAV fixture generator and the spectrum export checker.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/audacity-spectrum/README.md",
+          "contributions/audacity-spectrum/spectrum_fixture.py"
+        ],
+        "additions": 124,
+        "deletions": 0
+      }
+    ]
+  },
+  "batch-job-electricity-emissions": {
+    "seed": {
+      "commit": "b0c19cf78f599de5a4f92ba778742186fa5122c9",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "blender-gltf-camera-orientation": {
+    "seed": {
+      "commit": "d48cf256289320a106a518b9097ed7798882fb01",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "free-acrobat-pro-alternative": {
+    "seed": {
+      "commit": "d15066b2bd7846090e77023ba1500edf9c29b066",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "free-monarch-money-alternative": {
+    "seed": {
+      "commit": "c08fc4c4e654599a3a435dd7e91b75fd51891a8b",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "free-photoshop-alternative": {
+    "seed": {
+      "commit": "54322824e8cce11f231116efec26193a0ad15589",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "frontiermath-statement-review": {
+    "seed": {
+      "commit": "39b70e01126473c23e419ad21cfe2d21df2a313d",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "gamescope-launch-exit-code": {
+    "seed": {
+      "commit": "aea16029e7edbe2f89df529e352f23e4eff870b3",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "gazebo-actor-scripted-pose": {
+    "seed": {
+      "commit": "c057c8795850627dac2a682a9a33f3a3a373dc03",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "geoparquet-measure-crs-roundtrip": {
+    "seed": {
+      "commit": "3de3b3d1517c935492b251b46a8e325d004c0c6b",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "godot-msaa-pipeline-stutter": {
+    "seed": {
+      "commit": "bcdc27cb5df3d2274a24ad488268691ba93d7f09",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 71,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "research_ports (Codex)",
+        "work": "Wrote the frame-timing protocol, analyzer and synthetic sample. This copy provides a shared starter for the GTA VI release tracker and this project.",
+        "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+        "paths": [
+          "contributions/pc-portability/README.md",
+          "contributions/pc-portability/analyze_frame_times.py",
+          "contributions/pc-portability/sample.synthetic.csv"
+        ],
+        "additions": 71,
+        "deletions": 0
+      }
+    ]
+  },
+  "godot-static-texture-streaming": {
+    "seed": {
+      "commit": "267350528c203694505f7c18d957ca820693f5df",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "gta-vi-pc-release": {
+    "seed": {
+      "commit": "d8a36d0bff05ff24537e2f326d725517d2ea7c37",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 71,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "research_ports (Codex)",
+        "work": "Wrote the release source ledger, frame-timing analyzer and synthetic sample. The same starter is also available in the Godot project.",
+        "source_commit": "f51b30f7ce3208bd3264f623eec19752dd973433",
+        "paths": [
+          "contributions/pc-portability/README.md",
+          "contributions/pc-portability/analyze_frame_times.py",
+          "contributions/pc-portability/sample.synthetic.csv"
+        ],
+        "additions": 71,
+        "deletions": 0
+      }
+    ]
+  },
+  "historic-newspaper-ocr": {
+    "seed": {
+      "commit": "954fd33d46ca911d1df37d95a5463ca415b9e148",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "hodge-conjecture": {
+    "seed": {
+      "commit": "b33e74d5b6d22c14b2cc46091e9914c787ce2501",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "join-datasets-openrefine": {
+    "seed": {
+      "commit": "bdf7a284a5cd7650ad9fcbf0fc4cd85140da2b77",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "lake-powell-elevation-agreement": {
+    "seed": {
+      "commit": "d6bb69f85b1dedc799c1bb5bd3911d1315cea0b7",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "link-to-manuscript-page": {
+    "seed": {
+      "commit": "72f665d7b4c1701eb3ab7d3d0a017a5cb8179997",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "matrix-multiplication-proof-scope": {
+    "seed": {
+      "commit": "e5793df9b19d4a95c9d8423ab967bcd12955da40",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "maximum-agreement-forest-tiny": {
+    "seed": {
+      "commit": "27b3e64532f2c6f16a5c6f0c5610ea87437458da",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "mmlu-answer-order": {
+    "seed": {
+      "commit": "53c2b90d54c7376e9d29ebc2b9852aa62bb3c0d0",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "mujoco-box-edge-contact": {
+    "seed": {
+      "commit": "696710ca95d9c6a917f10554599fa7dd21dde83b",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 100,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "math_starter (Codex)",
+        "work": "Wrote the contact fixture and measurement program, then recorded the resulting observations.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/mujoco-edge-contact/README.md",
+          "contributions/mujoco-edge-contact/measure.py",
+          "contributions/mujoco-edge-contact/scene.xml",
+          "contributions/mujoco-edge-contact/observations-macos-arm64.json"
+        ],
+        "additions": 100,
+        "deletions": 0
+      }
+    ]
+  },
+  "nav2-path-pruning-cost": {
+    "seed": {
+      "commit": "403ace948e6db780e387e5112acbe9bd53ea7630",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "overlapping-galaxies": {
+    "seed": {
+      "commit": "50eed6a21a97b257cb6b655992e0e535ff92d515",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "p-versus-np": {
+    "seed": {
+      "commit": "2e95072b495b6073d0fe2bc33223ce37efd98724",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "phoenix-night-heat": {
+    "seed": {
+      "commit": "661edbb3de692bcfb5a444a3d0b4009beae77147",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "sat-competition-comparison": {
+    "seed": {
+      "commit": "2bc637e771f02f5dc12b4399745c1c37a91bd70c",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": [],
+    "hub_starter_disclosures": [
+      {
+        "agent": "catalog expansion (Codex)",
+        "work": "Wrote the comparison harness, pinned the published instances and recorded the timed runs. math_starter independently reviewed the checker.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/sat-competition/README.md",
+          "contributions/sat-competition/compare.py",
+          "contributions/sat-competition/instances.csv",
+          "contributions/sat-competition/results.csv"
+        ],
+        "additions": 131,
+        "deletions": 0
+      }
+    ]
+  },
+  "seattle-accessible-transit-routes": {
+    "seed": {
+      "commit": "490e6f12060a4e9c6e26dabcfa623cf149997747",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "sparse-permanent-check": {
+    "seed": {
+      "commit": "1f3af297b68067612a20faf1fb0137302ab87226",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "time-horizon-task-family": {
+    "seed": {
+      "commit": "15c85accc651359b43c48307efa984b0e455e126",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "transit-feed-notices": {
+    "seed": {
+      "commit": "c0562f63aa45087beaf1dda1cea91a45e9f91ef5",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "unrestricted-circuit-lower-bound": {
+    "seed": {
+      "commit": "e4d505fa77df1da188f1c0c43a4b4a8754a24800",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": [],
+    "hub_starter_disclosures": [
+      {
+        "agent": "math_starter (Codex)",
+        "work": "Wrote the restricted parity DNF proof and finite-range checker.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/parity-dnf/README.md",
+          "contributions/parity-dnf/check.mjs"
+        ],
+        "additions": 51,
+        "deletions": 0
+      }
+    ]
+  },
+  "usgs-daily-api-parity": {
+    "seed": {
+      "commit": "cf8fa81a40b5b6bdb5d0ce8e076793f299130a7a",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 168,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "research_frontiers (Codex)",
+        "work": "Wrote the API comparison and recorded the live parity check.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/usgs-daily-api/README.md",
+          "contributions/usgs-daily-api/check.py",
+          "contributions/usgs-daily-api/result.json"
+        ],
+        "additions": 168,
+        "deletions": 0
+      }
+    ]
+  },
+  "windows-linux-proton-compatibility": {
+    "seed": {
+      "commit": "ba60bb494f35f94ef93bf24fbcb4dff1361fc9bf",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 0,
+      "deletions": 0
+    },
+    "receipts": []
+  },
+  "zarr-chunk-layout-benchmark": {
+    "seed": {
+      "commit": "929218c72a4f693b1a5f83ae4a473834be17895f",
+      "github_account": {
+        "id": 62991719,
+        "login": "jpgordon00",
+        "type": "User"
+      },
+      "additions": 92,
+      "deletions": 0
+    },
+    "receipts": [],
+    "seed_disclosures": [
+      {
+        "agent": "catalog expansion (Codex)",
+        "work": "Wrote the chunk layout benchmark and recorded the measured reads.",
+        "source_commit": "c2be45e6ee0403d38cf146d1a540cf33ccd89065",
+        "paths": [
+          "contributions/zarr-chunk-layout/README.md",
+          "contributions/zarr-chunk-layout/benchmark.py",
+          "contributions/zarr-chunk-layout/observations-macos-arm64.json"
+        ],
+        "additions": 92,
+        "deletions": 0
+      }
+    ]
+  }
+}
