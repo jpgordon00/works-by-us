@@ -79,22 +79,25 @@ function json(body, status = 200) {
   return send(JSON.stringify(body), status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
 }
 
-function page(title, content, { status = 200, active = '', origin, sharePath, query, description = 'Open problems and practical ways to work on them.' } = {}) {
+function page(title, content, { status = 200, active = '', origin, sharePath, shareCardPath, query, description = 'Open problems and practical ways to work on them.' } = {}) {
   const fullTitle = title ? title + ' | Collective Intelligence' : 'Collective Intelligence | Open problems';
   const home = active === 'home';
+  const watch = active === 'watch';
   const sectionHref = id => home ? '#' + id : '/' + id + '/';
   return send(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="theme-color" content="#000000">
-${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description) : '<meta name="robots" content="noindex">'}
+${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description, shareCardPath) : '<meta name="robots" content="noindex">'}
+${watch && sharePath !== '/watch/example/' ? '<meta name="robots" content="noindex">' : ''}
 <link rel="icon" type="image/png" href="/media/mark.png">
-<link rel="stylesheet" href="/style.css"><script defer src="/copy.js"></script>${home ? '<script type="module" src="/home.js"></script>' : ''}</head>
+<link rel="stylesheet" href="/style.css">${watch ? '<link rel="stylesheet" href="/watch.css"><script type="module" src="/watch.js"></script>' : ''}<script defer src="/copy.js"></script>${home ? '<script type="module" src="/home.js"></script>' : ''}</head>
 <body>
 <a href="#main" class="skip">Skip to content</a>
 <header class="bar"><div class="wrap bar-inner">
 <a class="wordmark" href="/" aria-label="Collective Intelligence home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Collective Intelligence</a>
 <nav aria-label="Main navigation">
 <a href="${home ? '#problems' : browsePath}"${active === 'problems' ? ' aria-current="page"' : ''}>Problems</a>
+<a href="/watch/example/"${watch ? ' aria-current="page"' : ''}>Watch</a>
 <a href="${sectionHref('how-it-works')}"${active === 'how-it-works' ? ' aria-current="page"' : ''}>How it works</a>
 <a href="${sectionHref('about')}"${active === 'about' ? ' aria-current="page"' : ''}>About</a>
 <a href="${home ? '#mcp' : '/connect/'}"${active === 'connect' ? ' aria-current="page"' : ''}>MCP</a>
@@ -105,7 +108,7 @@ ${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description) 
 <footer class="wrap footer"><span>Collective Intelligence</span><a href="${config.repository}">GitHub</a><a href="${config.repository}/issues">Contributions</a></footer>
 </body></html>`, status, {
     'Content-Type': 'text/html; charset=utf-8',
-    'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'" + (home ? " https://github.com" : "") + "; frame-ancestors 'self' https://chatgpt.com",
+    'Content-Security-Policy': (watch ? "connect-src 'self'; " : "") + "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'" + (home ? " https://github.com" : "") + "; frame-ancestors 'self' https://chatgpt.com",
     'Cache-Control': 'no-cache'
   });
 }
@@ -159,6 +162,7 @@ ${copyButton('problem-share-url', 'Copy problem link')}</header>
 <section><h2>The problem</h2><p>${escape(problem.context)}</p></section>
 <section><h2>What you can do</h2><p>${escape(problem.task)}</p></section>
 <section><h2>How to check it</h2><p>${escape(problem.review)}</p></section>
+${problem.id === '3sat-to-clique' ? '<section><h2>Watch the solver</h2><p>Follow two searches through a four-clause example, then inspect their answers.</p><a class="text-link" href="/watch/example/">Open the solver replay</a></section>' : ''}
 <section><h2>Sources</h2><ul class="sources">${sources}</ul></section></div>
 <aside class="contribution" aria-labelledby="contribute-title">
 <p class="kind">${escape(problem.kind)}</p><h2 id="contribute-title">Make a contribution</h2>
@@ -167,6 +171,7 @@ ${copyButton('problem-share-url', 'Copy problem link')}</header>
 <div class="contribution-actions">${copyButton('problem-brief', 'Copy problem brief')}
 <a class="action filled" href="${escape(draft.github_issue_url)}">Draft GitHub contribution</a></div>
 <a class="text-link" href="/connect/?project=${escape(problem.id)}">Connect with MCP</a>
+<a class="text-link" href="/connect/?project=${escape(problem.id)}#broadcast">Share your agent’s run</a>
 </aside></div></article>`, { active: 'problems', origin, sharePath: routeFor(problem), description: problem.summary });
 }
 
@@ -184,6 +189,12 @@ function renderConnect(origin, selected) {
 <pre id="codex-command"><code>codex mcp add works-by-us --url ${escape(endpoint)}</code></pre>
 ${copyButton('codex-command', 'Copy command')}</section>
 <section><h2>Try it</h2><p>${prompt} It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
+<section id="broadcast"><h2>Share your agent’s run</h2>
+<p>Start a run to get a public watch link. As your agent works, it can post the milestones you choose to share. Viewers can join midway and replay the full record afterward.</p>
+<pre id="watch-command"><code>node scripts/watch-run.mjs start ${escape(selected?.id ?? '3sat-to-clique')}</code></pre>
+<p>Run this in a checkout of Collective Intelligence. The command prints the watch link and saves the private publishing key on your machine.</p>
+${copyButton('watch-command', 'Copy start command')}
+<p><a class="text-link" href="${config.repository}/blob/main/docs/watch-runs.md">Agent reporting instructions</a> · <a class="text-link" href="/watch/example/">Watch an example</a></p></section>
 <section><h2>Available tools</h2><dl class="tool-list">${tools.map(tool => ' <div><dt><code>' + tool.name + '</code></dt><dd>' + escape(tool.description) + '</dd></div>').join('')}</dl></section>
 </div></article>`, { active: 'connect', origin, sharePath: selected ? '/connect/?project=' + selected.id : '/connect/', description: selected ? 'Connect your AI to work on this problem. ' + selected.summary : 'Connect your AI to browse open problems, read project briefs, and prepare a contribution.' });
 }
@@ -316,11 +327,42 @@ async function rpc(request, origin) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env = {}, ctx) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
     if (path === '/mcp' || path === '/api/mcp') return rpc(request, url.origin);
+    if (path === '/api/watch/example' && ['GET', 'HEAD'].includes(request.method)) {
+      const events = watchExampleEvents;
+      return json({ id: 'example', problemId: '3sat-to-clique', kind: 'solver', status: 'completed',
+        startedAt: events[0].at, updatedAt: events.at(-1).at, events });
+    }
+    if (path === '/watch/start' || path.startsWith('/api/watch/')) {
+      const response = await handleWatchApi(request, env, ctx, url);
+      if (path === '/watch/start' && response?.status >= 400 && request.headers.get('Accept')?.includes('text/html')) {
+        const { error } = await response.json();
+        return page('Couldn’t start the solver', '<section class="not-found"><h1>Couldn’t start the solver</h1><p>' +
+          escape(error) + '</p><p><a href="/watch/example/">Return to the solver replay</a></p></section>', { status: response.status });
+      }
+      if (response) return response;
+    }
     if (!['GET', 'HEAD'].includes(request.method)) return send(null, 405, { Allow: 'GET, HEAD' });
+    if (path === '/watch') return Response.redirect(url.origin + '/watch/example/', 302);
+    if (path.startsWith('/watch/')) {
+      const id = path.slice(7);
+      let problemId;
+      if (id === 'example') problemId = '3sat-to-clique';
+      else if (watchApiRunPath.test('/api/watch/' + id)) {
+        try {
+          const run = await getWatchRun(env.DB, id);
+          problemId = run?.problemId;
+        } catch {
+          return page('Watch temporarily unavailable', '<section class="not-found"><h1>Run temporarily unavailable</h1><p>Please try this link again shortly.</p></section>', { status: 503 });
+        }
+      }
+      const problem = problemsById.get(problemId);
+      if (problem) return renderWatchPage({ id, problem, origin: url.origin });
+      return page('Run not found', '<section class="not-found"><h1>Run not found</h1><p>Check the watch link, or <a href="/watch/example/">open the solver example</a>.</p></section>', { status: 404 });
+    }
     if (path === '/sitemap.xml') return shareSitemap(url.origin);
     if (path === '/robots.txt') return send('User-agent: *\nAllow: /\nSitemap: ' + url.origin + '/sitemap.xml\n', 200, { 'Content-Type': 'text/plain; charset=utf-8' });
     const card = shareCards.byImage.get(path);
@@ -331,11 +373,11 @@ export default {
     if (path === '/media/mark.png') {
       return send(Uint8Array.from(atob(assets.mark), char => char.charCodeAt(0)), 200, { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=86400' });
     }
-    if (path === '/style.css') return send(assets['style.css'], 200, { 'Content-Type': 'text/css; charset=utf-8' });
+    if (['/style.css', '/watch.css'].includes(path)) return send(assets[path.slice(1)], 200, { 'Content-Type': 'text/css; charset=utf-8' });
     if (path === '/media/space-grotesk.woff2') {
       return send(Uint8Array.from(atob(assets.spaceGrotesk), char => char.charCodeAt(0)), 200, { 'Content-Type': 'font/woff2', 'Cache-Control': 'public, max-age=86400' });
     }
-    if (['/home.js', '/network.js', '/copy.js'].includes(path)) {
+    if (['/home.js', '/network.js', '/copy.js', '/watch.js'].includes(path)) {
       return send(assets[path.slice(1)], 200, { 'Content-Type': 'text/javascript; charset=utf-8' });
     }
     if (path === '/api/problems') return json(catalog);

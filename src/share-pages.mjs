@@ -9,6 +9,7 @@ function createShareCards() {
     byImage.set(imagePath, card);
   }
   add('/', 'home', 'Collective Intelligence', 'Open projects for people and AI');
+  add('/watch/example/', 'watch', 'Watch the clique solver', 'Recorded problem run', 'math');
   add('/problems/', 'problems', 'Explore open problems', 'Problem catalog');
   add('/how-it-works/', 'how-it-works', 'How it works', 'Contributing to a problem');
   add('/about/', 'about', 'About Collective Intelligence', 'People and AI');
@@ -24,8 +25,8 @@ function createShareCards() {
   return { byPage, byImage };
 }
 
-function socialHead(origin, path, query, title, description) {
-  const card = shareCards.byPage.get(path);
+function socialHead(origin, path, query, title, description, cardPath = path) {
+  const card = shareCards.byPage.get(cardPath);
   const canonical = new URL(path, origin);
   if (query) canonical.searchParams.set('q', query);
   const imageUrl = new URL(card.imagePath, origin);

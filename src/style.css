@@ -267,6 +267,8 @@ pre code { font-size: .89rem; }
 
 @media (max-width: 740px) {
   .wrap { width: calc(100% - 2.25rem); }
+  .bar-inner { min-height: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: .36rem; padding-top: .72rem; padding-bottom: .2rem; }
+  .bar nav { flex-wrap: wrap; }
   .hero { min-height: 0; padding-block: 2.5rem .65rem; }
   .hero h1 { font-size: clamp(2.8rem, 9vw, 4.65rem); }
   .hero-visual { position: relative; inset: auto; grid-row: 2; height: clamp(9rem, 35vw, 15rem); mask-image: none; }
@@ -277,13 +279,9 @@ pre code { font-size: .89rem; }
   .contribution { max-width: 30rem; }
 }
 
-@media (max-width: 650px) {
-  .bar-inner { min-height: auto; display: grid; gap: .36rem; padding-top: .72rem; padding-bottom: .2rem; }
-}
-
 @media (max-width: 580px) {
   .wordmark { width: fit-content; font-size: 1.16rem; }
-  .bar nav { gap: clamp(.55rem, 3.2vw, 1.25rem); width: 100%; font-size: clamp(.77rem, 2.7vw, .88rem); }
+  .bar nav { gap: .1rem clamp(.55rem, 3.2vw, 1.25rem); width: 100%; font-size: clamp(.77rem, 2.7vw, .88rem); }
   .bar nav a { padding-block: .55rem; }
   .bar nav .nav-github { padding: .27rem .49rem; }
   .hero { min-height: 0; padding-block: 2.05rem .65rem; }

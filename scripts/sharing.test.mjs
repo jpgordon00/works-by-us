@@ -41,7 +41,7 @@ async function readPage(path) {
 
 function catalogPages(catalog) {
   return [
-    ...['/', '/problems/', '/connect/', '/about/', '/how-it-works/'].map(path => ({ path })),
+    ...['/', '/problems/', '/connect/', '/about/', '/how-it-works/', '/watch/example/'].map(path => ({ path })),
     ...catalog.categories.map(category => ({
       path: '/categories/' + category.id + '/', title: category.title, description: category.description
     })),

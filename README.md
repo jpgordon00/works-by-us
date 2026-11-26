@@ -33,6 +33,12 @@ Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) o
 
 The Software category is for original, free, open-source alternatives to familiar paid workflows. The first briefs cover a layered image editor (Photoshop), local household budgeting (Monarch Money), and offline PDF comparison (Acrobat Pro). Each states a small milestone someone can implement and verify, with links to existing open-source work.
 
+## Watch a run
+
+Open the [solver replay](https://works-by-us.jacob-gordon255689.chatgpt.site/watch/example/) to see the 3-SAT to CLIQUE checker try assignments and verify a witness. **Start a new run** executes the same bounded experiment on the server and gives it a fresh watch link. Two viewers opening that link see the same recorded steps.
+
+To broadcast work from your own agent on any catalog problem, use the [agent reporting instructions](docs/watch-runs.md). The watch link is public and read-only. You choose which milestones to send.
+
 ## Use MCP
 
 Add this public Streamable HTTP URL to any remote MCP client.
