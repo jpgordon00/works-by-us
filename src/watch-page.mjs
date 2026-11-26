@@ -19,10 +19,11 @@ async function serveWatchView(request, db, id, image) {
   const label = (run.kind === 'solver' ? 'Solver run' : 'Agent run') + ' · ' + started + ' UTC';
   const card = { key: id, title: problem.title, label, category: problem.category, imagePath: '/og/watch/' + id + '.png' };
   if (image) return shareImageResponse(request, card);
-  return renderWatchPage({ id, problem, origin: new URL(request.url).origin, card });
+  return renderWatchPage({ id, problem, card });
 }
 
-function renderWatchPage({ id, problem, origin, card }) {
+function renderWatchPage({ id, problem, card }) {
+  const origin = config.origin;
   const path = '/watch/' + encodeURIComponent(id) + '/';
   const isExample = id === 'example';
   const title = problem.id === '3sat-to-clique' ? '3-SAT to CLIQUE' : problem.title;

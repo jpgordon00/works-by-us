@@ -446,7 +446,7 @@ export default {
     }
     if (!['GET', 'HEAD'].includes(request.method)) return send(null, 405, { Allow: 'GET, HEAD' });
     if (path === '/watch') return Response.redirect(url.origin + '/watch/example/', 302);
-    if (path === '/watch/example') return renderWatchPage({ id: 'example', problem: problemsById.get('3sat-to-clique'), origin: url.origin });
+    if (path === '/watch/example') return renderWatchPage({ id: 'example', problem: problemsById.get('3sat-to-clique') });
     const watchMatch = watchPagePath.exec(path) ?? watchImagePath.exec(path);
     if (watchMatch) return serveWatchView(request, env.DB, watchMatch[1], path.startsWith('/og/'));
     if (path === '/sitemap.xml') return shareSitemap(config.origin);
