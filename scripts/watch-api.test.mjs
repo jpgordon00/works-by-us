@@ -4,11 +4,11 @@ import worker from '../dist/server/index.js';
 import { openPreviewDatabase } from './preview-db.mjs';
 
 const origin = 'https://watch.example';
-function client() {
+function client(baseOrigin = origin) {
   const DB = openPreviewDatabase();
   const pending = [];
   function call(path, method = 'GET', body, headers = {}) {
-    return worker.fetch(new Request(origin + path, {
+    return worker.fetch(new Request(baseOrigin + path, {
       method, ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
       headers: { 'content-type': 'application/json', ...headers }
     }), { DB }, { waitUntil(promise) { pending.push(promise); } });
@@ -119,4 +119,58 @@ test('independent publishers share the global creation cap and an interrupted so
   DB.prepare("UPDATE watch_runs SET kind = 'solver', updated_at = ? WHERE id = ?").bind(Date.now() - 121_000, id).run();
   assert.equal((await (await call('/api/watch/' + id)).json()).status, 'stale');
   assert.equal((await start({ 'CF-Connecting-IP': '2001:db8::33' })).status, 201);
+});
+
+test('public links distinguish two runs of the same problem, even when started together', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.UTC(2026, 10, 26, 18, 42) });
+  const publicOrigin = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+  const { call, start } = client(publicOrigin);
+  const problemPath = '/problems/3sat-to-clique/';
+  const imageUrls = new Set();
+  const images = [];
+  async function readCard(path) {
+    const page = await call(path);
+    assert.equal(page.status, 200, path);
+    const html = await page.text();
+    const meta = Object.fromEntries(Array.from(html.matchAll(/<meta property="([^"]+)" content="([^"]*)">/g),
+      ([, property, content]) => [property, content.replaceAll('&amp;', '&')]));
+    assert.ok(html.includes('<link rel="canonical" href="' + publicOrigin + path + '">'), path);
+    assert.equal(meta['og:url'], publicOrigin + path);
+    const url = new URL(meta['og:image']);
+    assert.equal(url.origin, publicOrigin);
+    assert.ok(!imageUrls.has(url.href), path + ' needs its own share image URL');
+    imageUrls.add(url.href);
+    const imagePath = url.pathname + url.search;
+    const head = await call(imagePath, 'HEAD');
+    assert.equal(head.status, 200);
+    assert.equal(head.headers.get('content-type'), 'image/png');
+    assert.equal((await head.arrayBuffer()).byteLength, 0);
+    const response = await call(imagePath);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('content-type'), 'image/png');
+    const bytes = Buffer.from(await response.arrayBuffer());
+    assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    assert.deepEqual([bytes.readUInt32BE(16), bytes.readUInt32BE(20)], [1200, 630]);
+    assert.ok(images.every(other => !other.equals(bytes)), path + ' needs distinct card content');
+    images.push(bytes);
+    return meta;
+  }
+  await readCard(problemPath);
+  const runs = [];
+  for (let i = 0; i < 2; i++) {
+    const response = await start();
+    assert.equal(response.status, 201);
+    runs.push(await response.json());
+  }
+  assert.notEqual(runs[0].watchUrl, runs[1].watchUrl);
+  const sitemapResponse = await call('/sitemap.xml');
+  assert.equal(sitemapResponse.status, 200);
+  const sitemap = await sitemapResponse.text();
+  for (const { watchUrl } of runs) {
+    const { pathname } = new URL(watchUrl);
+    const meta = await readCard(pathname);
+    assert.match(meta['og:image:alt'], /agent run/i);
+    assert.match(meta['og:image:alt'], /2026-11-26 18:42 UTC/);
+    assert.ok(!sitemap.includes(watchUrl));
+  }
 });

@@ -25,8 +25,7 @@ function createShareCards() {
   return { byPage, byImage };
 }
 
-function socialHead(origin, path, query, title, description, cardPath = path) {
-  const card = shareCards.byPage.get(cardPath);
+function socialHead(origin, path, query, title, description, card = shareCards.byPage.get(path)) {
   const canonical = new URL(path, origin);
   if (query) canonical.searchParams.set('q', query);
   const imageUrl = new URL(card.imagePath, origin);

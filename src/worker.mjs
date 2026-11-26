@@ -104,7 +104,7 @@ function json(body, status = 200) {
   return send(JSON.stringify(body), status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
 }
 
-function page(title, content, { status = 200, active = '', origin, sharePath, shareCardPath, query, description = 'Open problems and practical ways to work on them.' } = {}) {
+function page(title, content, { status = 200, active = '', origin, sharePath, shareCard, query, description = 'Open problems and practical ways to work on them.' } = {}) {
   const fullTitle = title ? title + ' | Collective Intelligence' : 'Collective Intelligence | Open problems';
   const home = active === 'home';
   const watch = active === 'watch';
@@ -112,7 +112,7 @@ function page(title, content, { status = 200, active = '', origin, sharePath, sh
   return send(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="theme-color" content="#000000">
-${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description, shareCardPath) : '<meta name="robots" content="noindex">'}
+${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description, shareCard) : '<meta name="robots" content="noindex">'}
 ${watch && sharePath !== '/watch/example/' ? '<meta name="robots" content="noindex">' : ''}
 <link rel="icon" type="image/png" href="/media/mark.png">
 <link rel="stylesheet" href="/style.css">${watch ? '<link rel="stylesheet" href="/watch.css"><script type="module" src="/watch.js"></script>' : ''}<script defer src="/copy.js"></script>${home ? '<script type="module" src="/home.js"></script>' : ''}</head>
@@ -434,22 +434,9 @@ export default {
     }
     if (!['GET', 'HEAD'].includes(request.method)) return send(null, 405, { Allow: 'GET, HEAD' });
     if (path === '/watch') return Response.redirect(url.origin + '/watch/example/', 302);
-    if (path.startsWith('/watch/')) {
-      const id = path.slice(7);
-      let problemId;
-      if (id === 'example') problemId = '3sat-to-clique';
-      else if (watchApiRunPath.test('/api/watch/' + id)) {
-        try {
-          const run = await getWatchRun(env.DB, id);
-          problemId = run?.problemId;
-        } catch {
-          return page('Watch temporarily unavailable', '<section class="not-found"><h1>Run temporarily unavailable</h1><p>Please try this link again shortly.</p></section>', { status: 503 });
-        }
-      }
-      const problem = problemsById.get(problemId);
-      if (problem) return renderWatchPage({ id, problem, origin: url.origin });
-      return page('Run not found', '<section class="not-found"><h1>Run not found</h1><p>Check the watch link, or <a href="/watch/example/">open the solver example</a>.</p></section>', { status: 404 });
-    }
+    if (path === '/watch/example') return renderWatchPage({ id: 'example', problem: problemsById.get('3sat-to-clique'), origin: url.origin });
+    const watchMatch = watchPagePath.exec(path) ?? watchImagePath.exec(path);
+    if (watchMatch) return serveWatchView(request, env.DB, watchMatch[1], path.startsWith('/og/'));
     if (path === '/sitemap.xml') return shareSitemap(config.origin);
     if (path === '/robots.txt') return send('User-agent: *\nAllow: /\nSitemap: ' + config.origin + '/sitemap.xml\n', 200, { 'Content-Type': 'text/plain; charset=utf-8' });
     const card = shareCards.byImage.get(path);
