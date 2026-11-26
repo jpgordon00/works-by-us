@@ -16,7 +16,7 @@ const assets = {
   spaceGrotesk: (await readFile('src/media/space-grotesk.woff2')).toString('base64')
 };
 const exampleEvents = (await readFile('src/watch-example.jsonl', 'utf8')).trim().split('\n').map(line => JSON.parse(line));
-for (const name of ['style.css', 'copy.js', 'home.js', 'network.js', 'watch.js', 'watch.css']) assets[name] = await readFile('src/' + name, 'utf8');
+for (const name of ['style.css', 'copy.js', 'work-on-this.js', 'home.js', 'network.js', 'watch.js', 'watch.css']) assets[name] = await readFile('src/' + name, 'utf8');
 assets['style.css'] += '\n' + await readFile('src/project-art.css', 'utf8');
 
 let commit = 'local';

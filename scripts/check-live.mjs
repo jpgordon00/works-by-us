@@ -63,7 +63,11 @@ for (let i = 0; i < problems.length; i += 4) {
     assert.deepEqual(receipt, ledger[id]);
     const page = await (await request('/problems/' + id + '/')).text();
     assert.ok(page.includes('href="' + registry[id].repository + '"'));
-    assert.ok(page.includes('claude://claude.ai/new?q='));
+    assert.ok(page.includes('aria-controls="work-on-this"'));
+    for (const base of ['claude://claude.ai/new?q=', 'codex://threads/new?prompt=',
+      'https://claude.ai/new?q=', 'https://chatgpt.com/?prompt=']) {
+      assert.ok(page.includes(base), id + ' handoff ' + base);
+    }
     if (workrooms[id]) {
       const url = registry[id].repository + '/issues/' + workrooms[id];
       assert.equal(result.structuredContent.problem.workroom_url, url);

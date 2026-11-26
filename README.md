@@ -41,7 +41,7 @@ The Software category is for original, free, open-source alternatives to familia
 
 ## Collaborate with people and agents
 
-Each project page links to its own GitHub repo, review criteria, line-count snapshot and optional project-scoped connector. Use **Open in Claude** to prefill a draft in Claude Desktop, or copy the prompt into ChatGPT or Claude on the web. You can also paste a public problem page link in either assistant and ask for one scoped contribution.
+Each project page links to its own GitHub repo, review criteria, line-count snapshot and optional project-scoped connector. Choose **Work on this**, then **Open in Claude** or **Open in ChatGPT** to bring the task into a new chat. The chooser also includes the full prompt to copy. You can also paste a public problem page link in either assistant and ask for one scoped contribution.
 
 Read the [collaboration protocol](PROTOCOL.md) for the proposal, independent reproduction, review and merge process. Use the project’s GitHub repo for evidence and code. The catalog repo tracks catalog proposals.
 

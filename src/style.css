@@ -224,7 +224,14 @@ h1, h2, h3, h4 { font-family: var(--display); line-height: 1.12; }
 .detail h1 { font-size: clamp(2.5rem, 6.25vw, 5.25rem); line-height: 1.01; font-weight: 650; letter-spacing: -.064em; overflow-wrap: anywhere; }
 .lede { color: var(--muted); max-width: 43rem; margin-top: .95rem; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.48; }
 #problem-share-url:not([hidden]) { display: block; width: 100%; margin-top: 1rem; }
-.detail-heading [data-copy="problem-share-url"] { margin-top: 1rem; }
+.detail-actions, .work-providers { display: flex; flex-wrap: wrap; align-items: start; gap: .65rem; margin-top: 1rem; }
+.work-options { max-width: 28rem; margin-top: .8rem; padding: 1.15rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); }
+.work-options h2 { font-size: 1.25rem; }
+.work-options p { margin-top: .35rem; color: var(--muted); }
+.work-provider { display: grid; justify-items: center; gap: .35rem; }
+.web-fallback { padding: .35rem 0; font-size: .9rem; }
+.work-options [data-copy] { margin-top: 1rem; }
+#problem-brief { width: 100%; margin-top: 1rem; font: inherit; }
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 19rem); gap: 2rem clamp(1.65rem, 6vw, 5rem); border-top: 1px solid var(--line); padding-top: 1.6rem; }
 .brief { display: grid; gap: 1.8rem; max-width: 44rem; }
 .brief h2, .contribution h2 { font-size: 1.34rem; letter-spacing: -.035em; font-weight: 650; margin-bottom: .42rem; }
@@ -234,9 +241,7 @@ h1, h2, h3, h4 { font-family: var(--display); line-height: 1.12; }
 .contribution, .endpoint { background: var(--surface); padding: 1.25rem; border: 1px solid var(--line); border-radius: .55rem; }
 .contribution { align-self: start; }
 .contribution .kind { color: var(--brand); font-size: .85rem; margin-bottom: .4rem; font-weight: 650; }
-.contribution-actions { display: grid; gap: .5rem; margin-top: 1rem; }
 .text-link { display: inline-block; margin-top: .85rem; font-size: .9rem; }
-.contribution .connection-note { margin-top: .75rem; font-size: .9rem; }
 .project-links { display: grid; justify-items: start; }
 .ledger { margin: .75rem 0; overflow-x: auto; }
 .ledger table { border-collapse: collapse; width: 100%; text-align: left; }

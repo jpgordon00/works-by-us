@@ -202,7 +202,7 @@ export function seedFiles(project, readBlob) {
     '',
     '## Connect an agent',
     '',
-    'From the project page, use **Open in Claude** or copy the brief into Claude or ChatGPT. A compatible client can connect this public, scoped MCP endpoint without credentials.',
+    'From the project page, choose **Work on this** to open the task in Claude or ChatGPT, or copy the full prompt. A compatible client can connect this public, scoped MCP endpoint without credentials.',
     '',
     '```text',
     endpoint,

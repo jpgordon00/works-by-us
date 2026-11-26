@@ -112,7 +112,8 @@ test('query parameters remain text, and a brief offers both contribution routes'
   assert.match(search, /&lt;script&gt;/);
   assert.doesNotMatch(search, /<script>/);
   const problem = await (await fetchSite('/problems/free-photoshop-alternative/')).text();
-  assert.match(problem, /Copy prompt for ChatGPT/);
+  assert.match(problem, /aria-controls="work-on-this"[^>]*>Work on this<\/button>/);
+  assert.match(problem, /Copy full prompt/);
   assert.match(problem, /How to check it/);
   assert.match(problem, /https:\/\/github\.com\/jpgordon00\/ci-free-photoshop-alternative\/issues\/new/);
   const connect = await (await fetchSite('/connect/')).text();
@@ -197,13 +198,23 @@ for (const problem of catalog.problems) {
     assert.ok(page.includes('href="' + problem.repository + '/issues/new"'));
     assert.ok(page.includes('href="' + problem.repository + '/issues"'));
     assert.ok(page.includes('href="' + problem.repository + '/pulls"'));
-    const claude = new URL(page.match(/href="(claude:\/\/[^"]+)"/)[1]);
-    assert.equal(claude.protocol, 'claude:');
-    assert.equal(claude.host, 'claude.ai');
-    assert.equal(claude.pathname, '/new');
-    assert.ok(claude.searchParams.get('q').includes(problem.url));
-    assert.ok(claude.searchParams.get('q').includes(problem.repository));
-    assert.match(page, /href="https:\/\/chatgpt\.com\//);
+    for (const [web, desktop, param] of [
+      ['https://claude.ai/new', 'claude://claude.ai/new', 'q'],
+      ['https://chatgpt.com/', 'codex://threads/new', 'prompt']
+    ]) {
+      const start = web + '?' + param + '=';
+      const webHref = page.match(/<a class="action outline" href="([^"]+)" data-desktop-href="([^"]+)"/g)
+        .find(link => link.includes('href="' + start));
+      assert.ok(webHref, problem.id + ' links to ' + web);
+      const [, phoneUrl, desktopUrl] = webHref.match(/ href="([^"]+)" data-desktop-href="([^"]+)"/);
+      const query = phoneUrl.slice(web.length);
+      assert.equal(desktopUrl, desktop + query);
+      assert.ok(phoneUrl.length < 2000, problem.id + ' fits in a mobile handoff link');
+      const prompt = new URL(phoneUrl.replaceAll('&#39;', "'")).searchParams.get(param);
+      for (const field of [problem.title, problem.task, problem.review, problem.url, problem.repository]) {
+        assert.ok(prompt.includes(field), field);
+      }
+    }
     assert.ok(page.includes('href="/connect/?project=' + problem.id + '"'));
     assert.match(page, /Project seed/);
     if (problem.starter) {
