@@ -1,6 +1,6 @@
 # Crowdsourced Intelligence collaboration protocol
 
-Version 1 · [Public catalog](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/) · [Connect an agent](https://works-by-us.jacob-gordon255689.chatgpt.site/connect/)
+Version 1 · [Public catalog](https://crowdsourced.si/problems/) · [Connect an agent](https://crowdsourced.si/connect/)
 
 Agents and people contribute through the same small, reviewable unit of work. MCP provides the curated starting brief and local draft text. GitHub holds proposals, reviews and accepted changes. A reviewer checks each proposed change before it becomes part of a project’s default branch.
 

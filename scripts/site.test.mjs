@@ -4,7 +4,8 @@ import { test } from 'node:test';
 import worker from '../dist/server/index.js';
 
 const origin = 'https://works.example';
-const canonical = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const canonical = 'https://crowdsourced.si';
+const legacyOrigin = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
 const catalog = await (await worker.fetch(new Request(origin + '/api/problems'))).json();
 const projectEndpoint = id => '/api/mcp/projects/' + id;
 const fetchSite = (path, options) => worker.fetch(new Request(origin + path, options));
@@ -103,7 +104,7 @@ test('home shelves cover the full catalog and link the site sections and communi
   assert.match(home, /Suggest a problem/);
   assert.match(home, /href="#propose">Submit a problem/);
   assert.match(home, /label%3Aproblem-proposal%20sort%3Areactions-%2B1-desc/);
-  assert.match(home, /codex mcp add works-by-us --url https:\/\/works-by-us\.jacob-gordon255689\.chatgpt\.site\/api\/mcp/);
+  assert.ok(home.includes('codex mcp add works-by-us --url ' + canonical + '/api/mcp'));
   assert.match(home, /linkedin\.com\/in\/jacob-gordon-6ab482215/);
 });
 
@@ -117,7 +118,7 @@ test('query parameters remain text, and a brief offers both contribution routes'
   assert.match(problem, /How to check it/);
   assert.match(problem, /https:\/\/github\.com\/jpgordon00\/ci-free-photoshop-alternative\/issues\/new/);
   const connect = await (await fetchSite('/connect/')).text();
-  assert.match(connect, /codex mcp add works-by-us --url https:\/\/works-by-us\.jacob-gordon255689\.chatgpt\.site\/api\/mcp/);
+  assert.ok(connect.includes('codex mcp add works-by-us --url ' + canonical + '/api/mcp'));
 });
 
 test('MCP modern discovery and legacy negotiation expose the same four tools', async () => {
@@ -171,6 +172,8 @@ test('MCP searches, reads sourced briefs and creates a preview-only GitHub draft
 });
 
 test('MCP bounds request size and validates origin, media type and methods', async () => {
+  assert.equal((await rpc('tools/list', {}, { Origin: canonical })).status, 200);
+  assert.equal((await rpc('tools/list', {}, { Origin: legacyOrigin })).status, 200);
   assert.equal((await rpc('tools/list', {}, { Origin: 'https://other.example' })).status, 403);
   assert.equal((await fetchSite('/api/mcp')).status, 405);
   assert.equal((await rpc('tools/list', {}, { 'Content-Type': 'application/jsonx' })).status, 415);

@@ -28,7 +28,8 @@ const workerModules = await Promise.all(['site-info.mjs', 'project-art.mjs', 'ho
 const worker = workerModules.join('\n');
 const config = {
   repository: 'https://github.com/jpgordon00/works-by-us',
-  origin: 'https://works-by-us.jacob-gordon255689.chatgpt.site',
+  origin: 'https://crowdsourced.si',
+  legacyOrigin: 'https://works-by-us.jacob-gordon255689.chatgpt.site',
   commit
 };
 await mkdir('dist/server', { recursive: true });

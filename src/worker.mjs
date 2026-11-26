@@ -347,7 +347,7 @@ function decodeRoutingName(name) {
 
 async function rpc(request, scope) {
   const source = request.headers.get('origin');
-  if (source && source !== config.origin) return send(null, 403);
+  if (source && source !== config.origin && source !== config.legacyOrigin) return send(null, 403);
   if (request.method !== 'POST') return send(null, 405, { Allow: 'POST' });
   const version = request.headers.get('mcp-protocol-version');
   if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') return send('Use application/json', 415);

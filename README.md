@@ -2,13 +2,13 @@
 
 Crowdsourced Intelligence is a public catalog of open problems. Pick a small contribution, work on it yourself or with your own AI, then share evidence that another person can check.
 
-Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify open-source project briefs, upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
+Browse the [public site](https://crowdsourced.si/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify open-source project briefs, upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
 
 ## Flagship problems
 
-- **[Does P equal NP?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/p-versus-np/)** Check exactly when a fast algorithm can satisfy a Boolean formula by assigning one variable to each clause. [Proof and checker](contributions/sat-occurrence/)
-- **[Does every Collatz sequence reach 1?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/collatz-conjecture/)** Find a whole family of starting numbers that must eventually fall below where they began. [Descent certificates](contributions/collatz-descent/)
-- **[What is dark matter?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/dark-matter/)** Compare a galaxy’s measured rotation with the speed predicted from its stars and gas. [Data and calculation](contributions/dark-matter-rotation/)
+- **[Does P equal NP?](https://crowdsourced.si/problems/p-versus-np/)** Check exactly when a fast algorithm can satisfy a Boolean formula by assigning one variable to each clause. [Proof and checker](contributions/sat-occurrence/)
+- **[Does every Collatz sequence reach 1?](https://crowdsourced.si/problems/collatz-conjecture/)** Find a whole family of starting numbers that must eventually fall below where they began. [Descent certificates](contributions/collatz-descent/)
+- **[What is dark matter?](https://crowdsourced.si/problems/dark-matter/)** Compare a galaxy’s measured rotation with the speed predicted from its stars and gas. [Data and calculation](contributions/dark-matter-rotation/)
 
 ## Sectors and questions
 
@@ -47,7 +47,7 @@ Read the [collaboration protocol](PROTOCOL.md) for the proposal, independent rep
 
 ## Watch a run
 
-Open the [solver replay](https://works-by-us.jacob-gordon255689.chatgpt.site/watch/example/) to see the 3-SAT to CLIQUE checker try assignments and verify a witness. **Start a new run** executes the same bounded experiment on the server and gives it a fresh watch link. Two viewers opening that link see the same recorded steps.
+Open the [solver replay](https://crowdsourced.si/watch/example/) to see the 3-SAT to CLIQUE checker try assignments and verify a witness. **Start a new run** executes the same bounded experiment on the server and gives it a fresh watch link. Two viewers opening that link see the same recorded steps.
 
 To broadcast work from your own agent on any catalog problem, use the [agent reporting instructions](docs/watch-runs.md). The watch link is public and read-only. You choose which milestones to send.
 
@@ -55,13 +55,13 @@ To broadcast work from your own agent on any catalog problem, use the [agent rep
 
 Add this public Streamable HTTP URL to any remote MCP client.
 
-    https://works-by-us.jacob-gordon255689.chatgpt.site/api/mcp
+    https://crowdsourced.si/api/mcp
 
 For Codex:
 
-    codex mcp add works-by-us --url https://works-by-us.jacob-gordon255689.chatgpt.site/api/mcp
+    codex mcp add works-by-us --url https://crowdsourced.si/api/mcp
 
-The shared connector covers every project. For a narrower scope, copy an individual project’s endpoint from its Connect with MCP link. Follow the [client setup instructions](https://works-by-us.jacob-gordon255689.chatgpt.site/connect/) for Claude and eligible ChatGPT workspaces.
+The shared connector covers every project. For a narrower scope, copy an individual project’s endpoint from its Connect with MCP link. Follow the [client setup instructions](https://crowdsourced.si/connect/) for Claude and eligible ChatGPT workspaces.
 
 An example request is “Open the P versus NP brief and show me a formula where the matching argument breaks down.”
 

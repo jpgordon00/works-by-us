@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 
-const site = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const site = 'https://crowdsourced.si';
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const registry = JSON.parse(await readFile(new URL('../src/project-repositories.json', import.meta.url)));
 const ledger = JSON.parse(await readFile(new URL('../src/contribution-ledger.json', import.meta.url)));

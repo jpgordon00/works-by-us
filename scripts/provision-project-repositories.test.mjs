@@ -121,7 +121,7 @@ test('uses a single owner, repository prefix, canonical agent endpoint and compl
   ]);
   assert.equal(projects[0].metadata.catalog_commit, revision);
   assert.equal(projects[0].metadata.id, slug);
-  assert.equal(projects[0].metadata.mcp, 'https://works-by-us.jacob-gordon255689.chatgpt.site/api/mcp/projects/sample-experiment');
+  assert.equal(projects[0].metadata.mcp, 'https://crowdsourced.si/api/mcp/projects/sample-experiment');
 });
 
 test('rejects duplicate, malformed, traversal and oversized slugs before building a repository name', () => {

@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const publicOrigin = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const publicOrigin = 'https://crowdsourced.si';
 const idPattern = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 const usage = 'Usage: node scripts/watch-run.mjs start <problemId> | step|finish|fail <id> "<title>" "<detail>" | retry <id>';
 const actions = {

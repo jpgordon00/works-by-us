@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 
 const owner = 'jpgordon00';
 const hub = 'https://github.com/jpgordon00/works-by-us';
-const site = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const site = 'https://crowdsourced.si';
 const main = 'refs/heads/main';
 const policyName = 'Crowdsourced Intelligence review';
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

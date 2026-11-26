@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { inflateSync } from 'node:zlib';
 import worker from '../dist/server/index.js';
 
-const origin = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+const origin = 'https://crowdsourced.si';
 const fetchSite = (path, method = 'GET') => worker.fetch(new Request(new URL(path, origin), {
   method, headers: { 'User-Agent': 'Twitterbot/1.0' }
 }));

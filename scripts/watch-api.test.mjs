@@ -123,7 +123,7 @@ test('independent publishers share the global creation cap and an interrupted so
 
 test('public links distinguish two runs of the same problem, even when started together', async t => {
   t.mock.timers.enable({ apis: ['Date'], now: Date.UTC(2026, 10, 26, 18, 42) });
-  const publicOrigin = 'https://works-by-us.jacob-gordon255689.chatgpt.site';
+  const publicOrigin = 'https://crowdsourced.si';
   const { call, start } = client(publicOrigin);
   const problemPath = '/problems/3sat-to-clique/';
   const imageUrls = new Set();
