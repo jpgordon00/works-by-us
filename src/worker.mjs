@@ -246,7 +246,7 @@ function renderConnect(problem) {
   const endpoint = config.origin + '/api/mcp';
   const prompt = problem
     ? 'Ask your AI to open the brief for ' + escape(problem.id) + ' and suggest one small contribution.'
-    : 'Ask your AI to find the free Photoshop alternative and suggest one small contribution.';
+    : 'Ask your AI to open the P versus NP brief and check where the matching argument for SAT breaks down.';
   const scope = problem ? `<section class="endpoint"><label for="project-endpoint">${escape(problem.title)}</label><div>
 <input type="url" id="project-endpoint" value="${config.origin + scopePath(problem.id)}" readonly>${copyButton('project-endpoint', 'Copy project URL')}</div>
 <p>This URL limits the connector to <a href="${routeFor(problem)}">this project</a>.</p></section>` : '';
@@ -277,7 +277,7 @@ const tools = [
   { name: 'list_categories', title: 'List categories', description: 'See the subject areas and how many problems each contains.', inputSchema: schema(), annotations: readOnly },
   { name: 'list_problems', title: 'Find problems', description: 'Search open problems and free software projects by keywords, category, or both. Use the returned ID to fetch the full brief.', inputSchema: schema({
     category: { type: 'string', enum: catalog.categories.map(category => category.id), description: 'Subject area ID. Omit for all areas.' },
-    query: string('Keywords, such as Photoshop, Monarch or transit.', 100)
+    query: string('Keywords, such as P vs NP, Collatz or dark matter.', 100)
   }), annotations: readOnly },
   { name: 'get_problem', title: 'Read a problem brief', description: 'Get a problem’s scope, primary sources, review criteria, and a copyable contribution brief.', inputSchema: schema({
     id: string('Problem ID returned by list_problems.', 100, 1)

@@ -11,6 +11,8 @@ const artByProject = {
   'free-monarch-money-alternative': ['budget', '<div class="art-window"><div class="art-budget-heading"><b>Monthly spending</b><i></i></div><span class="art-budget-body"><span class="art-donut"></span><span class="art-ledger">' + marks(3) + '</span></span></div>'],
   'free-acrobat-pro-alternative': ['compare', sheet('art-before') + sheet('art-after')],
   'p-versus-np': ['formula', '<span class="art-equation"><b>P</b><strong>≟</strong><b>NP</b></span>'],
+  'collatz-conjecture': ['formula', '<span class="art-equation"><b>5</b><strong>→</strong><b>16</b><strong>→</strong><b>8</b></span>'],
+  'dark-matter': ['halo', '<span class="art-halo"><i></i></span>'],
   'sparse-permanent-check': ['matrix', cells('+----+----+----++--+-----') + '<span class="art-matrix-result"><b>Σ</b>' + marks(2) + '</span>'],
   'sat-competition-comparison': ['solvers', graph],
   '3sat-to-clique': ['reduction', '<span class="art-clauses">' + marks(6) + '</span><b>→</b>' + dots],

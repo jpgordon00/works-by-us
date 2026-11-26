@@ -7,6 +7,8 @@ function initHero(hero) {
   const pauseButton = hero.querySelector('.hero-pause');
   const slides = [...hero.querySelectorAll('.hero-project')];
   const selectors = [...hero.querySelectorAll('[data-slide]')];
+  const introductions = [...hero.querySelectorAll('[data-introduction]')];
+  const briefLink = hero.querySelector('[data-featured-brief]');
   const updateNetwork = initNetwork(hero.querySelector('[data-network]'));
   let selected = 0;
   let timer;
@@ -18,8 +20,10 @@ function initHero(hero) {
 
   function select(index) {
     selected = index;
+    briefLink.href = slides[index].href;
     slides.forEach((slide, i) => {
       slide.hidden = i !== index;
+      introductions[i].hidden = i !== index;
       selectors[i].setAttribute('aria-pressed', String(i === index));
     });
   }

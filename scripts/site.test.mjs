@@ -65,6 +65,23 @@ test('P versus NP and GTA VI lead to checkable questions and repository starter 
   assert.match(dataSearch, /href="\/problems\/usgs-daily-api-parity\/"/);
 });
 
+test('the homepage opens with P vs NP and leads directly to each featured research brief', async () => {
+  const home = await (await fetchSite('/')).text();
+  const hero = home.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(hero);
+  assert.deepEqual([...hero.matchAll(/<a class="hero-project" href="([^"]+)"( hidden)?>([^<]+)<\/a>/g)]
+    .map(([, href, hidden, text]) => [href, Boolean(hidden), text]), [
+    ['/problems/p-versus-np/', false, 'Does P equal NP?'],
+    ['/problems/collatz-conjecture/', true, 'Does every number reach 1?'],
+    ['/problems/dark-matter/', true, 'What is dark matter?']
+  ]);
+  assert.match(hero, /data-featured-brief href="\/problems\/p-versus-np\/"/);
+  assert.equal([...hero.matchAll(/data-introduction/g)].length, 3);
+  assert.equal([...hero.matchAll(/data-slide=/g)].length, 3);
+  const shelves = [...home.matchAll(/class="project-shelf category-([a-z]+)"/g)].map(([, id]) => id);
+  assert.deepEqual(shelves.slice(0, 2), ['math', 'science']);
+});
+
 test('home shelves cover the full catalog and link the site sections and community actions', async () => {
   const home = await (await fetchSite('/')).text();
   const catalog = await (await fetchSite('/api/problems')).json();

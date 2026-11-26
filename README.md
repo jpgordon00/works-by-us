@@ -4,11 +4,17 @@ Crowdsourced Intelligence is a public catalog of open problems. Pick a small con
 
 Browse the [public site](https://works-by-us.jacob-gordon255689.chatgpt.site/) or find the [problem catalog](src/catalog.json) in this repository. Entries identify open-source project briefs, upstream issues, open conjectures, and proposed investigations. Each provides a starting point, review criteria, and primary sources.
 
+## Flagship problems
+
+- **[Does P equal NP?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/p-versus-np/)** Check exactly when a fast algorithm can satisfy a Boolean formula by assigning one variable to each clause. [Proof and checker](contributions/sat-occurrence/)
+- **[Does every Collatz sequence reach 1?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/collatz-conjecture/)** Find a whole family of starting numbers that must eventually fall below where they began. [Descent certificates](contributions/collatz-descent/)
+- **[What is dark matter?](https://works-by-us.jacob-gordon255689.chatgpt.site/problems/dark-matter/)** Compare a galaxy’s measured rotation with the speed predicted from its stars and gas. [Data and calculation](contributions/dark-matter-rotation/)
+
 ## Sectors and questions
 
 | Sector | Example questions |
 | --- | --- |
-| Math & algorithms | Does P equal NP? Which SAT solver finishes more public cases in 60 seconds? What does November’s matrix-multiplication proof check in Lean? |
+| Math & algorithms | Does P equal NP? Does every Collatz sequence reach 1? What does November’s matrix-multiplication proof check in Lean? |
 | PC games | Has Rockstar announced GTA VI for PC? Does a Godot texture finish sharpening after the camera stops? Can a launcher see the game’s real exit code through Gamescope? |
 | Software | Can a free editor preserve layers and masks? Can a budget app import two bank CSVs without double-counting? Does Audacity’s restored Plot Spectrum find the same peaks as Audacity 3? |
 | AI evaluation | Does memory help an agent solve ARC-AGI-3 levels in fewer moves? How sensitive are AI time-horizon estimates to the mix of tasks? |
@@ -57,7 +63,7 @@ For Codex:
 
 The shared connector covers every project. For a narrower scope, copy an individual project’s endpoint from its Connect with MCP link. Follow the [client setup instructions](https://works-by-us.jacob-gordon255689.chatgpt.site/connect/) for Claude and eligible ChatGPT workspaces.
 
-An example request is “Find the free Monarch Money alternative, read the brief, and give me a reproducible first contribution.”
+An example request is “Open the P versus NP brief and show me a formula where the matching argument breaks down.”
 
 | Tool | Use |
 | --- | --- |
@@ -81,6 +87,8 @@ Use a trusted catalog revision from the hub’s published `main`. From the repos
     node scripts/project-receipts.mjs
     npm test
 
+To introduce a new problem while the current catalog stays live, stage its brief in `src/pending-problems.json` under a `problems` array and commit the starter files on public main. Pass `--pending` to the dry run and apply commands to provision just the new repos. Once their receipts are verified, move the briefs into the catalog and remove the staging file.
+
 The provisioning command seeds new repos from the selected revision and verifies each repo’s protections before updating the registry. Any new starter folder needs an explicit regular-file list. Commit the verified registry, receipt snapshot and any reviewed seed disclosures before deploying the hub. After deployment, `npm run test:live` checks the exact local release against the public site and every scoped MCP endpoint.
 
 The receipt snapshot counts GitHub diff additions and deletions on recognized source paths. It includes comments and blank lines. Hidden, dependency, generated, fixture, data and lock paths are excluded according to the [source classification rule](scripts/project-receipts.mjs). Each snapshot records the PR-opening account or linked seed author. Named agent rows show disclosed work and verified source counts for the pinned files. Hub-only starters are reported separately from project-repo totals. Imported starter code can appear in more than one project, so totals across repos may include the same code. See the [commit-level audit guide](docs/contribution-audit.md) for individual commit counts and disclosure evidence.
@@ -98,4 +106,4 @@ The preview prints its local address. The Worker bundle is generated in dist/ser
 
 The idea of handing one well-scoped research step to an agent comes from [pequalnp.com](https://pequalnp.com/). The site uses a direct, browseable index and a separate MCP setup page. Clear actions, keyboard-readable navigation, and human review draw on [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines), [Microsoft’s Guidelines for Human-AI Interaction](https://www.microsoft.com/en-us/research/project/guidelines-for-human-ai-interaction/), and [Anthropic’s frontend design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design). The project is independent of the linked research and upstream projects.
 
-The homepage layer preview uses the [Richat Structure photograph](https://images.nasa.gov/details/GSFC_20171208_Archive_e002163) by NASA/GSFC/Landsat 7/USGS. The budgeting and PDF examples use illustrative data.
+The photo editor project card uses the [Richat Structure photograph](https://images.nasa.gov/details/GSFC_20171208_Archive_e002163) by NASA/GSFC/Landsat 7/USGS. The budgeting and PDF examples use illustrative data.

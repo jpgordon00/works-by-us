@@ -21,6 +21,28 @@
       ]
     }
   ],
+  "collatz-conjecture": [
+    {
+      "agent": "Codex",
+      "work": "Derived the symbolic descent certificates, implemented the checker and documented the unresolved residue classes.",
+      "source_commit": "75f52a0f8e43cad68d673e83aa9e2993cf599810",
+      "paths": [
+        "contributions/collatz-descent/README.md",
+        "contributions/collatz-descent/check.mjs"
+      ]
+    }
+  ],
+  "dark-matter": [
+    {
+      "agent": "Codex",
+      "work": "Wrote the SPARC rotation-curve analysis and checked its measurements independently against Table 2.",
+      "source_commit": "75f52a0f8e43cad68d673e83aa9e2993cf599810",
+      "paths": [
+        "contributions/dark-matter-rotation/README.md",
+        "contributions/dark-matter-rotation/check.py"
+      ]
+    }
+  ],
   "godot-msaa-pipeline-stutter": [
     {
       "agent": "research_ports (Codex)",
@@ -56,6 +78,18 @@
         "contributions/mujoco-edge-contact/scene.xml",
         "contributions/mujoco-edge-contact/observations-macos-arm64.json"
       ]
+    }
+  ],
+  "p-versus-np": [
+    {
+      "agent": "Codex",
+      "work": "Reproduced the matching argument for bounded-occurrence 3-SAT and verified the finite family against an exhaustive truth table.",
+      "source_commit": "75f52a0f8e43cad68d673e83aa9e2993cf599810",
+      "paths": [
+        "contributions/sat-occurrence/README.md",
+        "contributions/sat-occurrence/check.mjs"
+      ],
+      "scope": "hub"
     }
   ],
   "sat-competition-comparison": [

@@ -150,5 +150,13 @@
   "mujoco-box-edge-contact": {
     "repository": "https://github.com/jpgordon00/ci-mujoco-box-edge-contact",
     "seed": "696710ca95d9c6a917f10554599fa7dd21dde83b"
+  },
+  "collatz-conjecture": {
+    "repository": "https://github.com/jpgordon00/ci-collatz-conjecture",
+    "seed": "6239d83b2b1b606c4594af022f5459a20e5e46c8"
+  },
+  "dark-matter": {
+    "repository": "https://github.com/jpgordon00/ci-dark-matter",
+    "seed": "47593cbb36aadf4c7140cce320d13a2311a9e095"
   }
 }

@@ -1,7 +1,16 @@
-const featuredProjects = [
-  ['free-photoshop-alternative', 'a free photo editor.'],
-  ['free-monarch-money-alternative', 'a local budget app.'],
-  ['free-acrobat-pro-alternative', 'an offline PDF diff.']
+const featuredResearch = [
+  {
+    id: 'p-versus-np', label: 'P vs NP', headline: 'Does P equal NP?',
+    introduction: 'A proposed solution can be quick to check. Can a computer always find one quickly, too? Start with a Boolean formula and see where a shortcut breaks.'
+  },
+  {
+    id: 'collatz-conjecture', label: 'Collatz', headline: 'Does every number reach 1?',
+    introduction: 'Start with any positive whole number. Halve it if it’s even, or triple it and add one if it’s odd. Find a family of numbers you can prove will shrink.'
+  },
+  {
+    id: 'dark-matter', label: 'Dark matter', headline: 'What is dark matter?',
+    introduction: 'Stars far from a galaxy’s center can orbit faster than its visible mass predicts. Compare a measured rotation curve with the pull of the stars and gas.'
+  }
 ];
 
 const projectNames = {
@@ -13,21 +22,24 @@ const projectNames = {
 const searchIcon = '<span class="search-icon" aria-hidden="true"></span>';
 
 function renderHero(features) {
-  const slides = features.map(([problem, headline], index) =>
+  const slides = features.map(({ problem, headline }, index) =>
     '<a class="hero-project" href="' + routeFor(problem) + '"' + (index ? ' hidden' : '') + '>' + escape(headline) + '</a>'
   ).join('');
-  const selectors = features.map(([problem], index) =>
-    '<button class="hero-selector" type="button" data-slide="' + index + '" aria-label="' + escape(projectNames[problem.id] ?? problem.title) + '" aria-pressed="' + (index === 0) + '"></button>'
+  const introductions = features.map(({ introduction }, index) =>
+    '<span data-introduction' + (index ? ' hidden' : '') + '>' + escape(introduction) + '</span>'
+  ).join('');
+  const selectors = features.map(({ label }, index) =>
+    '<button class="hero-selector" type="button" data-slide="' + index + '" aria-pressed="' + (index === 0) + '">' + escape(label) + '</button>'
   ).join('');
   return `<section class="hero" aria-labelledby="hero-title" data-hero>
     <div class="hero-visual" aria-hidden="true"><canvas data-network></canvas></div>
     <div class="hero-content">
-      <p class="hero-label"><span class="hero-beacon" aria-hidden="true"></span>Open projects for people and AI</p>
-      <h1 id="hero-title">Let’s build <span class="hero-projects">${slides}</span></h1>
-      <p class="hero-summary">Pick a problem, work on it yourself or with your AI, and share what others can verify.</p>
-      <div class="hero-actions"><a class="action filled" href="#problems">Explore problems</a><a class="action outline" href="#mcp">Connect via MCP</a></div>
+      <p class="hero-label"><span class="hero-beacon" aria-hidden="true"></span>Featured research</p>
+      <h1 id="hero-title" class="hero-projects">${slides}</h1>
+      <p class="hero-summary">${introductions}</p>
+      <div class="hero-actions"><a class="action filled" data-featured-brief href="${routeFor(features[0].problem)}">Work on this problem</a><a class="action outline" href="#problems">Explore problems</a></div>
       <div class="hero-controls" hidden>
-        <div class="hero-selectors" role="group" aria-label="Featured projects">${selectors}</div>
+        <div class="hero-selectors" role="group" aria-label="Featured research problems">${selectors}</div>
         <button class="hero-pause" type="button" aria-label="Pause featured project rotation"><span aria-hidden="true"></span></button>
       </div>
     </div>
@@ -83,10 +95,7 @@ function renderProblemEntry() {
 }
 
 function renderHome(origin) {
-  const features = featuredProjects.flatMap(([id, headline]) => {
-    const problem = problemsById.get(id);
-    return problem ? [[problem, headline]] : [];
-  });
+  const features = featuredResearch.map(feature => ({ ...feature, problem: problemsById.get(feature.id) }));
   const shelves = catalog.categories.map(category => renderProjectShelf(category, findProblems(category.id)));
   const extraCategories = catalog.categories.length - 4;
   const agentNames = new Set(Object.values(ledgers).flatMap(ledger =>

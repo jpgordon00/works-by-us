@@ -47,7 +47,7 @@ export function renderSiteInfo({ mcpUrl = '', repoUrl, section }) {
       <pre id="home-mcp-codex"><code>codex mcp add works-by-us --url ${endpoint}</code></pre>
       ${infoCopyButton('home-mcp-codex', 'Copy command')}
     </div>
-    <p>Try asking your AI, “Find the free photo editor project and suggest a small contribution.” It can prepare a GitHub draft for you to review and submit.</p>
+    <p>Try asking your AI, “Open the P versus NP brief and show me a claim I can check.” It can prepare a GitHub draft for you to review and submit.</p>
   </div>
 </section>`;
   const about = `<section class="info-section" id="about" aria-labelledby="about-heading">

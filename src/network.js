@@ -6,94 +6,14 @@ const stageWidth = 700;
 const stageHeight = 460;
 const palette = ['#be9aff', '#80e7c7', '#ffc18c'];
 const layerNames = [
-  ['Photo', 'Mask', 'Base'],
-  ['Budget', 'Ledger', 'Import'],
-  ['Changes', 'Insert', 'Original']
+  ['Witness', 'Graph', 'Vertices'],
+  ['Trajectory', 'Rule', 'Seed'],
+  ['Galaxy', 'Orbits', 'Halo model']
 ];
-
-function newPlate() {
-  const surface = document.createElement('canvas');
-  surface.width = plateWidth;
-  surface.height = plateHeight;
-  return surface;
-}
-
-function plateFrame(ctx, fill, edge) {
-  ctx.beginPath();
-  ctx.roundRect(10, 10, 480, 340, 12);
-  ctx.fillStyle = fill;
-  ctx.fill();
-  ctx.strokeStyle = edge;
-  ctx.lineWidth = 2;
-  ctx.stroke();
-}
 
 function pathThrough(ctx, points) {
   ctx.beginPath();
   points.forEach(([x, y], index) => index ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-}
-
-function satelliteLayers(photo) {
-  const layers = [newPlate(), newPlate(), newPlate()];
-  const [base, mask, image] = layers.map(layer => layer.getContext('2d'));
-
-  plateFrame(base, '#312840', '#ccbae4');
-  base.save();
-  base.clip();
-  for (let y = 10; y < 350; y += 22) {
-    for (let x = 10; x < 490; x += 22) {
-      base.fillStyle = ((x - 10) / 22 + (y - 10) / 22) % 2 ? '#5d5172' : '#3d354f';
-      base.fillRect(x, y, 22, 22);
-    }
-  }
-  base.restore();
-
-  plateFrame(mask, '#262737', '#b2a7d4');
-  mask.save();
-  mask.clip();
-  const field = mask.createRadialGradient(276, 190, 29, 276, 190, 197);
-  field.addColorStop(0, '#efede9');
-  field.addColorStop(.46, '#c2bfd3');
-  field.addColorStop(.68, '#726781');
-  field.addColorStop(1, '#282733');
-  mask.fillStyle = field;
-  mask.fillRect(10, 10, 480, 340);
-  mask.restore();
-
-  plateFrame(image, '#ddd6eb', '#f5ebff');
-  image.save();
-  image.beginPath();
-  image.roundRect(15, 15, 470, 330, 8);
-  image.clip();
-  // Start with a recognizable mask contour while the local satellite photo loads.
-  image.fillStyle = '#24243c';
-  image.fillRect(15, 15, 470, 330);
-  if (photo) {
-    // Crop around the Richat Structure so the eye is visible on phone screens.
-    image.drawImage(photo, 280, 170, 815, 573, 15, 15, 470, 330);
-    // A restrained lavender grade keeps the topography and original highlights.
-    image.globalCompositeOperation = 'color';
-    image.fillStyle = '#8f7cc6';
-    image.globalAlpha = .82;
-    image.fillRect(15, 15, 470, 330);
-    image.globalCompositeOperation = 'source-over';
-    image.globalAlpha = 1;
-  } else {
-    for (let i = 0; i < 30; i++) {
-      image.strokeStyle = i % 4 ? '#797288' : '#ccc0de';
-      image.beginPath();
-      image.ellipse(258, 181, 17 + i * 7.6, 12 + i * 6.3, -.34, 0, Math.PI * 2);
-      image.stroke();
-    }
-  }
-  image.restore();
-  image.strokeStyle = '#fff8';
-  image.lineWidth = 2;
-  for (const [x, y, dx, dy] of [[30, 30, 1, 1], [470, 30, -1, 1], [30, 330, 1, -1], [470, 330, -1, -1]]) {
-    pathThrough(image, [[x + dx * 14, y], [x, y], [x, y + dy * 14]]);
-    image.stroke();
-  }
-  return layers;
 }
 
 // Traces and terminals belong to the illustration. They carry no activity data.
@@ -257,7 +177,8 @@ export function initNetwork(canvas) {
   const ctx = canvas?.getContext('2d');
   if (!ctx) return () => {};
 
-  const scenes = [satelliteLayers(null), null, null];
+  const buildScenes = [pathPlates, collatzPlates, galaxyPlates];
+  const scenes = new Array(buildScenes.length);
   const floors = [];
   const drift = { x: 0, y: 0 };
   const target = { x: 0, y: 0 };
@@ -267,7 +188,7 @@ export function initNetwork(canvas) {
   let running = false, visible = true, frame = 0, last = null;
 
   function loadScene(index) {
-    if (!scenes[index]) scenes[index] = index === 1 ? buildBudgetPlates() : buildPdfPlates();
+    scenes[index] ??= buildScenes[index]();
     floors[index] ??= buildFloor(palette[index]);
   }
 
@@ -352,13 +273,6 @@ export function initNetwork(canvas) {
     target.y = (event.clientY - bounds.top) / bounds.height * 2 - 1;
   }, { passive: true });
   hero?.addEventListener('pointerleave', () => { target.x = target.y = 0; });
-  const photo = new Image();
-  photo.onload = () => {
-    scenes[0] = satelliteLayers(photo);
-    if (visible && (current === 0 || previous === 0)) paint();
-  };
-  photo.src = '/media/richat.jpg';
-
   return (index, shouldRun) => {
     const next = index % scenes.length;
     if (current !== next) {
@@ -373,7 +287,7 @@ export function initNetwork(canvas) {
     update();
   };
 }
-// The six surfaces are drawn once. The exhibit positions and animates the cached plates.
+// Each illustration is drawn once and projected onto the animated layers.
 function exhibitPlate(paper, draw) {
   const canvas = document.createElement('canvas');
   canvas.width = 500;
@@ -406,179 +320,136 @@ function exhibitText(ctx, value, x, y, size, color, weight = 500, align = 'left'
   ctx.fillText(value, x, y);
 }
 
-function exhibitRule(ctx, x, y, end, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, end - x, 1.5);
-}
-
-function buildBudgetPlates() {
-  const dark = '#133c35';
-  const ink = '#0b342a';
-  const mid = '#366451';
-  const names = ['Studio', 'Market', 'Transit'];
-  const amounts = [120, 64, 24];
-  const spend = amounts.reduce((sum, amount) => sum + amount, 0);
-  const plan = 300;
-  const colors = ['#164c3a', '#4b9472', '#81c79d', '#d2e6c9'];
-
-  const raw = exhibitPlate(['#295948', '#143a34'], ctx => {
-    exhibitText(ctx, 'Checking.csv', 38, 67, 32, '#e0fce4', 700);
-    exhibitRule(ctx, 38, 91, 462, '#709684');
-    exhibitText(ctx, 'Date', 38, 138, 17, '#b3d7bc', 600, 'left', true);
-    exhibitText(ctx, 'Description', 137, 138, 17, '#b3d7bc', 600, 'left', true);
-    exhibitText(ctx, 'Amount', 460, 138, 17, '#b3d7bc', 600, 'right', true);
-    names.forEach((name, i) => {
-      const y = 179 + i * 40;
-      exhibitText(ctx, ['11/02', '11/06', '11/08'][i], 38, y, 20, '#d5efdc', 500, 'left', true);
-      exhibitText(ctx, name, 137, y, 20, '#d5efdc', 500, 'left', true);
-      exhibitText(ctx, '−' + amounts[i] + '.00', 460, y, 20, '#d5efdc', 500, 'right', true);
-    });
-    exhibitRule(ctx, 38, 286, 462, '#709684');
-    exhibitText(ctx, 'Source file', 38, 322, 20, '#c0dcc6', 600);
-    exhibitText(ctx, '3 rows', 460, 322, 20, '#c0dcc6', 600, 'right');
-  });
-
-  const ledger = exhibitPlate(['#85c7a1', '#529c79'], ctx => {
-    exhibitText(ctx, 'Import preview', 38, 67, 32, ink, 700);
-    exhibitRule(ctx, 38, 91, 462, '#478467');
-    names.forEach((name, i) => {
-      const y = 145 + i * 56;
-      ctx.beginPath();
-      ctx.roundRect(40, y - 22, 28, 28, 6);
-      ctx.fillStyle = dark;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(47, y - 9);
-      ctx.lineTo(52, y - 4);
-      ctx.lineTo(61, y - 14);
-      ctx.strokeStyle = '#d3f1ce';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      exhibitText(ctx, name, 84, y, 24, ink, 600);
-      exhibitText(ctx, '$' + amounts[i] + '.00', 460, y, 24, ink, 600, 'right');
-      exhibitRule(ctx, 38, y + 18, 462, '#64a380');
-    });
-    exhibitText(ctx, '3 transactions', 38, 323, 20, dark, 600);
-    exhibitText(ctx, '$' + spend + '.00', 460, 323, 21, ink, 700, 'right');
-  });
-
-  const budget = exhibitPlate(['#e4f4d8', '#a8d5b5'], ctx => {
-    exhibitText(ctx, 'Monthly budget', 38, 66, 34, ink, 700);
-    exhibitRule(ctx, 38, 89, 462, '#9cbfa6');
-    exhibitText(ctx, 'Spent', 38, 146, 19, mid, 600);
-    exhibitText(ctx, '$' + spend, 35, 212, 66, ink, 700);
-    exhibitText(ctx, 'of $' + plan + ' planned', 39, 247, 19, mid, 500);
-
-    const cx = 363;
-    const cy = 189;
-    let angle = -Math.PI / 2;
-    [...amounts, plan - spend].forEach((amount, i) => {
-      const end = angle + 2 * Math.PI * amount / plan;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 65, angle + .021, end - .021);
-      ctx.strokeStyle = colors[i];
-      ctx.lineWidth = 35;
-      ctx.stroke();
-      angle = end;
-    });
-    exhibitText(ctx, Math.round(spend / plan * 100) + '%', cx, cy + 9, 27, ink, 700, 'center');
-
-    exhibitRule(ctx, 38, 288, 462, '#9cbfa6');
-    names.forEach((name, i) => {
-      const x = [39, 184, 336][i];
-      ctx.fillStyle = colors[i];
-      ctx.fillRect(x, 309, 15, 15);
-      exhibitText(ctx, name, x + 24, 323, 19, dark, 600);
-    });
-  });
-  return [raw, ledger, budget];
-}
-
-// Parallel contour lines, made specifically for the two versions of the field note.
-function exhibitTerrain(ctx, x, y, w, h) {
-  ctx.save();
+function dot(ctx, x, y, radius, color) {
   ctx.beginPath();
-  ctx.roundRect(x, y, w, h, 5);
-  ctx.clip();
-  ctx.fillStyle = '#e9b189';
-  ctx.fillRect(x, y, w, h);
-  const cx = x + w * .55;
-  const cy = y + h * .54;
-  for (let ring = 20; ring > 0; ring--) {
-    const radius = (ring / 20) * .9;
-    ctx.beginPath();
-    for (let point = 0; point <= 180; point++) {
-      const t = point / 180 * Math.PI * 2;
-      const relief = 1 + .23 * Math.sin(t * 2.0 + .45) + .08 * Math.cos(t * 5 - radius * 2.4)
-        + .062 * Math.sin(t * 3.0 + radius * 3) + .035 * Math.cos(t * 7.0 + radius);
-      const px = cx + w * radius * relief * Math.cos(t);
-      const py = cy + h * radius * relief * Math.sin(t) * .72;
-      if (point === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
-    }
-    ctx.closePath();
-    if (ring === 16 || ring === 10 || ring === 4) {
-      ctx.fillStyle = ['#e8a176', '#e18e66', '#b6684d'][[16, 10, 4].indexOf(ring)];
-      ctx.fill();
-    }
-    ctx.lineWidth = ring % 5 === 0 ? 2 : 1.15;
-    ctx.strokeStyle = ring % 5 === 0 ? '#985e49' : '#b57859';
-    ctx.stroke();
-  }
-  ctx.restore();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
 }
 
-function buildPdfPlates() {
-  const ink = '#4b291e';
-  const mid = '#835d4e';
-  const rule = '#cda98d';
-
-  function fieldNote(revised) {
-    return exhibitPlate(revised ? ['#fff0d5', '#efd1b0'] : ['#f4c29e', '#d89b79'], ctx => {
-      exhibitText(ctx, 'Field notes', 38, 68, 36, ink, 700);
-      exhibitText(ctx, revised ? 'v2' : 'v1', 461, 64, 24, mid, 600, 'right', true);
-      exhibitRule(ctx, 38, 90, 462, rule);
-      exhibitText(ctx, 'Survey route', 38, 145, 20, mid, 600);
-      if (revised) {
-        ctx.fillStyle = '#e9b99e';
-        ctx.fillRect(38, 166, 177, 35);
-        exhibitText(ctx, '− East ridge', 46, 191, 23, '#773c31', 600);
-        ctx.fillStyle = '#773c31';
-        ctx.fillRect(68, 182, 123, 2);
-        ctx.fillStyle = '#b8cd98';
-        ctx.fillRect(38, 208, 181, 38);
-        exhibitText(ctx, '+ West ridge', 46, 235, 23, '#365137', 650);
-      } else {
-        exhibitText(ctx, 'East ridge', 38, 206, 27, ink, 600);
+// An explicit Hamiltonian path. The edges in the witness join every vertex once.
+function pathPlates() {
+  const points = [[66, 178], [132, 92], [235, 134], [348, 83], [424, 193], [275, 264], [150, 252]];
+  const edges = [[0, 2], [0, 6], [1, 5], [2, 4], [2, 5], [3, 5]];
+  function graph(paper, stage) {
+    return exhibitPlate(paper, ctx => {
+      if (stage > 0) {
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#92809f';
+        for (const [a, b] of edges) {
+          pathThrough(ctx, [points[a], points[b]]);
+          ctx.stroke();
+        }
+        pathThrough(ctx, points);
+        ctx.strokeStyle = stage === 2 ? '#582e83' : '#9486a7';
+        ctx.lineWidth = stage === 2 ? 8 : 3;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
       }
-      exhibitTerrain(ctx, 248, 113, 213, 152);
-      exhibitRule(ctx, 38, 288, 462, rule);
-      exhibitText(ctx, revised ? 'Revised document' : 'Original document', 38, 323, 21, mid, 600);
-      exhibitText(ctx, revised ? 'p. 03' : 'p. 02', 460, 323, 20, ink, 600, 'right', true);
+      points.forEach(([x, y], i) => {
+        dot(ctx, x, y, 17, stage === 2 ? '#482464' : '#5d4b74');
+        exhibitText(ctx, String(i + 1), x, y + 7, 20, '#f6edff', 650, 'center', true);
+      });
+      exhibitText(ctx, ['7 vertices', 'Undirected graph', 'A path through every vertex'][stage], 40, 323, 26, stage === 2 ? '#512968' : '#fff1ff', 650);
     });
   }
+  return [graph(['#453b5a', '#2e253b'], 0), graph(['#847399', '#695878'], 1), graph(['#f3e9ff', '#b69acb'], 2)];
+}
 
-  const inserted = exhibitPlate(['#e8aa7d', '#c77c59'], ctx => {
-    exhibitText(ctx, 'Elevation profile', 38, 68, 32, ink, 700);
-    exhibitText(ctx, 'v2', 461, 64, 24, mid, 600, 'right', true);
-    exhibitRule(ctx, 38, 90, 462, '#a97255');
-    [139, 185, 231].forEach(y => exhibitRule(ctx, 38, y, 462, '#d49470'));
-    const profile = [[38, 247], [88, 201], [117, 216], [167, 157], [208, 174],
-      [255, 128], [279, 155], [323, 117], [368, 169], [397, 144], [462, 210]];
-    ctx.beginPath();
-    profile.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-    ctx.strokeStyle = '#784a37';
-    ctx.lineWidth = 3;
+function collatzPlates() {
+  const values = [7];
+  while (values.at(-1) > 1) {
+    const n = values.at(-1);
+    values.push(n % 2 ? 3 * n + 1 : n / 2);
+  }
+  const seed = exhibitPlate(['#32554f', '#183b34'], ctx => {
+    exhibitText(ctx, 'Starting number', 42, 82, 28, '#c0ded0', 600);
+    exhibitText(ctx, String(values[0]), 38, 251, 164, '#e0f6e6', 650);
+  });
+  const rules = exhibitPlate(['#a0d3b8', '#6fac90'], ctx => {
+    exhibitText(ctx, 'Even', 43, 107, 31, '#235445', 600);
+    exhibitText(ctx, 'n / 2', 460, 107, 42, '#12392d', 650, 'right', true);
+    exhibitText(ctx, 'Odd', 43, 233, 31, '#235445', 600);
+    exhibitText(ctx, '3n + 1', 460, 233, 42, '#12392d', 650, 'right', true);
+  });
+  const trajectory = exhibitPlate(['#e6f8dc', '#a8d6b9'], ctx => {
+    exhibitText(ctx, '7 reaches 1', 37, 66, 41, '#164335', 650);
+    const high = Math.max(...values);
+    const points = values.map((n, i) => [42 + 415 * i / (values.length - 1), 261 - 155 * n / high]);
+    for (let y = 111; y < 270; y += 50) {
+      pathThrough(ctx, [[40, y], [461, y]]);
+      ctx.lineWidth = 1.3;
+      ctx.strokeStyle = '#8abb9f';
+      ctx.stroke();
+    }
+    pathThrough(ctx, points);
+    ctx.strokeStyle = '#205e45';
+    ctx.lineWidth = 6;
     ctx.lineJoin = 'round';
     ctx.stroke();
-    ctx.lineTo(462, 260);
-    ctx.lineTo(38, 260);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(139,72,45,.2)';
-    ctx.fill();
-    exhibitRule(ctx, 38, 288, 462, '#a97255');
-    exhibitText(ctx, 'Inserted page', 38, 323, 21, ink, 600);
-    exhibitText(ctx, 'p. 02', 460, 323, 20, ink, 600, 'right', true);
+    points.forEach(([x, y]) => dot(ctx, x, y, 4, '#1d634b'));
+    exhibitText(ctx, 'Start 7', 38, 318, 21, '#275642', 600);
+    exhibitText(ctx, String(values.length - 1) + ' steps', 464, 318, 21, '#275642', 600, 'right');
   });
-  return [fieldNote(false), inserted, fieldNote(true)];
+  return [seed, rules, trajectory];
+}
+
+// A schematic disk and halo. The public measurements live in the research brief.
+function galaxyPlates() {
+  const cx = 250, cy = 172;
+  const halo = exhibitPlate(['#303344', '#211d31'], ctx => {
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 164);
+    glow.addColorStop(0, '#edb690');
+    glow.addColorStop(.26, '#ac787d');
+    glow.addColorStop(.64, '#4d405c');
+    glow.addColorStop(1, '#34304800');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, plateWidth, plateHeight);
+    for (const radius of [59, 99, 141]) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#debbbd7a';
+      ctx.setLineDash([6, 7]);
+      ctx.lineWidth = 1.8;
+      ctx.stroke();
+    }
+  });
+  const orbits = exhibitPlate(['#5d4147', '#312735'], ctx => {
+    for (let ring = 1; ring <= 6; ring++) {
+      const radius = 15 + 27 * ring;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, radius, radius * .7, -.16, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#e6c0a899';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      const angle = ring * 2.5;
+      const x = radius * Math.cos(angle), y = radius * .7 * Math.sin(angle);
+      dot(ctx, cx + x * Math.cos(.16) + y * Math.sin(.16), cy - x * Math.sin(.16) + y * Math.cos(.16), 4.5, '#ffd7af');
+    }
+  });
+  const disk = exhibitPlate(['#353047', '#1a1b2a'], ctx => {
+    let seed = 3729;
+    function random() {
+      seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+      return seed / 4294967296;
+    }
+    for (let i = 0; i < 240; i++) dot(ctx, 12 + 476 * random(), 12 + 336 * random(), .6 + 1.2 * random(), '#d9c6c78f');
+    const bloom = ctx.createRadialGradient(cx, cy, 0, cx, cy, 163);
+    bloom.addColorStop(0, '#ffe4c6'); bloom.addColorStop(.12, '#d4a28e'); bloom.addColorStop(.42, '#825b7399'); bloom.addColorStop(1, '#705a7700');
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(1.22, .75);
+    ctx.translate(-cx, -cy);
+    ctx.fillStyle = bloom;
+    ctx.fillRect(40, -30, 420, 410);
+    for (let i = 0; i < 3500; i++) {
+      const radius = 164 * Math.sqrt(random());
+      const angle = i % 2 * Math.PI + radius * .025 + (random() - .5) * (.5 + 15 / (radius + 12));
+      const color = ['#fff1cddd', '#eac9bca0', '#b292bd90', '#d6aed690'][i % 4];
+      dot(ctx, cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), .65 + random() * 1.6, color);
+    }
+    ctx.restore();
+    exhibitText(ctx, 'Spiral galaxy · illustration', 38, 321, 23, '#f4d9c5', 600);
+  });
+  return [halo, orbits, disk];
 }
