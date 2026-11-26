@@ -57,7 +57,7 @@ test('P versus NP and GTA VI lead to checkable questions and repository starter 
   assert.match(pcSearch, /href="\/problems\/gta-vi-pc-release\/"/);
 });
 
-test('the home gallery and project list together link the full catalog', async () => {
+test('home shelves cover the full catalog and link the site sections and community actions', async () => {
   const home = await (await fetchSite('/')).text();
   const catalog = await (await fetchSite('/api/problems')).json();
   for (const project of catalog.problems) assert.ok(home.includes('href="/problems/' + project.id + '/"'));
@@ -67,7 +67,14 @@ test('the home gallery and project list together link the full catalog', async (
   const photo = await fetchSite('/media/richat.jpg');
   assert.equal(photo.headers.get('content-type'), 'image/jpeg');
   assert.deepEqual([...new Uint8Array(await photo.arrayBuffer()).slice(0, 3)], [255, 216, 255]);
-  assert.match(home, /%23%23\+Problem%0A%0A%23%23\+Primary\+source/);
+  assert.match(home, /<details class="extra-shelves"/);
+  for (const section of ['problems', 'how-it-works', 'about', 'mcp']) {
+    assert.ok(home.includes('href="#' + section + '"') && home.includes('id="' + section + '"'));
+  }
+  assert.match(home, /issues\/new\?template=problem\.yml/);
+  assert.match(home, /label%3Aproblem-proposal%20sort%3Areactions-%2B1-desc/);
+  assert.match(home, /codex mcp add works-by-us --url https:\/\/works\.example\/api\/mcp/);
+  assert.match(home, /linkedin\.com\/in\/jacob-gordon-6ab482215/);
 });
 
 test('query parameters remain text, and a brief offers both contribution routes', async () => {

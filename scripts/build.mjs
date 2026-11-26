@@ -22,13 +22,21 @@ for (const problem of catalog.problems) {
 }
 if (!ids.has(catalog.featured)) throw new Error('The featured problem is missing');
 
-const assets = { richat: (await readFile('src/media/richat.jpg')).toString('base64') };
-for (const name of ['style.css', 'copy.js']) assets[name] = await readFile('src/' + name, 'utf8');
+const assets = {
+  richat: (await readFile('src/media/richat.jpg')).toString('base64'),
+  mark: (await readFile('src/media/mark.png')).toString('base64'),
+  spaceGrotesk: (await readFile('src/media/space-grotesk.woff2')).toString('base64')
+};
+for (const name of ['style.css', 'copy.js', 'home.js', 'network.js']) assets[name] = await readFile('src/' + name, 'utf8');
+assets['style.css'] += '\n' + await readFile('src/project-art.css', 'utf8');
 
 let commit = 'local';
 try { commit = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
 catch {}
-const worker = await readFile('src/worker.mjs', 'utf8');
+const workerModules = await Promise.all(['site-info.mjs', 'project-art.mjs', 'home.mjs', 'worker.mjs'].map(
+  path => readFile('src/' + path, 'utf8')
+));
+const worker = workerModules.join('\n');
 const config = { repository: 'https://github.com/jpgordon00/works-by-us', commit };
 await mkdir('dist/server', { recursive: true });
 await mkdir('dist/.openai', { recursive: true });
