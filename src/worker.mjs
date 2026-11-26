@@ -172,15 +172,18 @@ ${copyButton('problem-share-url', 'Copy problem link')}</header>
 
 function renderConnect(origin, selected) {
   const endpoint = origin + '/api/mcp';
+  const prompt = selected
+    ? 'Ask your AI to open the brief for ' + escape(selected.id) + ' and suggest one small contribution.'
+    : 'Ask your AI to find the free Photoshop alternative and suggest one small contribution.';
   return page(selected ? 'MCP setup for ' + selected.title : 'Connect MCP', `<article class="detail connect">
-<nav class="breadcrumb" aria-label="Breadcrumb"><a href="${browsePath}">Problems</a><span aria-hidden="true">/</span><span>Connect MCP</span></nav>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="${browsePath}">Problems</a><span aria-hidden="true">/</span>${selected ? '<a href="' + routeFor(selected) + '">' + escape(selected.title) + '</a><span aria-hidden="true">/</span>' : ''}<span>Connect MCP</span></nav>
 <header class="detail-heading"><h1>Bring your own AI.</h1><p class="lede">Give your MCP client this URL to browse the same problems and prepare a contribution for review.</p></header>
 <section class="endpoint"><label for="endpoint">Server URL</label><div><input type="url" id="endpoint" value="${escape(endpoint)}" readonly>${copyButton('endpoint', 'Copy URL')}</div><p>Streamable HTTP. Public access.</p></section>
 <div class="brief connection-help">
 <section><h2>Add it to your client</h2><p>In a client with remote MCP support, add a Streamable HTTP server named <strong>Collective Intelligence</strong>. Use the URL above. For Codex, run this command.</p>
 <pre id="codex-command"><code>codex mcp add works-by-us --url ${escape(endpoint)}</code></pre>
 ${copyButton('codex-command', 'Copy command')}</section>
-<section><h2>Try it</h2><p>Ask your AI to find the free Photoshop alternative and suggest a small contribution. It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
+<section><h2>Try it</h2><p>${prompt} It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
 <section><h2>Available tools</h2><dl class="tool-list">${tools.map(tool => ' <div><dt><code>' + tool.name + '</code></dt><dd>' + escape(tool.description) + '</dd></div>').join('')}</dl></section>
 </div></article>`, { active: 'connect', origin, sharePath: selected ? '/connect/?project=' + selected.id : '/connect/', description: selected ? 'Connect your AI to work on this problem. ' + selected.summary : 'Connect your AI to browse open problems, read project briefs, and prepare a contribution.' });
 }
