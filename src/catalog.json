@@ -7,29 +7,39 @@
       "description": "Build free, open-source alternatives to the paid apps people use every day."
     },
     {
+      "id": "math",
+      "title": "Math & algorithms",
+      "description": "Open complexity questions, proof checks and reproducible solver benchmarks."
+    },
+    {
+      "id": "games",
+      "title": "PC games",
+      "description": "Track official PC releases and test graphics, performance and compatibility in open games."
+    },
+    {
+      "id": "ai",
+      "title": "AI evaluation",
+      "description": "Measure when AI systems learn, get stuck or change their answers."
+    },
+    {
       "id": "data",
-      "title": "Data",
-      "description": "Ways to make public datasets easier to use and combine."
+      "title": "Public data",
+      "description": "Make shared datasets easier to clean, verify and combine."
     },
     {
       "id": "civic",
-      "title": "Civic",
-      "description": "Public infrastructure and the data people rely on to use it."
+      "title": "Civic & accessibility",
+      "description": "Check whether public data and infrastructure work for the people who rely on them."
     },
     {
       "id": "culture",
-      "title": "Culture",
-      "description": "Better ways to find and share public collections."
+      "title": "Culture & archives",
+      "description": "Make public collections easier to find, read and cite."
     },
     {
       "id": "science",
-      "title": "Science",
-      "description": "Small investigations with public data and reproducible methods."
-    },
-    {
-      "id": "math",
-      "title": "Math",
-      "description": "Unsolved questions and small steps a second person can check."
+      "title": "Science & energy",
+      "description": "Run small, repeatable investigations using public observations."
     }
   ],
   "problems": [
@@ -37,7 +47,7 @@
       "id": "free-photoshop-alternative",
       "category": "software",
       "track": "Photoshop alternative",
-      "title": "Build a free layered image editor",
+      "title": "Can a free browser editor preserve editable layers and masks?",
       "summary": "Create a browser editor for everyday photo compositing and retouching, free to use and open to inspect.",
       "context": "Photoshop’s layers, masks and blending make a composite editable after it is assembled. This project starts with that workflow in an original browser interface, using files from the person’s device. GIMP is an existing open-source precedent.",
       "task": "Build a small prototype that opens two PNGs as layers and lets someone reorder them, adjust opacity and paint a mask. Save a reopenable project and export a transparent PNG. Use original interface code and sample artwork.",
@@ -68,7 +78,7 @@
       "id": "free-monarch-money-alternative",
       "category": "software",
       "track": "Monarch Money alternative",
-      "title": "Build a free household budget app",
+      "title": "Can a local budget app import two bank CSVs without double-counting?",
       "summary": "Turn downloaded bank CSVs into a monthly budget that people can keep on their own device.",
       "context": "Monarch combines transaction categorization and monthly planning. This project starts with a local budgeting workflow using file import. Actual Budget already demonstrates open-source budgeting and transaction imports.",
       "task": "Prototype a screen for importing CSVs from two accounts. Preview the column mapping, let someone categorize spending, and show a planned-versus-actual monthly view. Use synthetic data and provide a local export.",
@@ -95,85 +105,10 @@
       ]
     },
     {
-      "id": "transit-feed-notices",
-      "category": "civic",
-      "track": "Public transit",
-      "title": "Give each transit feed notice an agency",
-      "summary": "Help operators see which findings in a shared timetable belong to them.",
-      "context": "A single GTFS feed can serve more than one operator. A combined validation report makes it harder for each agency to find the notices it can act on. MobilityData is discussing how to attribute notices to agencies.",
-      "task": "Build a tiny synthetic feed with two agencies and draft the shape of a per-agency report. Include at least one notice that involves the whole feed.",
-      "review": "Show the fixture and command. The expected report assigns each attributable finding to the right agency and handles feed-wide findings explicitly.",
-      "kind": "Open upstream discussion",
-      "keywords": [
-        "GTFS",
-        "bus",
-        "agency",
-        "validator"
-      ],
-      "sources": [
-        {
-          "title": "MobilityData issue #2201",
-          "url": "https://github.com/MobilityData/gtfs-validator/issues/2201"
-        },
-        {
-          "title": "GTFS Schedule reference",
-          "url": "https://gtfs.org/documentation/schedule/reference/"
-        }
-      ]
-    },
-    {
-      "id": "p-versus-np",
-      "category": "math",
-      "title": "P versus NP",
-      "summary": "If an answer is quick to check, is there always a quick way to find it?",
-      "context": "The Clay Mathematics Institute lists P versus NP as a Millennium Prize Problem. A shared library of small, clearly specified reductions can help readers examine the ideas used in attempted solutions.",
-      "task": "Write a small Lean formalization of an existing reduction, such as 3-SAT to CLIQUE, or improve a documented lemma in a current public formalization effort. State the precise claim you are proving.",
-      "review": "Pin the repository and toolchain. Supply the theorem, build command, and result. Use no new axioms or unfinished proofs. State exactly what the result implies for the broader question.",
-      "kind": "Open conjecture",
-      "keywords": [
-        "P=NP",
-        "complexity",
-        "Lean",
-        "proof"
-      ],
-      "sources": [
-        {
-          "title": "Clay Mathematics Institute, P versus NP",
-          "url": "https://www.claymath.org/millennium/p-vs-np/"
-        },
-        {
-          "title": "P = NP? public research project",
-          "url": "https://pequalnp.com/"
-        }
-      ]
-    },
-    {
-      "id": "join-datasets-openrefine",
-      "category": "data",
-      "title": "Join two messy datasets without a formula",
-      "summary": "Make a common data-cleaning operation easier to inspect and repeat.",
-      "context": "An open OpenRefine proposal asks for a clearer way to join data across projects. Duplicate keys and unmatched rows are where a seemingly simple join can produce misleading results.",
-      "task": "Create two small CSVs with a duplicate key, a missing match, and fields someone might want to keep. Prototype how a person selects keys and fields and previews the result.",
-      "review": "Publish the input and expected output. Show how duplicates and unmatched rows are represented and how the choices could be recorded in project history for replay.",
-      "kind": "Open upstream issue",
-      "keywords": [
-        "OpenRefine",
-        "join",
-        "CSV",
-        "data cleaning"
-      ],
-      "sources": [
-        {
-          "title": "OpenRefine issue #7761",
-          "url": "https://github.com/OpenRefine/OpenRefine/issues/7761"
-        }
-      ]
-    },
-    {
       "id": "free-acrobat-pro-alternative",
       "category": "software",
       "track": "Acrobat Pro alternative",
-      "title": "Compare PDFs without uploading them",
+      "title": "Can an offline PDF comparison survive a page insertion?",
       "summary": "Build a free tool that shows what changed between two versions of a document on your own device.",
       "context": "Acrobat Pro can compare two PDF revisions and produce a report. Existing open-source projects such as diff-pdf demonstrate visual comparison. This project proposes a simple local workflow for matching pages and sharing a review report.",
       "task": "Prototype a workflow that accepts two PDFs locally and marks added, removed and changed pages. Export a small report with page references and a visual difference for edited pages.",
@@ -200,10 +135,390 @@
       ]
     },
     {
+      "id": "p-versus-np",
+      "category": "math",
+      "title": "Does P equal NP?",
+      "summary": "Can every decision problem whose yes answers have efficiently checkable certificates also be decided efficiently?",
+      "context": "The Clay Mathematics Institute lists P versus NP as unsolved. The independent pequalnp.com project publishes research programs and work in progress. The questions below give contributors a way to inspect a known reduction, test practical solvers or work on a current complexity result.",
+      "task": "Pick one precise claim from a public write-up about P versus NP. State its computational model and assumptions, then independently check one proof step or construct a counterexample to that step.",
+      "review": "Link the exact source and revision, quote or state the claim precisely, and give a proof, counterexample or reproducible check. Say which claims remain open.",
+      "kind": "Open Millennium Prize problem",
+      "keywords": [
+        "P=NP",
+        "P vs NP",
+        "complexity",
+        "Lean",
+        "proof",
+        "SAT"
+      ],
+      "sources": [
+        {
+          "title": "Clay Mathematics Institute, P versus NP",
+          "url": "https://www.claymath.org/millennium/p-vs-np/"
+        },
+        {
+          "title": "P = NP? public research project",
+          "url": "https://pequalnp.com/"
+        }
+      ],
+      "track": "P versus NP",
+      "related": [
+        "3sat-to-clique",
+        "sat-competition-comparison",
+        "sparse-permanent-check",
+        "unrestricted-circuit-lower-bound"
+      ]
+    },
+    {
+      "id": "gta-vi-pc-release",
+      "category": "games",
+      "track": "Grand Theft Auto VI",
+      "title": "Has Rockstar announced a PC release for GTA VI?",
+      "summary": "Track official PC release announcements, dates and system requirements.",
+      "context": "Rockstar launched GTA VI on PlayStation 5 and Xbox Series X|S on November 19, 2026. Its product page and Take-Two’s launch release listed those platforms on November 26. An official PC date and requirements remained unconfirmed in those sources.",
+      "task": "Check Rockstar’s product page and Newswire and Take-Two’s release archive. Record the check date, platform, region, release date and requirements exactly as supported by the sources.",
+      "review": "Provide first-party URLs and announcement dates for changed fields. Mark unavailable fields as unconfirmed and retain prior confirmed entries so a reviewer can check the change.",
+      "kind": "Official release tracker",
+      "keywords": [
+        "GTA 6",
+        "GTA VI",
+        "PC port",
+        "Steam",
+        "Rockstar",
+        "Take-Two",
+        "Windows"
+      ],
+      "sources": [
+        {
+          "title": "Rockstar GTA VI product page",
+          "url": "https://www.rockstargames.com/VI"
+        },
+        {
+          "title": "Rockstar’s November 19 launch announcement",
+          "url": "https://www.rockstargames.com/newswire/article/39akk424a9oo53/grand-theft-auto-vi-now-available"
+        },
+        {
+          "title": "Take-Two’s launch release",
+          "url": "https://ir.take2games.com/node/32696/pdf"
+        }
+      ],
+      "related": [
+        "godot-msaa-pipeline-stutter",
+        "windows-linux-proton-compatibility"
+      ],
+      "starter": {
+        "title": "November 26 release check and source ledger",
+        "path": "contributions/pc-portability/README.md"
+      }
+    },
+    {
+      "id": "sparse-permanent-check",
+      "category": "math",
+      "track": "Exact counting",
+      "title": "Does the sparse permanent algorithm agree with exhaustive counting?",
+      "summary": "Check a small component of recent work on the Exponential Time Hypothesis against an independent reference.",
+      "context": "An October 2026 preprint presents a subexponential algorithm for exact k-SAT. November lecture notes explain a route through the permanent of sparse matrices. The proposed experiment concerns correctness on small inputs and practical resource cost.",
+      "task": "Implement the bounded-degree permanent routine from the notes for small integer matrices. Compare it with direct permutation enumeration on empty, diagonal, singular, and seeded sparse fixtures.",
+      "review": "Publish the code and seeded input list. Require exact integer agreement and report wall time and peak memory by matrix size. State the size and degree limits of the run.",
+      "kind": "Research reproduction",
+      "keywords": [
+        "P vs NP",
+        "ETH",
+        "k-SAT",
+        "counting",
+        "permanent"
+      ],
+      "sources": [
+        {
+          "title": "OpenAI October 25 preprint",
+          "url": "https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf"
+        },
+        {
+          "title": "Hamed Hatami’s November 18 lecture notes",
+          "url": "https://www.cs.mcgill.ca/~hatami/expositions/ETH.pdf"
+        }
+      ]
+    },
+    {
+      "id": "godot-msaa-pipeline-stutter",
+      "category": "games",
+      "track": "Graphics performance",
+      "title": "When does changing 3D anti-aliasing cause stutter in Godot?",
+      "summary": "Measure whether applying MSAA at startup shifts GPU pipeline work into loading or leaves later first-use hitches.",
+      "context": "An open Godot issue documents draw-time pipeline compilations after an MSAA change. This is a portable graphics problem that can be tested with a small original scene.",
+      "task": "In a pinned Forward+ Godot build, run a repeatable camera path past staggered material variants. Compare applying the same MSAA level before loading and after loading. Do at least five runs per condition with documented cold and warm caches.",
+      "review": "Publish the redistributable scene, engine revision, OS, GPU, driver, renderer settings, raw frame times and compilation counters. Report loading time, p99 frame time and frames over 33.3 ms separately for each run, including runs with no hitch.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "PC port",
+        "Godot",
+        "MSAA",
+        "Vulkan",
+        "DX12",
+        "GPU",
+        "frame time"
+      ],
+      "sources": [
+        {
+          "title": "Godot issue #124873",
+          "url": "https://github.com/godotengine/godot/issues/124873"
+        },
+        {
+          "title": "Godot pipeline compilation guide",
+          "url": "https://docs.godotengine.org/en/stable/tutorials/performance/pipeline_compilations.html"
+        }
+      ],
+      "starter": {
+        "title": "Frame-trace analysis starter and synthetic sample",
+        "path": "contributions/pc-portability/README.md"
+      }
+    },
+    {
+      "id": "sat-competition-comparison",
+      "category": "math",
+      "track": "Solver benchmarking",
+      "title": "Which SAT solver finishes more public cases in 60 seconds?",
+      "summary": "Compare two pinned solvers on 12 predetermined 2026 competition instances under the same single-core limit.",
+      "context": "SAT Competition 2026 publishes instance-level results, solvers and benchmarks. A small, fixed sample makes it possible for another contributor to reproduce a comparison.",
+      "task": "Predeclare 12 public instance hashes, two solvers that output checkable witnesses or certificates, and a one-core 60-second wall-time limit. Publish one driver command to run both.",
+      "review": "For every solver and instance, report the model or certificate check, elapsed time, timeout or error, and environment. Count only independently verified answers as solved.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "P vs NP",
+        "SAT",
+        "Kissat",
+        "CaDiCaL",
+        "DIMACS",
+        "CNF"
+      ],
+      "sources": [
+        {
+          "title": "SAT Competition 2026 releases and results",
+          "url": "https://satcompetition.github.io/2026/"
+        },
+        {
+          "title": "SAT Competition output and certificate rules",
+          "url": "https://satcompetition.github.io/2026/output.html"
+        }
+      ]
+    },
+    {
+      "id": "windows-linux-proton-compatibility",
+      "category": "games",
+      "track": "Game compatibility",
+      "title": "What breaks when the same open game runs through Proton?",
+      "summary": "Compare the same redistributable Windows build on Windows and Proton, with a native Linux build as a reference.",
+      "context": "Valve’s Proton release notes document launch, controller and frame-pacing fixes. An open game with a fixed scene makes regressions easier to reproduce and share.",
+      "task": "Choose a redistributable game that exports native Windows and Linux builds from the same source revision. Use a scripted path and fixed inputs to check launch, controller mapping and one streaming transition on all three configurations.",
+      "review": "Publish versions, build hashes, OS and driver details, a pass or fail for each check and reproducible steps for one difference. Use the same in-engine frame-time definition for cross-platform comparisons.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "PC port",
+        "Windows",
+        "Linux",
+        "Proton",
+        "Steam Deck",
+        "controller"
+      ],
+      "sources": [
+        {
+          "title": "Valve Proton changelog",
+          "url": "https://github.com/ValveSoftware/Proton/wiki/Changelog"
+        },
+        {
+          "title": "Godot exporting documentation",
+          "url": "https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html"
+        }
+      ]
+    },
+    {
+      "id": "3sat-to-clique",
+      "category": "math",
+      "track": "Reductions",
+      "title": "Can we check each direction of the 3-SAT to CLIQUE reduction?",
+      "summary": "Prove the standard construction and check it against independently enumerated small instances.",
+      "context": "A clique of size equal to the number of clauses picks one consistent literal from each clause. Repeated literals and contradictions are useful fixtures because they expose mistakes in a graph generator or witness translator.",
+      "task": "Run the repository’s checker, then add a bounded fixture family with known outcomes or formalize one direction and connect it to the exact graph construction.",
+      "review": "Include the formula family, expected decision and witness checks. State what the finite run checks and give the general proof for the reduction.",
+      "kind": "Proof and reproduction",
+      "keywords": [
+        "P vs NP",
+        "SAT",
+        "complexity",
+        "Lean",
+        "witness"
+      ],
+      "sources": [
+        {
+          "title": "MIT 18.404J, NP-completeness and the 3-SAT-to-CLIQUE reduction",
+          "url": "https://learn.mit.edu/video/7035/lecture-15-np-completeness?playlist=7021"
+        }
+      ],
+      "starter": {
+        "title": "Proof and executable checker",
+        "path": "contributions/3sat-clique/README.md"
+      }
+    },
+    {
+      "id": "unrestricted-circuit-lower-bound",
+      "category": "math",
+      "track": "Circuit complexity",
+      "title": "Does any language in E^NP require Ω(n log n)-size unrestricted circuits?",
+      "summary": "Work on a circuit lower-bound question explicitly posed in a November 2026 preprint.",
+      "context": "The question concerns explicit Boolean functions in exponential time with an NP oracle, and unrestricted circuits. Depth-two conjunction/disjunction formulas with negations on inputs give a more accessible model in which parity has a provable exponential bound.",
+      "task": "Reproduce the odd-parity lower bound for depth-two disjunctive normal form. Identify the place in the argument that relies on each term being a conjunction of literals.",
+      "review": "Supply a proof of the bound and an independent small truth-table check. State the circuit model, size measure and which lower-bound claim remains open.",
+      "kind": "Open research problem",
+      "keywords": [
+        "P vs NP",
+        "parity",
+        "lower bound",
+        "Boolean circuits"
+      ],
+      "sources": [
+        {
+          "title": "Chukhin et al., ECCC 2026/313 (Open Problem 1)",
+          "url": "https://eccc.weizmann.ac.il/report/2026/313/"
+        }
+      ]
+    },
+    {
+      "id": "arc-agi-memory",
+      "category": "ai",
+      "track": "ARC-AGI-3",
+      "title": "Does memory help an agent solve ARC-AGI-3 levels in fewer moves?",
+      "summary": "Test an agent with and without persistent scratch memory at matched action and inference budgets.",
+      "context": "ARC Prize publishes interactive environments and human play traces. A paired experiment can show whether retaining observations helps a specific agent on a fixed set of levels.",
+      "task": "Choose ten public levels before running the experiment. Pin the model and harness and compare memory on and off with matched token and action budgets, using the same starting states and repeat seeds.",
+      "review": "Publish level IDs, run settings, replay files, completion rates and moves used. Include failed and timed-out runs and report how the moves comparison handles them.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "ARC",
+        "ARC-AGI-3",
+        "agent",
+        "memory",
+        "actions"
+      ],
+      "sources": [
+        {
+          "title": "ARC-AGI-3 benchmark",
+          "url": "https://arcprize.org/arc-agi/3"
+        },
+        {
+          "title": "ARC Prize human replay dataset",
+          "url": "https://arcprize.org/blog/arc-agi-3-human-dataset"
+        }
+      ]
+    },
+    {
+      "id": "mmlu-answer-order",
+      "category": "ai",
+      "track": "Benchmark robustness",
+      "title": "How often does a model change its answer when the choices move?",
+      "summary": "Test how much a model’s answer depends on answer position on a small MMLU-Pro sample.",
+      "context": "The MMLU-Pro authors test sensitivity to prompt styles. This experiment fixes the question and model and changes only the order of choices.",
+      "task": "Select 30 public question IDs from one subject before the run. Generate five seeded option orders per question, remap the answer labels, and evaluate one pinned model with a fixed prompt and generation settings.",
+      "review": "Publish question IDs, permutations, parsed option identities, invalid-answer counts and accuracy by position. Report how often the same question receives different option identities and include an unshuffled control.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "MMLU-Pro",
+        "model evaluation",
+        "answer ordering",
+        "multiple choice"
+      ],
+      "sources": [
+        {
+          "title": "MMLU-Pro evaluation code and data",
+          "url": "https://github.com/TIGER-AI-Lab/MMLU-Pro"
+        },
+        {
+          "title": "MMLU-Pro paper",
+          "url": "https://arxiv.org/abs/2406.01574"
+        }
+      ]
+    },
+    {
+      "id": "join-datasets-openrefine",
+      "category": "data",
+      "title": "How should OpenRefine preview a join with duplicate keys?",
+      "summary": "Make a common data-cleaning operation easier to inspect and repeat.",
+      "context": "An open OpenRefine proposal asks for a clearer way to join data across projects. Duplicate keys and unmatched rows are where a seemingly simple join can produce misleading results.",
+      "task": "Create two small CSVs with a duplicate key, a missing match, and fields someone might want to keep. Prototype how a person selects keys and fields and previews the result.",
+      "review": "Publish the input and expected output. Show how duplicates and unmatched rows are represented and how the choices could be recorded in project history for replay.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "OpenRefine",
+        "join",
+        "CSV",
+        "data cleaning"
+      ],
+      "sources": [
+        {
+          "title": "OpenRefine issue #7761",
+          "url": "https://github.com/OpenRefine/OpenRefine/issues/7761"
+        }
+      ]
+    },
+    {
+      "id": "transit-feed-notices",
+      "category": "civic",
+      "track": "Public transit",
+      "title": "Can a shared transit feed assign each notice to the right agency?",
+      "summary": "Help operators see which findings in a shared timetable belong to them.",
+      "context": "A single GTFS feed can serve more than one operator. A combined validation report makes it harder for each agency to find the notices it can act on. MobilityData is discussing how to attribute notices to agencies.",
+      "task": "Build a tiny synthetic feed with two agencies and draft the shape of a per-agency report. Include at least one notice that involves the whole feed.",
+      "review": "Show the fixture and command. The expected report assigns each attributable finding to the right agency and handles feed-wide findings explicitly.",
+      "kind": "Open upstream discussion",
+      "keywords": [
+        "GTFS",
+        "bus",
+        "agency",
+        "validator"
+      ],
+      "sources": [
+        {
+          "title": "MobilityData issue #2201",
+          "url": "https://github.com/MobilityData/gtfs-validator/issues/2201"
+        },
+        {
+          "title": "GTFS Schedule reference",
+          "url": "https://gtfs.org/documentation/schedule/reference/"
+        }
+      ]
+    },
+    {
+      "id": "seattle-accessible-transit-routes",
+      "category": "civic",
+      "track": "Accessible routing",
+      "title": "Where do Seattle’s mapped routes to transit leave wheelchair access uncertain?",
+      "summary": "Audit curb ramps, crossings and slopes on a sample of 20 trips between transit stops and public destinations.",
+      "context": "OpenSidewalks and AccessMap model sidewalk attributes that ordinary shortest-path directions can miss. Missing data can make a crossing’s suitability uncertain.",
+      "task": "Preselect 20 public stop-to-destination pairs in one neighborhood. Generate routes with a specified accessibility profile, review segments with missing data and record dated public-source or field observations.",
+      "review": "Publish route GeoJSON, the routing profile and the evidence type for each flagged segment. Tabulate verified barriers, verified passable segments and unknowns. Record the routes that could not be generated.",
+      "kind": "Proposed investigation",
+      "keywords": [
+        "Seattle",
+        "OpenSidewalks",
+        "wheelchair",
+        "curb ramp",
+        "transit"
+      ],
+      "sources": [
+        {
+          "title": "University of Washington’s Taskar Center documentation",
+          "url": "https://taskarcenteratuw.github.io/tcat-wiki/"
+        },
+        {
+          "title": "AccessMap routing project",
+          "url": "https://github.com/TaskarCenterAtUW/AccessMap"
+        }
+      ]
+    },
+    {
       "id": "link-to-manuscript-page",
       "category": "culture",
       "track": "Digital collections",
-      "title": "Share a link to a single manuscript page",
+      "title": "Can a shared link open a digitized manuscript at the right page?",
       "summary": "Open a digitized book at the page someone actually meant to share.",
       "context": "IIIF Content State describes a portable way to open an object at a particular place. Mirador tracks support for importing that state. A single-page example is a small, useful piece of the wider proposal.",
       "task": "Choose an openly accessible IIIF manifest and create a Content State link for one page. Prototype loading it in a fresh Mirador session.",
@@ -223,6 +538,33 @@
         {
           "title": "IIIF Content State API",
           "url": "https://iiif.io/api/content-state/1.0/"
+        }
+      ]
+    },
+    {
+      "id": "historic-newspaper-ocr",
+      "category": "culture",
+      "track": "Archives",
+      "title": "How many OCR errors can we verify in one historic newspaper column?",
+      "summary": "Correct one column from a public scan and record exactly what changed.",
+      "context": "The Library of Congress is reprocessing Chronicling America to improve searchable text. Public scans and word-level machine transcriptions make it possible to document improvements page by page.",
+      "task": "Choose one column on a pre-1920 page. Create a TSV with stable line references, the original OCR, corrected text, and flags for uncertain readings.",
+      "review": "Link the original scan and machine text. A second reader can compare every line with the source image and identify remaining uncertainty.",
+      "kind": "Proposed contribution",
+      "keywords": [
+        "OCR",
+        "Chronicling America",
+        "newspaper",
+        "transcription"
+      ],
+      "sources": [
+        {
+          "title": "Library of Congress OCR reprocessing",
+          "url": "https://blogs.loc.gov/thesignal/2026/08/yarasavage-new-ocr-reprocessing/"
+        },
+        {
+          "title": "Library of Congress text services",
+          "url": "https://www.loc.gov/apis/micro-services/text-services/"
         }
       ]
     },
@@ -256,29 +598,31 @@
       ]
     },
     {
-      "id": "historic-newspaper-ocr",
-      "category": "culture",
-      "track": "Archives",
-      "title": "Make a historic newspaper page searchable",
-      "summary": "Correct one column from a public scan and record exactly what changed.",
-      "context": "The Library of Congress is reprocessing Chronicling America to improve searchable text. Public scans and word-level machine transcriptions make it possible to document improvements page by page.",
-      "task": "Choose one column on a pre-1920 page. Create a TSV with stable line references, the original OCR, corrected text, and flags for uncertain readings.",
-      "review": "Link the original scan and machine text. A second reader can compare every line with the source image and identify remaining uncertainty.",
-      "kind": "Proposed contribution",
+      "id": "batch-job-electricity-emissions",
+      "category": "science",
+      "track": "Grid carbon intensity",
+      "title": "Could moving a two-hour computing job lower estimated electricity emissions?",
+      "summary": "Backtest immediate and delayed starts in the same eight-hour window using an hourly California grid series.",
+      "context": "EIA publishes hourly electricity generation and estimated CO₂ emissions. The Carbon Aware SDK provides an example of workload scheduling around electricity emissions intensity.",
+      "task": "Choose one month and one California balancing authority. For a constant-power two-hour job released at the same time each day, compare immediate execution with a fixed delay chosen from the previous month. Also calculate the lowest observed emissions window as a hindsight reference.",
+      "review": "Publish dataset timestamps, missing-hour rules, estimated average emissions intensity of load and calculations. Report results for all complete days, excluded days and deadline misses. Make the accounting basis explicit.",
+      "kind": "Proposed investigation",
       "keywords": [
-        "OCR",
-        "Chronicling America",
-        "newspaper",
-        "transcription"
+        "CAISO",
+        "EIA",
+        "energy",
+        "CO2",
+        "carbon aware",
+        "scheduling"
       ],
       "sources": [
         {
-          "title": "Library of Congress OCR reprocessing",
-          "url": "https://blogs.loc.gov/thesignal/2026/08/yarasavage-new-ocr-reprocessing/"
+          "title": "EIA hourly electric grid data methodology",
+          "url": "https://www.eia.gov/electricity/930-content/about.html"
         },
         {
-          "title": "Library of Congress text services",
-          "url": "https://www.loc.gov/apis/micro-services/text-services/"
+          "title": "Green Software Foundation Carbon Aware SDK",
+          "url": "https://github.com/Green-Software-Foundation/carbon-aware-sdk"
         }
       ]
     },
@@ -286,11 +630,11 @@
       "id": "overlapping-galaxies",
       "category": "science",
       "track": "Astronomy",
-      "title": "Build a test set for overlapping galaxies",
+      "title": "Can reviewers agree on which galaxy images show an overlap?",
       "summary": "Create a small public benchmark from released catalogs and telescope images.",
       "context": "Images of overlapping galaxies are useful for studying dust. Galaxy Zoo has published accepted and rejected candidate catalogs, and the Legacy Surveys provide public image cutouts.",
-      "task": "Build an independent manifest of 20 accepted and 20 rejected coordinates from the released catalogs. Use a documented scale and release for their image cutouts.",
-      "review": "Include the input releases, coordinates, source labels, cutout locations, and excluded records. Publish enough code to reproduce the selection and summarize ambiguities in the labels.",
+      "task": "Select 20 accepted and 20 rejected coordinates from the released catalogs. Retrieve same-scale cutouts, conceal their source labels, and have two reviewers independently label them overlap, no overlap or uncertain.",
+      "review": "Publish the selection rule, cutout locations, label rubric, reviewers’ decisions and exclusions. Report inter-reviewer agreement and how often each reviewer agrees with the source labels.",
       "kind": "Proposed benchmark",
       "keywords": [
         "Galaxy Zoo",
@@ -313,7 +657,7 @@
     {
       "id": "hodge-conjecture",
       "category": "math",
-      "title": "The Hodge conjecture",
+      "title": "Are all rational Hodge classes algebraic?",
       "summary": "Identify which topological features of algebraic varieties come from algebraic cycles.",
       "context": "The Clay Mathematics Institute lists the Hodge conjecture as a Millennium Prize Problem. Concrete examples can help distinguish cases where a statement is already known from the general conjecture.",
       "task": "Work through a known low-dimensional case or explicit projective example. Identify the relevant rational cohomology class, give a candidate algebraic cycle, and explain how their relationship is checked.",

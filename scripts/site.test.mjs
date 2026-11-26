@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import worker from '../dist/server/index.js';
 
@@ -15,20 +16,45 @@ async function rpc(method, params, headers = {}, id = 1) {
 
 test('catalog links resolve and category filtering and search agree', async () => {
   const catalog = await (await fetchSite('/api/problems')).json();
-  assert.equal(catalog.categories.length, 6);
-  assert.ok(catalog.problems.length >= 10);
+  assert.ok(catalog.categories.length >= 8);
+  assert.ok(catalog.problems.length >= 22);
   const paths = [...catalog.problems.map(p => '/problems/' + p.id + '/'), ...catalog.categories.map(c => '/categories/' + c.id + '/')];
   for (const path of paths) assert.equal((await fetchSite(path)).status, 200, path);
   const software = await (await fetchSite('/categories/software/?q=Photoshop')).text();
   assert.match(software, /aria-current="page">Software/);
   assert.match(software, /1 result for “Photoshop”/);
-  assert.match(software, /Build a free layered image editor/);
-  assert.doesNotMatch(software, /Build a free household budget app/);
+  assert.match(software, /Can a free browser editor preserve editable layers and masks\?/);
+  assert.doesNotMatch(software, /Can a local budget app import two bank CSVs/);
   const softwareIndex = await (await fetchSite('/categories/software/')).text();
   assert.match(softwareIndex, /Photoshop alternative/);
   assert.match(softwareIndex, /Monarch Money alternative/);
   assert.match(softwareIndex, /Acrobat Pro alternative/);
   assert.equal((await fetchSite('/problems/unknown/')).status, 404);
+});
+
+test('P versus NP and GTA VI lead to checkable questions and repository starter material', async () => {
+  const catalog = await (await fetchSite('/api/problems')).json();
+  const byId = new Map(catalog.problems.map(problem => [problem.id, problem]));
+  const math = byId.get('p-versus-np');
+  const pc = byId.get('gta-vi-pc-release');
+  assert.ok(math.related.includes('3sat-to-clique'));
+  assert.ok(pc.related.includes('godot-msaa-pipeline-stutter'));
+  assert.match(pc.context, /An official PC date and requirements remained unconfirmed/);
+  for (const problem of catalog.problems) {
+    assert.match(problem.title, /\?$/, problem.id);
+    for (const id of problem.related ?? []) {
+      assert.notEqual(id, problem.id);
+      assert.ok(byId.has(id), problem.id + ' links to missing ' + id);
+    }
+    if (problem.starter) {
+      assert.ok(problem.starter.title);
+      assert.match(problem.starter.path, /^contributions\/[a-z0-9-]+\/README\.md$/);
+      const file = await readFile(new URL('../' + problem.starter.path, import.meta.url), 'utf8');
+      assert.match(file, /^# /);
+    }
+  }
+  const pcSearch = await (await fetchSite('/categories/games/?q=GTA+6+PC')).text();
+  assert.match(pcSearch, /href="\/problems\/gta-vi-pc-release\/"/);
 });
 
 test('the home gallery and project list together link the full catalog', async () => {
