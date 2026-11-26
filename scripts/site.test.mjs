@@ -16,8 +16,8 @@ async function rpc(method, params, headers = {}, id = 1) {
 
 test('catalog links resolve and category filtering and search agree', async () => {
   const catalog = await (await fetchSite('/api/problems')).json();
-  assert.ok(catalog.categories.length >= 8);
-  assert.ok(catalog.problems.length >= 22);
+  assert.ok(catalog.categories.length >= 9);
+  assert.ok(catalog.problems.length >= 38);
   const paths = [...catalog.problems.map(p => '/problems/' + p.id + '/'), ...catalog.categories.map(c => '/categories/' + c.id + '/')];
   for (const path of paths) assert.equal((await fetchSite(path)).status, 200, path);
   const software = await (await fetchSite('/categories/software/?q=Photoshop')).text();
@@ -55,6 +55,11 @@ test('P versus NP and GTA VI lead to checkable questions and repository starter 
   }
   const pcSearch = await (await fetchSite('/categories/games/?q=GTA+6+PC')).text();
   assert.match(pcSearch, /href="\/problems\/gta-vi-pc-release\/"/);
+  const robotics = catalog.problems.filter(problem => problem.category === 'robotics');
+  assert.ok(robotics.length >= 3);
+  assert.ok(robotics.some(problem => problem.id === 'mujoco-box-edge-contact' && problem.starter));
+  const dataSearch = await (await fetchSite('/categories/data/?q=USGS+discharge')).text();
+  assert.match(dataSearch, /href="\/problems\/usgs-daily-api-parity\/"/);
 });
 
 test('home shelves cover the full catalog and link the site sections and community actions', async () => {

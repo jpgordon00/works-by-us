@@ -40,6 +40,11 @@
       "id": "science",
       "title": "Science & energy",
       "description": "Run small, repeatable investigations using public observations."
+    },
+    {
+      "id": "robotics",
+      "title": "Robotics simulation",
+      "description": "Check physics, simulated sensors and robot control performance in repeatable virtual scenes."
     }
   ],
   "problems": [
@@ -166,7 +171,8 @@
         "3sat-to-clique",
         "sat-competition-comparison",
         "sparse-permanent-check",
-        "unrestricted-circuit-lower-bound"
+        "unrestricted-circuit-lower-bound",
+        "maximum-agreement-forest-tiny"
       ]
     },
     {
@@ -204,7 +210,9 @@
       ],
       "related": [
         "godot-msaa-pipeline-stutter",
-        "windows-linux-proton-compatibility"
+        "windows-linux-proton-compatibility",
+        "godot-static-texture-streaming",
+        "gamescope-launch-exit-code"
       ],
       "starter": {
         "title": "November 26 release check and source ledger",
@@ -218,7 +226,7 @@
       "title": "Does the sparse permanent algorithm agree with exhaustive counting?",
       "summary": "Check a small component of recent work on the Exponential Time Hypothesis against an independent reference.",
       "context": "An October 2026 preprint presents a subexponential algorithm for exact k-SAT. November lecture notes explain a route through the permanent of sparse matrices. The proposed experiment concerns correctness on small inputs and practical resource cost.",
-      "task": "Implement the bounded-degree permanent routine from the notes for small integer matrices. Compare it with direct permutation enumeration on empty, diagonal, singular, and seeded sparse fixtures.",
+      "task": "Implement the bounded-degree permanent routine from the notes for small integer matrices, with a fixed bound on the count of nonzero entries in each row and column. Compare with permutation enumeration on empty, diagonal, singular and seeded sparse fixtures.",
       "review": "Publish the code and seeded input list. Require exact integer agreement and report wall time and peak memory by matrix size. State the size and degree limits of the run.",
       "kind": "Research reproduction",
       "keywords": [
@@ -300,7 +308,11 @@
           "title": "SAT Competition output and certificate rules",
           "url": "https://satcompetition.github.io/2026/output.html"
         }
-      ]
+      ],
+      "starter": {
+        "title": "Pinned twelve-case comparison and checked results",
+        "path": "contributions/sat-competition/README.md"
+      }
     },
     {
       "id": "windows-linux-proton-compatibility",
@@ -365,7 +377,7 @@
       "track": "Circuit complexity",
       "title": "Does any language in E^NP require Ω(n log n)-size unrestricted circuits?",
       "summary": "Work on a circuit lower-bound question explicitly posed in a November 2026 preprint.",
-      "context": "The question concerns explicit Boolean functions in exponential time with an NP oracle, and unrestricted circuits. Depth-two conjunction/disjunction formulas with negations on inputs give a more accessible model in which parity has a provable exponential bound.",
+      "context": "The open question concerns languages in deterministic time 2^O(n) with an NP oracle and unrestricted Boolean circuits. In the more restrictive disjunctive normal form model, odd parity requires exponentially many terms.",
       "task": "Reproduce the odd-parity lower bound for depth-two disjunctive normal form. Identify the place in the argument that relies on each term being a conjunction of literals.",
       "review": "Supply a proof of the bound and an independent small truth-table check. State the circuit model, size measure and which lower-bound claim remains open.",
       "kind": "Open research problem",
@@ -380,7 +392,11 @@
           "title": "Chukhin et al., ECCC 2026/313 (Open Problem 1)",
           "url": "https://eccc.weizmann.ac.il/report/2026/313/"
         }
-      ]
+      ],
+      "starter": {
+        "title": "Exact parity bound and exhaustive checker",
+        "path": "contributions/parity-dnf/README.md"
+      }
     },
     {
       "id": "arc-agi-memory",
@@ -675,6 +691,490 @@
           "url": "https://www.claymath.org/millennium/hodge-conjecture/"
         }
       ]
+    },
+    {
+      "id": "matrix-multiplication-proof-scope",
+      "category": "math",
+      "track": "Proof checking",
+      "title": "What does the November matrix-multiplication proof check in Lean?",
+      "summary": "Audit the theorem statement and assumptions behind a new matrix-multiplication preprint.",
+      "context": "The November 24 authors report an exponent of 9/4. The accompanying Lean scope describes a theorem for division-free circuits computing formal polynomial identities. The scope audit compares the exact formal and manuscript claims.",
+      "task": "Pin the source and Lean toolchain. Build the named square-exponent theorem, print its statement and axioms, and trace the definitions for formal identities and counted operations.",
+      "review": "Publish the commit, build and print commands and a comparison of field assumptions, division, identity model and gate metric. Mark any manuscript step that you did not independently check.",
+      "kind": "Research reproduction",
+      "keywords": [
+        "Lean",
+        "matrix multiplication",
+        "exponent",
+        "omega",
+        "proof"
+      ],
+      "sources": [
+        {
+          "title": "November 24 preprint and formalization links",
+          "url": "https://github.com/openai/math/blob/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/README.md"
+        },
+        {
+          "title": "ExactExponent Lean source",
+          "url": "https://github.com/openai/math/blob/main/lean/OAI/LinearAlgebra/SpectralBooks/ExactExponent.lean"
+        }
+      ]
+    },
+    {
+      "id": "maximum-agreement-forest-tiny",
+      "category": "math",
+      "track": "Exact graph algorithms",
+      "title": "Can a tiny reference solver check the smallest forest shared by two trees?",
+      "summary": "Build a brute-force oracle for small rooted trees and compare it with a PACE 2026 exact solver.",
+      "context": "The PACE 2026 challenge studied maximum agreement forests and published a tiny set, a checker and access to submitted solvers. An independent implementation can check whether an output is minimal on small inputs.",
+      "task": "Use the published rooted binary tree format. Enumerate candidate edge cuts for inputs with at most eight leaves, compare the resulting forests using their labeled rooted topology, and check the reported optimum with one pinned exact submission.",
+      "review": "Publish tree pairs, minimum component counts, witness forests and checker output. Include identical trees and a hand-checkable conflicting pair and state which cases fell outside the oracle’s bounds.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "PACE",
+        "agreement forest",
+        "tree",
+        "exact solver",
+        "oracle"
+      ],
+      "sources": [
+        {
+          "title": "PACE 2026 challenge resources and checker",
+          "url": "https://pacechallenge.org/2026/"
+        },
+        {
+          "title": "PACE 2026 organizers’ report",
+          "url": "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.IPEC.2026.32"
+        }
+      ]
+    },
+    {
+      "id": "time-horizon-task-family",
+      "category": "ai",
+      "track": "AI time horizons",
+      "title": "How much does an AI time-horizon estimate change if one task family is omitted?",
+      "summary": "Measure the sensitivity of published 50% task-completion time horizons to the mixture of task families.",
+      "context": "METR publishes data and methods for estimating how long a human would take on tasks that agents can complete with a given probability. Closely related tasks can influence a fitted horizon together.",
+      "task": "Pin the public TH1.1 scored runs and analysis code. Reproduce the released baseline for two models, then refit after leaving out one task family at a time using the same fit settings.",
+      "review": "Publish task and run counts, baseline and per-family estimates, and any failed or poorly determined fits. Check the same code reproduces the baseline before interpreting changes.",
+      "kind": "Proposed analysis",
+      "keywords": [
+        "METR",
+        "TH1.1",
+        "time horizon",
+        "task family",
+        "sensitivity"
+      ],
+      "sources": [
+        {
+          "title": "METR time-horizon methods and data",
+          "url": "https://metr.org/time-horizons/"
+        },
+        {
+          "title": "METR public analysis repository",
+          "url": "https://github.com/METR/eval-analysis-public"
+        },
+        {
+          "title": "METR November capability update",
+          "url": "https://metr.org/blog/2026-11-20-q4-2026-capability-update/"
+        }
+      ]
+    },
+    {
+      "id": "frontiermath-statement-review",
+      "category": "ai",
+      "track": "Formal benchmark review",
+      "title": "Do five FrontierMath Erdős statements preserve the original mathematical hypotheses?",
+      "summary": "Compare original problem statements with their Lean formulations before treating a proof as evidence of a solution.",
+      "context": "Epoch AI released formal statements for a set of Erdős problems. A faithful formalization needs equivalent domains, conditions and quantifiers even when the surface wording changes.",
+      "task": "Preselect five formalized statements at a pinned revision. Have two reviewers compare each original statement with its Lean definitions, domains, assumptions and quantifiers.",
+      "review": "Publish the source-to-formal statement mapping, commit, reviewer decisions and a minimal example for any semantic difference. Record disagreements and ambiguous translations.",
+      "kind": "Proposed audit",
+      "keywords": [
+        "FrontierMath",
+        "Erdos",
+        "Lean",
+        "theorem",
+        "formal verification"
+      ],
+      "sources": [
+        {
+          "title": "Epoch AI’s FrontierMath Erdős announcement",
+          "url": "https://epoch.ai/latest/announcing-frontiermath-erdos"
+        },
+        {
+          "title": "LeanOpenProblems statements",
+          "url": "https://github.com/epoch-research/LeanOpenProblems"
+        }
+      ]
+    },
+    {
+      "id": "usgs-daily-api-parity",
+      "category": "data",
+      "track": "Public API migration",
+      "title": "Do both USGS APIs report the same mean daily river discharge?",
+      "summary": "Compare the legacy WaterServices and modern OGC endpoints across known gauges, dates and pagination.",
+      "context": "USGS is migrating users from WaterServices to new APIs. A client needs to preserve daily dates, discharge values, units and quality fields when switching endpoints.",
+      "task": "Reproduce the repository’s fixed three-gauge check, then repeat for a declared week with provisional or missing observations. Follow the modern API’s next links with a small page size.",
+      "review": "Report missing, duplicate, extra and mismatched gauge-days. Compare dates, exact decimal values and units, and report approval status separately from qualifiers. Attach the query parameters and raw page counts.",
+      "kind": "Migration check",
+      "keywords": [
+        "USGS",
+        "WaterServices",
+        "OGC",
+        "water",
+        "daily discharge",
+        "pagination"
+      ],
+      "sources": [
+        {
+          "title": "USGS migration guide for /dv and /daily",
+          "url": "https://api.waterdata.usgs.gov/docs/ogcapi/migration/"
+        },
+        {
+          "title": "USGS WaterServices retirement announcement",
+          "url": "https://waterdata.usgs.gov/blog/api-waterservices-decom/"
+        }
+      ],
+      "starter": {
+        "title": "Live three-gauge comparison and rerunnable check",
+        "path": "contributions/usgs-daily-api/README.md"
+      }
+    },
+    {
+      "id": "geoparquet-measure-crs-roundtrip",
+      "category": "data",
+      "track": "Geospatial interoperability",
+      "title": "Do GeoParquet exports preserve measures and coordinate systems across tools?",
+      "summary": "Exercise a measured geometry and its coordinate reference system across DuckDB and GDAL readers and writers.",
+      "context": "GeoParquet 2.0 can use native Parquet geometry metadata. DuckDB’s spatial project tracks a metadata question for measured M and ZM geometries, which encode a measure in addition to spatial ordinates.",
+      "task": "Use an original tiny dataset with a measured line, a ZM line and an unmeasured control in an explicit coordinate reference system. Export in GeoParquet 1.x and 2.0 with pinned versions and read each file back in both tools.",
+      "review": "Publish commands, version and capability matrix, native schema and file metadata, and coordinate and measure comparisons with stated tolerance. Record any unsupported export as such and distinguish it from silently dropped metadata.",
+      "kind": "Interoperability check",
+      "keywords": [
+        "GeoParquet",
+        "DuckDB",
+        "GDAL",
+        "CRS",
+        "geometry",
+        "ZM"
+      ],
+      "sources": [
+        {
+          "title": "GeoParquet releases and specification changes",
+          "url": "https://github.com/opengeospatial/geoparquet/releases"
+        },
+        {
+          "title": "GeoParquet tools and version guide",
+          "url": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/distributing-geoparquet-tools.md"
+        },
+        {
+          "title": "DuckDB Spatial measured-geometry metadata issue",
+          "url": "https://github.com/duckdb/duckdb-spatial/issues/847"
+        }
+      ]
+    },
+    {
+      "id": "lake-powell-elevation-agreement",
+      "category": "science",
+      "track": "Satellite validation",
+      "title": "How closely do satellite and dam-gauge changes agree at Lake Powell?",
+      "summary": "Compare changes in water-surface elevation from qualifying satellite passes and the public dam-gauge series.",
+      "context": "NASA’s SWOT LakeSP product reports pass-level water elevations and quality flags. The Bureau of Reclamation releases observed daily Lake Powell elevations. A relative-change comparison can handle an undocumented constant datum offset.",
+      "task": "Predeclare October 1 through November 20, 2026. Select all qualifying Lake Powell passes with a fixed lake identifier and quality filter. Match each to the nearest daily gauge reading and subtract each series’ first matched value.",
+      "review": "Include IDs, acquisition dates, time gaps, excluded passes, units and uncertainties. Report relative change in metres and only compare absolute levels if a common vertical datum is documented.",
+      "kind": "Proposed investigation",
+      "keywords": [
+        "Lake Powell",
+        "SWOT",
+        "NASA",
+        "water level",
+        "reservoir",
+        "altimetry"
+      ],
+      "sources": [
+        {
+          "title": "NASA SWOT LakeSP D product",
+          "url": "https://podaac.jpl.nasa.gov/dataset/SWOT_L2_HR_LakeSP_D"
+        },
+        {
+          "title": "Bureau of Reclamation Lake Powell elevation data",
+          "url": "https://data.usbr.gov/catalog/2362/item/508"
+        }
+      ]
+    },
+    {
+      "id": "zarr-chunk-layout-benchmark",
+      "category": "science",
+      "track": "Scientific data access",
+      "title": "Which Zarr chunk shape reads fewer bytes for a time series and for a map?",
+      "summary": "Measure how the same gridded array reads under two chunk shapes and two common scientific queries.",
+      "context": "Xarray supports Zarr for chunked scientific arrays, and a September release added read support for rectilinear Zarr v3 chunks. This experiment uses regular writable chunk shapes to measure a basic workload trade-off.",
+      "task": "Write the same deterministic 120×180×360 array twice using 30×15×15 and 1×90×90 chunk shapes. Hold dtype and compression fixed. Read a 90-step point series and an aligned 90×90 single-time slice with fresh caches.",
+      "review": "Publish source, store configuration, read requests, data and metadata bytes and exact output equality. Report median elapsed time across five runs per workload and disclose the storage backend.",
+      "kind": "Proposed benchmark",
+      "keywords": [
+        "Zarr",
+        "Xarray",
+        "chunking",
+        "scientific computing",
+        "arrays",
+        "I/O"
+      ],
+      "sources": [
+        {
+          "title": "Xarray September 2026 release notes",
+          "url": "https://docs.xarray.dev/en/v2026.09.0/whats-new.html"
+        },
+        {
+          "title": "Xarray I/O guide",
+          "url": "https://docs.xarray.dev/en/stable/user-guide/io.html"
+        }
+      ],
+      "starter": {
+        "title": "Measured local chunk reads and exact equality check",
+        "path": "contributions/zarr-chunk-layout/README.md"
+      }
+    },
+    {
+      "id": "audacity-spectrum-parity",
+      "category": "software",
+      "track": "Audio editing",
+      "title": "Can Audacity’s restored Plot Spectrum find the same peaks as Audacity 3?",
+      "summary": "Use an original two-tone WAV to compare the spectrum from the restored tool with an Audacity 3 export.",
+      "context": "Audacity maintainers are working to bring Plot Spectrum to version 4.2. Known input frequencies and amplitudes give both the current and restored analysis tools a checkable reference.",
+      "task": "Generate the repository’s 48 kHz mono fixture. In Audacity 3 and a 4.2 build with Plot Spectrum, select the same interval, use a Hann window and a 4,096-point spectrum, and export each result.",
+      "review": "Publish build IDs, settings and the two exports. Check for peaks at 468.75 Hz and 937.5 Hz within one frequency bin and a relative level difference near 12.04 dB within 1 dB.",
+      "kind": "Open upstream work",
+      "keywords": [
+        "Audacity",
+        "FFT",
+        "spectrum",
+        "Hann",
+        "audio editing"
+      ],
+      "sources": [
+        {
+          "title": "Audacity Plot Spectrum tracking issue",
+          "url": "https://github.com/audacity/audacity/issues/12241"
+        },
+        {
+          "title": "Audacity’s version 4.2 spectrum discussion",
+          "url": "https://forum.audacityteam.org/t/help-us-bring-back-plot-spectrum-in-audacity-4-2/154996"
+        },
+        {
+          "title": "Audacity Plot Spectrum manual",
+          "url": "https://manual.audacityteam.org/man/plot_spectrum.html"
+        }
+      ],
+      "starter": {
+        "title": "Deterministic two-tone WAV and spectrum checker",
+        "path": "contributions/audacity-spectrum/README.md"
+      }
+    },
+    {
+      "id": "blender-gltf-camera-orientation",
+      "category": "games",
+      "track": "3D asset pipelines",
+      "title": "Does adding stationary keyframes rotate a camera during glTF export?",
+      "summary": "Compare static and identically keyed camera orientation when Blender exports the same scene to glTF.",
+      "context": "Blender’s glTF exporter has an open report about animated camera orientation when Y Up is disabled. An independent fixture can check the reported behavior and the proposed change.",
+      "task": "Build an original asymmetric scene with a rotated camera. Export it once statically and once with two identical rotation keys, with Y Up disabled and enabled. Test a stable exporter and the candidate revision.",
+      "review": "Publish the scene, export settings, revisions and decoded static and keyed world rotations. Account for quaternion sign equivalence and measure the angular difference in degrees.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "Blender",
+        "glTF",
+        "animation",
+        "camera",
+        "quaternion",
+        "PC game"
+      ],
+      "sources": [
+        {
+          "title": "Blender glTF exporter issue #2770",
+          "url": "https://github.com/KhronosGroup/glTF-Blender-IO/issues/2770"
+        },
+        {
+          "title": "Candidate exporter change #2801",
+          "url": "https://github.com/KhronosGroup/glTF-Blender-IO/pull/2801"
+        }
+      ]
+    },
+    {
+      "id": "godot-static-texture-streaming",
+      "category": "games",
+      "track": "Graphics performance",
+      "title": "Does a texture finish sharpening after the Godot camera stops moving?",
+      "summary": "Compare texture streaming with continuous redraw and with low-processor mode after a camera move stops.",
+      "context": "An issue on Godot’s 4.8 milestone concerns texture streaming and redraw in low-processor mode. A small original scene makes it possible to compare visible output without shipping game assets.",
+      "task": "Use an original mipmapped checkerboard on one plane. Move from a distant camera pose to a fixed near pose and record the same region at fixed times. Compare low-processor and continuous redraw, plus a full-resolution reference.",
+      "review": "Publish the engine build, GPU, driver, rendering settings, image crops and a declared image-similarity threshold. Report time to match the reference and whether a forced redraw changes the result.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "Godot",
+        "textures",
+        "streaming",
+        "mipmaps",
+        "PC port"
+      ],
+      "sources": [
+        {
+          "title": "Godot texture-streaming issue #124180",
+          "url": "https://github.com/godotengine/godot/issues/124180"
+        },
+        {
+          "title": "Godot 4.8 beta 5 notes",
+          "url": "https://godotengine.org/article/dev-snapshot-godot-4-8-beta-5/"
+        }
+      ]
+    },
+    {
+      "id": "gamescope-launch-exit-code",
+      "category": "games",
+      "track": "PC game launchers",
+      "title": "Can a launcher read the real game exit status through Gamescope?",
+      "summary": "Exercise normal exits, errors and missing commands in a small headless and Wayland comparison.",
+      "context": "Gamescope has a reported child-process status issue and a proposed change. An exit-code fixture can check that launchers can distinguish deliberate game exit from failure.",
+      "task": "Use harmless local dummy commands for exits 0 and 7, self-SIGTERM and a missing program. Compare a stable build and the proposed change headlessly and under nested Wayland.",
+      "review": "Publish expected and observed exit codes for both builds and backends with tool versions. Cover an explicit compositor shutdown separately and record unavailable test configurations.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "Gamescope",
+        "Steam Deck",
+        "Linux",
+        "launcher",
+        "exit status",
+        "Wayland"
+      ],
+      "sources": [
+        {
+          "title": "Gamescope exit-status issue #2540",
+          "url": "https://github.com/ValveSoftware/gamescope/issues/2540"
+        },
+        {
+          "title": "Gamescope candidate change #2541",
+          "url": "https://github.com/ValveSoftware/gamescope/pull/2541"
+        }
+      ]
+    },
+    {
+      "id": "archived-load-more-capture",
+      "category": "culture",
+      "track": "Web preservation",
+      "title": "Can an archived page’s Load More button replay results from the same capture date?",
+      "summary": "Check that a page and its paginated results stay associated when replaying two archived snapshots.",
+      "context": "Webrecorder’s pywb project tracks a date-selection issue involving archived POST responses. An original local page and two archived snapshots can isolate the date-matching behavior.",
+      "task": "Create a local page with two POST pagination requests and archive captures at two timestamps with different visible markers per page. Stop the original server and replay each capture, testing JSON and form-encoded bodies.",
+      "review": "Publish redistributable inputs, pywb version and request logs. Each replay must show its two markers in order and all successful pagination responses must come from the matching capture.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "pywb",
+        "WARC",
+        "web archive",
+        "capture",
+        "pagination"
+      ],
+      "sources": [
+        {
+          "title": "pywb capture-selection issue #988",
+          "url": "https://github.com/webrecorder/pywb/issues/988"
+        },
+        {
+          "title": "pywb recording documentation",
+          "url": "https://github.com/webrecorder/pywb/blob/main/docs/manual/recorder.rst"
+        }
+      ]
+    },
+    {
+      "id": "nav2-path-pruning-cost",
+      "category": "robotics",
+      "track": "Navigation performance",
+      "title": "Why does a simulated Nav2 controller slow down on long waypoint lists?",
+      "summary": "Isolate how the cost of pruning and reporting a path scales with the number of remaining waypoints.",
+      "context": "A Nav2 issue reports per-cycle work growing with path length even when the controller plugin stays fixed. The report measured an x86 system and requests more evidence about smaller processors.",
+      "task": "Drive the same path-handler and remaining-length functions with deterministic virtual routes of 10,000, 100,000 and 400,000 poses. Hold advancing distance and plugin settings fixed and measure components separately.",
+      "review": "Publish generator, versions, architecture and median and p95 timings across repeated runs. Include remaining-distance and path-segment comparisons if evaluating a proposed optimization.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "Nav2",
+        "ROS",
+        "robotics",
+        "path",
+        "waypoint",
+        "performance"
+      ],
+      "sources": [
+        {
+          "title": "Nav2 long-path issue #6759",
+          "url": "https://github.com/ros-navigation/navigation2/issues/6759"
+        },
+        {
+          "title": "Nav2 Controller Server documentation",
+          "url": "https://docs.nav2.org/configuration/packages/configuring-controller-server.html"
+        }
+      ]
+    },
+    {
+      "id": "gazebo-actor-scripted-pose",
+      "category": "robotics",
+      "track": "Simulation state",
+      "title": "Does Gazebo report a scripted actor at its actual simulated position?",
+      "summary": "Compare a scripted actor’s reported world pose with a known linear trajectory.",
+      "context": "An open Gazebo Sim report says Actor::WorldPose can return the base pose for an actor following a scripted trajectory. A headless fixture with a short straight route offers a checkable expectation.",
+      "task": "Use Gazebo’s documented actor trajectory pattern with a nonzero base translation and a straight scripted segment. Log world pose in a defined update phase at three known simulation times, plus a stationary control.",
+      "review": "Publish the original world, simulation version, step size and logged versus expected poses. Distinguish base pose and trajectory coordinates and report any sampling offset.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "Gazebo",
+        "robotics",
+        "simulation",
+        "Actor",
+        "SDF",
+        "pose"
+      ],
+      "sources": [
+        {
+          "title": "Gazebo Sim actor world pose issue #4131",
+          "url": "https://github.com/gazebosim/gz-sim/issues/4131"
+        },
+        {
+          "title": "Gazebo scripted actor documentation",
+          "url": "https://gazebosim.org/docs/harmonic/actors/"
+        }
+      ]
+    },
+    {
+      "id": "mujoco-box-edge-contact",
+      "category": "robotics",
+      "track": "Contact physics",
+      "title": "When does a MuJoCo box-on-edge contact collapse to one point?",
+      "summary": "Check how small changes in box angle affect the reported virtual contact manifold.",
+      "context": "An open MuJoCo report shows one contact near the end of an overlapping box edge. Comparing nearby angles and a flat-face control can help characterize where the reported contact pattern changes.",
+      "task": "Construct two original virtual boxes with dimensions and poses documented in the report. Evaluate contacts at the reported pose, nearby angular perturbations and one simple no-contact control using a pinned engine.",
+      "review": "Publish the model and angles, engine version, distances and individual contact positions in world coordinates. Show controls and distinguish static contact reports from claims about motion over time.",
+      "kind": "Open upstream issue",
+      "keywords": [
+        "MuJoCo",
+        "robotics",
+        "simulation",
+        "collision",
+        "contacts"
+      ],
+      "sources": [
+        {
+          "title": "MuJoCo box-edge contact issue #3755",
+          "url": "https://github.com/google-deepmind/mujoco/issues/3755"
+        },
+        {
+          "title": "MuJoCo contact model documentation",
+          "url": "https://mujoco.readthedocs.io/en/stable/modeling.html"
+        }
+      ],
+      "starter": {
+        "title": "Two-box model, angle sweep and measured contacts",
+        "path": "contributions/mujoco-edge-contact/README.md"
+      }
     }
   ]
 }

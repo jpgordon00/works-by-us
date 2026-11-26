@@ -1,0 +1,10 @@
+<mujoco model="edge-contact-probe">
+  <worldbody>
+    <geom name="support" type="box" pos="0.35 0 -0.00635" size="0.3 0.6 0.00635"/>
+    <body name="probe" pos="0.378351959 0.599323405 0.0000633253313"
+          quat="-0.00729818454 0.0299928649 -0.200104167 0.979288255">
+      <joint name="probe_pose" type="free"/>
+      <geom name="probe_box" type="box" size="0.0375 0.0041667 0.0075"/>
+    </body>
+  </worldbody>
+</mujoco>

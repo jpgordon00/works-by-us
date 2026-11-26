@@ -1,0 +1,566 @@
+{
+  "checked_at_utc": "2026-11-26T19:27:09+00:00",
+  "parameter_code": "00060",
+  "statistic_id": "00003",
+  "gauges": [
+    "01094400",
+    "01646500",
+    "09506000"
+  ],
+  "start_date": "2025-10-01",
+  "end_date": "2025-10-07",
+  "summary": {
+    "expected_pairs": 21,
+    "matching_pairs": 21,
+    "mismatched_pairs": 0,
+    "unexpected_pairs": 0,
+    "missing_pairs": {
+      "legacy": 0,
+      "modern": 0
+    },
+    "duplicate_pairs": {
+      "legacy": 0,
+      "modern": 0
+    }
+  },
+  "errors": [],
+  "requests": {
+    "legacy": [
+      {
+        "url": "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=01094400%2C01646500%2C09506000&startDT=2025-10-01&endDT=2025-10-07&parameterCd=00060&statCd=00003",
+        "http_status": 200,
+        "sha256": "39acd37e0841212606377e7f863cfac454baac0e17b15d3583e4b4abd6e7c55f",
+        "rows": 21
+      }
+    ],
+    "modern": [
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&monitoring_location_id=USGS-01094400&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3",
+        "http_status": 200,
+        "sha256": "ba486fb4c6f2678be4551d5f278ffd18904bff4e6b43ba40b2a33d633dd75177",
+        "gauge": "01094400",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=MmE3NDUzOWMtMDNiYy00OWY3LTk5NmEtNjRiODc4NWMxZDYz&monitoring_location_id=USGS-01094400&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "25cc77f302742952c6a702899266edce6c4832c98a69f1914c5eb33e1aed2d74",
+        "gauge": "01094400",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=NzU3ZjU1MDEtMWU0Zi00NGM5LWI1OWYtNDlmYzhhZGY2ZTEx&monitoring_location_id=USGS-01094400&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "6ddec322dee16497aebf93ad6560be52804690a1331110f4eb9a77c9ccf45e5f",
+        "gauge": "01094400",
+        "rows": 1
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&monitoring_location_id=USGS-01646500&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3",
+        "http_status": 200,
+        "sha256": "ea195a70184e3458dfc8f7c36b003bc434f9e695322fa95e47f7c6cbc39ce67f",
+        "gauge": "01646500",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=NmJmZTg4NWItZTMyNS00ZmQ1LTkyZDEtYmU1OWJiODFlM2Qx&monitoring_location_id=USGS-01646500&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "eb2d757632f5ce7334c5fb3f9eb19f58db069cd82043b5f015a03f20282cf102",
+        "gauge": "01646500",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=ZDhlYTRlZTUtNWJlNC00OTQ3LThhYzctNzA1ODIyYWNiMDBh&monitoring_location_id=USGS-01646500&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "3256333cada54530d2a60599b97b3e58c83f1337bdc00f5943523804f5b41748",
+        "gauge": "01646500",
+        "rows": 1
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&monitoring_location_id=USGS-09506000&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3",
+        "http_status": 200,
+        "sha256": "e86d20b02a0c9335fe75bf7f2630b9b69b2ff5ff1bc7c3426af377d85795192a",
+        "gauge": "09506000",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=OWMxODM0MmEtZDZhYy00MzU2LThkY2UtOTA3ZmMwZDYzN2M0&monitoring_location_id=USGS-09506000&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "1dacdc936f7bcb4da270f08a0c17926c050e3a76a160648a150559a7d1839605",
+        "gauge": "09506000",
+        "rows": 3
+      },
+      {
+        "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?cursor=ZGY2YTYzZjItNmU2OC00ODVlLTlkNGYtMzBkMGY4OGY4Mzhj&monitoring_location_id=USGS-09506000&parameter_code=00060&statistic_id=00003&datetime=2025-10-01%2F2025-10-07&limit=3&f=json",
+        "http_status": 200,
+        "sha256": "4910020aa5fd18100fafcf250bd0b1bc641d470ab9b0cd878ba5f7efbba9bfc8",
+        "gauge": "09506000",
+        "rows": 1
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "gauge": "01094400",
+      "date": "2025-10-01",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "15.3",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "15.3",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-02",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "12.4",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "12.4",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-03",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "10.5",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "10.5",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-04",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "8.81",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "8.81",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-05",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "7.11",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "7.11",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-06",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "7.12",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "7.12",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01094400",
+      "date": "2025-10-07",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "8.01",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "8.01",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-01",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1800",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1800",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-02",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1740",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1740",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-03",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1710",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1710",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-04",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1580",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1580",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-05",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1510",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1510",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-06",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1390",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1390",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "01646500",
+      "date": "2025-10-07",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "1350",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "1350",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-01",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "158",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "158",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-02",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "158",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "158",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-03",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "143",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "143",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-04",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "131",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "131",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-05",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "124",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "124",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-06",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "121",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "121",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    },
+    {
+      "gauge": "09506000",
+      "date": "2025-10-07",
+      "expected": true,
+      "legacy": [
+        {
+          "value": "115",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "modern": [
+        {
+          "value": "115",
+          "unit": "ft^3/s",
+          "approval": "approved",
+          "qualifiers": []
+        }
+      ],
+      "different_fields": []
+    }
+  ]
+}

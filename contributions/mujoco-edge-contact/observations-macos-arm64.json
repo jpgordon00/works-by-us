@@ -1,0 +1,254 @@
+{
+  "environment": {
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "python": "3.12.14",
+    "mujoco_python": "3.17.0",
+    "mujoco_engine": "3.17.0",
+    "numpy": "2.5.5"
+  },
+  "measurements": [
+    {
+      "rotation_axis_world": null,
+      "rotation_degrees": 0,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.758991,
+        415.90219
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.770144,
+            597.769185,
+            -0.95121
+          ],
+          "signed_distance_mm": -4.850293,
+          "normal_support_to_probe": [
+            0.0,
+            0.919868,
+            0.392228
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "x",
+      "rotation_degrees": -1,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.759626,
+        415.902824
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.770792,
+            597.75035,
+            -0.913177
+          ],
+          "signed_distance_mm": -4.85585,
+          "normal_support_to_probe": [
+            0.0,
+            0.926573,
+            0.376114
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "x",
+      "rotation_degrees": -0.25,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.75915,
+        415.902348
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.770306,
+            597.764408,
+            -0.94174
+          ],
+          "signed_distance_mm": -4.851699,
+          "normal_support_to_probe": [
+            0.0,
+            0.921571,
+            0.388211
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "x",
+      "rotation_degrees": 0.25,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.758834,
+        415.902032
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.769983,
+            597.774008,
+            -0.960654
+          ],
+          "signed_distance_mm": -4.848875,
+          "normal_support_to_probe": [
+            0.0,
+            0.918148,
+            0.396238
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "x",
+      "rotation_degrees": 1,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.758363,
+        415.901562
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.769503,
+            597.788746,
+            -0.988827
+          ],
+          "signed_distance_mm": -4.844554,
+          "normal_support_to_probe": [
+            0.0,
+            0.912883,
+            0.408222
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "z",
+      "rotation_degrees": -1,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.782356,
+        415.902453
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            415.829555,
+            597.572328,
+            -1.037837
+          ],
+          "signed_distance_mm": -5.280415,
+          "normal_support_to_probe": [
+            0.0,
+            0.9195,
+            0.393089
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "z",
+      "rotation_degrees": -0.25,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.765907,
+        415.901183
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            415.892834,
+            597.779267,
+            -0.947553
+          ],
+          "signed_distance_mm": -4.828875,
+          "normal_support_to_probe": [
+            0.0,
+            0.919772,
+            0.392453
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "z",
+      "rotation_degrees": 0.25,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.751359,
+        415.903912
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.783014,
+            597.69957,
+            -0.98021
+          ],
+          "signed_distance_mm": -5.001116,
+          "normal_support_to_probe": [
+            0.0,
+            0.919967,
+            0.391997
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": "z",
+      "rotation_degrees": 1,
+      "lift_mm": 0,
+      "contact_count": 1,
+      "contact_span_x_mm": 0.0,
+      "overlap_interval_x_mm": [
+        340.724153,
+        415.913377
+      ],
+      "contacts": [
+        {
+          "world_position_mm": [
+            340.824673,
+            597.490694,
+            -1.066854
+          ],
+          "signed_distance_mm": -5.453364,
+          "normal_support_to_probe": [
+            0.0,
+            0.920278,
+            0.391264
+          ]
+        }
+      ]
+    },
+    {
+      "rotation_axis_world": null,
+      "rotation_degrees": 0,
+      "lift_mm": 50,
+      "contact_count": 0,
+      "contact_span_x_mm": null,
+      "overlap_interval_x_mm": null,
+      "contacts": []
+    }
+  ]
+}
