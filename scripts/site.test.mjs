@@ -71,7 +71,12 @@ test('home shelves cover the full catalog and link the site sections and communi
   for (const section of ['problems', 'how-it-works', 'about', 'mcp']) {
     assert.ok(home.includes('href="#' + section + '"') && home.includes('id="' + section + '"'));
   }
-  assert.match(home, /issues\/new\?template=problem\.yml/);
+  assert.match(home, /<form[^>]+action="https:\/\/github\.com\/jpgordon00\/works-by-us\/issues\/new"[^>]+data-proposal/);
+  assert.match(home, /name="template" value="problem.yml"/);
+  assert.match(home, /<textarea[^>]+name="problem"[^>]+required/);
+  assert.match(home, /What problem will you solve\?/);
+  assert.match(home, /Suggest a problem/);
+  assert.match(home, /href="#propose">Submit a problem/);
   assert.match(home, /label%3Aproblem-proposal%20sort%3Areactions-%2B1-desc/);
   assert.match(home, /codex mcp add works-by-us --url https:\/\/works\.example\/api\/mcp/);
   assert.match(home, /linkedin\.com\/in\/jacob-gordon-6ab482215/);

@@ -157,5 +157,35 @@ function initProjectBrowser(browser) {
   if (input.value) search();
 }
 
+function initProblemEntry(form) {
+  const textarea = form.querySelector('textarea');
+  const suggest = form.querySelector('[data-suggest]');
+  const copy = form.querySelector('[data-copy]');
+  const examples = [
+    'Can we make a free tool that turns a scanned bus timetable into a searchable table?',
+    'Which public weather datasets agree on the hottest hour in the same city?',
+    'Can a free app compare two audio recordings and mark where they differ?'
+  ];
+  let current = -1;
+  function refresh() {
+    const text = textarea.value.trim();
+    textarea.setCustomValidity(text || !textarea.value ? '' : 'Describe the problem before continuing.');
+    suggest.disabled = Boolean(text) && text !== examples[current];
+    copy.disabled = !text;
+  }
+  suggest.hidden = false;
+  copy.hidden = false;
+  suggest.addEventListener('click', () => {
+    current = (current + 1) % examples.length;
+    textarea.value = examples[current];
+    textarea.focus();
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    refresh();
+  });
+  textarea.addEventListener('input', refresh);
+  refresh();
+}
+
 initHero(document.querySelector('[data-hero]'));
 initProjectBrowser(document.querySelector('.project-browser'));
+initProblemEntry(document.querySelector('[data-proposal]'));

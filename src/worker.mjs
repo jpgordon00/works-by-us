@@ -33,8 +33,7 @@ function findProblems(category = '', query = '') {
   });
 }
 
-function communityLinks() {
-  const submit = issuePath + '?template=problem.yml';
+function communityLinks(submit = issuePath + '?template=problem.yml') {
   const vote = config.repository + '/issues?q=' + encodeURIComponent('is:issue is:open label:problem-proposal sort:reactions-+1-desc');
   return `<a href="${escape(submit)}">Submit a problem</a><a href="${escape(vote)}">Vote on proposals</a>`;
 }
@@ -106,7 +105,7 @@ ${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description) 
 <footer class="wrap footer"><span>Collective Intelligence</span><a href="${config.repository}">GitHub</a><a href="${config.repository}/issues">Contributions</a></footer>
 </body></html>`, status, {
     'Content-Type': 'text/html; charset=utf-8',
-    'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com",
+    'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'" + (home ? " https://github.com" : "") + "; frame-ancestors 'self' https://chatgpt.com",
     'Cache-Control': 'no-cache'
   });
 }
