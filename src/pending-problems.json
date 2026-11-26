@@ -1,0 +1,77 @@
+{
+  "problems": [
+    {
+      "id": "collatz-conjecture",
+      "category": "math",
+      "track": "Collatz conjecture",
+      "title": "Does every Collatz sequence reach 1?",
+      "summary": "Pick a positive whole number. If it is even, halve it. If it is odd, triple it and add one. Does every starting number eventually reach 1?",
+      "context": "A proof that every starting number above 1 eventually drops below itself would settle the conjecture by induction. The starter uses exact algebra to prove this descent for whole families of numbers at once. Terence Tao proved an almost-all result. The conjecture asks about every positive integer.",
+      "task": "Choose one residue class left uncovered by the starter at depth 12. Split it into smaller classes and look for a sequence of steps that takes every member of one subclass below its starting value. Record which cases remain.",
+      "review": "Give the residue and modulus, the odd and even steps, and the exact formula for the resulting value. Check the parity at each step and prove strict descent for every starting number above 1 in the claimed class. Report how much previously uncovered territory the certificate covers.",
+      "kind": "Open number theory problem",
+      "keywords": [
+        "Collatz",
+        "3n+1",
+        "3x+1",
+        "hailstone",
+        "number theory",
+        "descent",
+        "proof",
+        "residue classes"
+      ],
+      "sources": [
+        {
+          "title": "Terence Tao on almost all Collatz orbits",
+          "url": "https://arxiv.org/abs/1909.03562"
+        },
+        {
+          "title": "David Bařina on computational verification of the Collatz problem",
+          "url": "https://doi.org/10.1007/s11227-025-07337-0"
+        }
+      ],
+      "starter": {
+        "title": "Check descent for whole families of starting numbers",
+        "path": "contributions/collatz-descent/README.md"
+      }
+    },
+    {
+      "id": "dark-matter",
+      "category": "science",
+      "track": "Dark matter",
+      "title": "What is dark matter?",
+      "summary": "Stars and gas near the edge of a spiral galaxy can orbit faster than their visible mass predicts. Measure how much faster in one galaxy, then compare it with a second.",
+      "context": "Astronomers infer dark matter from its gravity. At the outermost measured radius of galaxy NGC 3198, the observed orbital speed is 149 ± 3 km/s. The model for its stars and gas gives 64.71 km/s at the adopted stellar disk mass-to-light ratio of 0.5 in solar units. The speed difference constrains the gravitational field. The identity of dark matter remains open.",
+      "task": "Reproduce the NGC 3198 result, then test whether the gap persists in NGC 2403. Use every measured radius at or beyond half the last measured radius. Repeat the calculation at disk mass-to-light ratios of 0.3, 0.5 and 0.8.",
+      "review": "Use SPARC Table 2 for an independent calculation. Report the galaxy, radial range, number of measurements and median observed minus predicted speed in km/s for each ratio. Check the outermost point by hand and distinguish the measured speed error from model uncertainty.",
+      "kind": "Open physics question",
+      "keywords": [
+        "dark matter",
+        "galaxy rotation curves",
+        "SPARC",
+        "gravity",
+        "stars",
+        "astronomy",
+        "cosmology"
+      ],
+      "sources": [
+        {
+          "title": "SPARC rotation measurements and Newtonian mass models",
+          "url": "https://astroweb.case.edu/SPARC/"
+        },
+        {
+          "title": "Lelli, McGaugh and Schombert on the SPARC mass models",
+          "url": "https://arxiv.org/abs/1606.09251"
+        },
+        {
+          "title": "NASA on the evidence for dark matter",
+          "url": "https://science.nasa.gov/dark-matter/"
+        }
+      ],
+      "starter": {
+        "title": "Reproduce the rotation curve of NGC 3198",
+        "path": "contributions/dark-matter-rotation/README.md"
+      }
+    }
+  ]
+}

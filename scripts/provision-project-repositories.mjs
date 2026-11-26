@@ -15,6 +15,18 @@ const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const commitId = /^[a-f0-9]{40}$/;
 const model = 'works-by-us.problem.v1';
 const allowedStarters = new Map([
+  ['contributions/collatz-descent/README.md', [
+    'contributions/collatz-descent/README.md',
+    'contributions/collatz-descent/check.mjs'
+  ]],
+  ['contributions/dark-matter-rotation/README.md', [
+    'contributions/dark-matter-rotation/README.md',
+    'contributions/dark-matter-rotation/check.py'
+  ]],
+  ['contributions/sat-occurrence/README.md', [
+    'contributions/sat-occurrence/README.md',
+    'contributions/sat-occurrence/check.mjs'
+  ]],
   ['contributions/audacity-spectrum/README.md', [
     'contributions/audacity-spectrum/README.md',
     'contributions/audacity-spectrum/spectrum_fixture.py'
@@ -545,16 +557,22 @@ async function writeRegistry(root, registry) {
 
 async function cli(args) {
   let apply = false;
+  let pending = false;
   let revision = 'HEAD';
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--apply') apply = true;
+    else if (args[i] === '--pending') pending = true;
     else if (args[i] === '--revision' && args[i + 1]) revision = args[++i];
-    else throw new Error('Usage: node scripts/provision-project-repositories.mjs [--revision COMMIT] [--apply]');
+    else throw new Error('Usage: node scripts/provision-project-repositories.mjs [--revision COMMIT] [--pending] [--apply]');
   }
   const root = resolve('.');
   const snapshot = snapshotReader(root, revision);
-  const catalog = JSON.parse(snapshot.read('src/catalog.json').toString());
+  const catalog = JSON.parse(snapshot.read(pending ? 'src/pending-problems.json' : 'src/catalog.json').toString());
+  const current = pending ? JSON.parse(snapshot.read('src/project-repositories.json').toString()) : {};
   const projects = planProjects(catalog, snapshot.commit);
+  if (projects.some(project => Object.hasOwn(current, project.id))) {
+    throw new Error('Pending projects must have new catalog IDs');
+  }
   const seeds = projects.map(project => seedFiles(project, snapshot.read));
   if (!apply) {
     console.log(JSON.stringify({ revision: snapshot.commit, apply: false, repositories: projects.map(project => project.repository) }, null, 2));
@@ -574,7 +592,7 @@ async function cli(args) {
     console.log('Verified ' + project.repository + ' at ' + result.seed);
     return result;
   });
-  await writeRegistry(root, registry);
+  await writeRegistry(root, { ...current, ...registry });
 }
 
 if (process.argv[1] && existsSync(process.argv[1]) && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
