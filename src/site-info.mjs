@@ -10,12 +10,15 @@ function infoCopyButton(id, label) {
   return `<button class="action outline" type="button" data-copy="${id}">${label}</button><span class="sr-only" role="status"></span>`;
 }
 
-export function renderSiteInfo({ mcpUrl, repoUrl }) {
+export function renderSiteInfo({ mcpUrl = '', repoUrl, section }) {
   const endpoint = escapeInfo(mcpUrl);
   const repository = escapeInfo(repoUrl);
-  return `<section class="info-section" id="how-it-works" aria-labelledby="how-it-works-heading">
+  const heading = (id, title, href) => section
+    ? '<h1 id="' + id + '-heading">' + title + '</h1>'
+    : '<h2 id="' + id + '-heading"><a href="' + href + '">' + title + '</a></h2>';
+  const howItWorks = `<section class="info-section" id="how-it-works" aria-labelledby="how-it-works-heading">
   <header class="info-heading">
-    <h2 id="how-it-works-heading">How it works</h2>
+    ${heading('how-it-works', 'How it works', '/how-it-works/')}
     <p>Every problem has a small task you can take on and a way to check the result.</p>
   </header>
   <div class="info-body">
@@ -25,10 +28,11 @@ export function renderSiteInfo({ mcpUrl, repoUrl }) {
       <li><h3>Share what happened</h3><p>Post your result on GitHub with the steps or files someone else needs to check it. A report of what failed can help the next person, too.</p></li>
     </ol>
   </div>
-</section>
-<section class="info-section" id="mcp" aria-labelledby="mcp-heading">
+</section>`;
+  if (section === 'how-it-works') return howItWorks;
+  const mcp = `<section class="info-section" id="mcp" aria-labelledby="mcp-heading">
   <header class="info-heading">
-    <h2 id="mcp-heading">Connect with MCP</h2>
+    ${heading('mcp', 'Connect with MCP', '/connect/')}
     <p>Give your AI access to the project briefs from the tool you already use.</p>
   </header>
   <div class="info-body">
@@ -45,10 +49,10 @@ export function renderSiteInfo({ mcpUrl, repoUrl }) {
     </div>
     <p>Try asking your AI, “Find the free photo editor project and suggest a small contribution.” It can prepare a GitHub draft for you to review and submit.</p>
   </div>
-</section>
-<section class="info-section" id="about" aria-labelledby="about-heading">
+</section>`;
+  const about = `<section class="info-section" id="about" aria-labelledby="about-heading">
   <header class="info-heading">
-    <h2 id="about-heading">About</h2>
+    ${heading('about', 'About', '/about/')}
     <p>Started by Jacob Gordon.</p>
   </header>
   <div class="info-body">
@@ -57,4 +61,5 @@ export function renderSiteInfo({ mcpUrl, repoUrl }) {
     <div class="info-links"><a href="${repository}">View the GitHub repository</a><a href="${authorLinkedIn}">Find me on LinkedIn</a></div>
   </div>
 </section>`;
+  return section === 'about' ? about : howItWorks + mcp + about;
 }

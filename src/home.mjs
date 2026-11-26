@@ -92,5 +92,5 @@ function renderHome(origin) {
       <nav class="browser-footer" aria-label="Catalog and community"><a href="${browsePath}">Browse all problems</a>${communityLinks()}</nav>
     </section>
     ${renderSiteInfo({ mcpUrl: origin + '/api/mcp', repoUrl: config.repository })}`,
-    { active: 'home', description: 'A public collection of open problems. Pick a brief, bring your own AI, and share evidence anyone can check.' });
+    { active: 'home', origin, sharePath: '/', description: 'A public collection of open problems. Pick a brief, bring your own AI, and share evidence anyone can check.' });
 }

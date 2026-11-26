@@ -10,6 +10,7 @@ for (const button of document.querySelectorAll('[data-copy]')) {
       button.nextElementSibling.textContent = 'Copied to clipboard.';
       setTimeout(() => { button.textContent = original; }, 1800);
     } catch {
+      target.hidden = false;
       const selection = window.getSelection();
       if (typeof target.select === 'function') {
         target.focus();

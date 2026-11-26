@@ -23,6 +23,7 @@ for (const problem of catalog.problems) {
 if (!ids.has(catalog.featured)) throw new Error('The featured problem is missing');
 
 const assets = {
+  shareGlyphs: (await readFile('src/media/share-glyphs.bin')).toString('base64'),
   richat: (await readFile('src/media/richat.jpg')).toString('base64'),
   mark: (await readFile('src/media/mark.png')).toString('base64'),
   spaceGrotesk: (await readFile('src/media/space-grotesk.woff2')).toString('base64')
@@ -33,7 +34,7 @@ assets['style.css'] += '\n' + await readFile('src/project-art.css', 'utf8');
 let commit = 'local';
 try { commit = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
 catch {}
-const workerModules = await Promise.all(['site-info.mjs', 'project-art.mjs', 'home.mjs', 'worker.mjs'].map(
+const workerModules = await Promise.all(['site-info.mjs', 'project-art.mjs', 'home.mjs', 'share-image.mjs', 'share-pages.mjs', 'worker.mjs'].map(
   path => readFile('src/' + path, 'utf8')
 ));
 const worker = workerModules.join('\n');

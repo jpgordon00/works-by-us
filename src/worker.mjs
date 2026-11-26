@@ -13,6 +13,8 @@ const routeFor = problem => browsePath + problem.id + '/';
 const categoryPath = id => id ? '/categories/' + id + '/' : browsePath;
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 
+const shareCards = createShareCards();
+
 function problemTitle(problem) {
   return problem.track ? problem.track + ' / ' + problem.title : problem.title;
 }
@@ -78,13 +80,14 @@ function json(body, status = 200) {
   return send(JSON.stringify(body), status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
 }
 
-function page(title, content, { status = 200, active = '', description = 'Open problems and practical ways to work on them.' } = {}) {
+function page(title, content, { status = 200, active = '', origin, sharePath, query, description = 'Open problems and practical ways to work on them.' } = {}) {
   const fullTitle = title ? title + ' | Collective Intelligence' : 'Collective Intelligence | Open problems';
   const home = active === 'home';
-  const homeHref = id => (home ? '' : '/') + '#' + id;
+  const sectionHref = id => home ? '#' + id : '/' + id + '/';
   return send(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="theme-color" content="#000000">
+${status === 200 ? socialHead(origin, sharePath, query, fullTitle, description) : '<meta name="robots" content="noindex">'}
 <link rel="icon" type="image/png" href="/media/mark.png">
 <link rel="stylesheet" href="/style.css"><script defer src="/copy.js"></script>${home ? '<script type="module" src="/home.js"></script>' : ''}</head>
 <body>
@@ -93,9 +96,9 @@ function page(title, content, { status = 200, active = '', description = 'Open p
 <a class="wordmark" href="/" aria-label="Collective Intelligence home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Collective Intelligence</a>
 <nav aria-label="Main navigation">
 <a href="${home ? '#problems' : browsePath}"${active === 'problems' ? ' aria-current="page"' : ''}>Problems</a>
-<a href="${homeHref('how-it-works')}">How it works</a>
-<a href="${homeHref('about')}">About</a>
-<a href="${active === 'connect' ? '/connect/' : homeHref('mcp')}"${active === 'connect' ? ' aria-current="page"' : ''}>MCP</a>
+<a href="${sectionHref('how-it-works')}"${active === 'how-it-works' ? ' aria-current="page"' : ''}>How it works</a>
+<a href="${sectionHref('about')}"${active === 'about' ? ' aria-current="page"' : ''}>About</a>
+<a href="${home ? '#mcp' : '/connect/'}"${active === 'connect' ? ' aria-current="page"' : ''}>MCP</a>
 <a class="nav-github" href="${config.repository}">GitHub</a>
 </nav>
 </div></header>
@@ -126,7 +129,8 @@ function renderIndex(url, { category }) {
   const query = (url.searchParams.get('q') ?? '').slice(0, 100).trim();
   const categoryId = category?.id ?? '';
   const visible = findProblems(categoryId, query);
-  const title = category?.title ?? 'Open problems';
+  const baseTitle = category?.title ?? 'Open problems';
+  const title = query ? baseTitle + ' matching “' + query + '”' : baseTitle;
   const description = category?.description ?? 'Pick a problem. Work on it yourself or with your AI. Share what you find.';
   return page(title, `<section class="index">
     <div class="index-top"><div><h1>${escape(title)}</h1><p>${escape(description)}</p></div>
@@ -135,7 +139,7 @@ function renderIndex(url, { category }) {
     ${query ? '<p class="search-result">' + visible.length + ' ' + (visible.length === 1 ? 'result' : 'results') + ' for “' + escape(query) + '”</p>' : ''}
     ${problemRows(visible)}
     <nav class="browser-footer" aria-label="Community proposals">${communityLinks()}</nav>
-  </section>`, { active: 'problems', description });
+  </section>`, { active: 'problems', origin: url.origin, sharePath: categoryPath(categoryId), query, description });
 }
 
 function copyButton(target, text) {
@@ -149,7 +153,9 @@ function renderProblem(problem, origin) {
   return page(problemTitle(problem), `<article class="detail">
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="${browsePath}">Problems</a><span aria-hidden="true">/</span><a href="${categoryPath(category.id)}">${escape(category.title)}</a></nav>
 <header class="detail-heading">${problem.track ? '<p class="track">' + escape(problem.track) + '</p>' : ''}<h1>${escape(problem.title)}</h1>
-<p class="lede">${escape(problem.summary)}</p></header>
+<p class="lede">${escape(problem.summary)}</p>
+<input id="problem-share-url" type="url" hidden aria-label="Problem link" readonly value="${escape(origin + routeFor(problem))}">
+${copyButton('problem-share-url', 'Copy problem link')}</header>
 <div class="detail-grid"><div class="brief">
 <section><h2>The problem</h2><p>${escape(problem.context)}</p></section>
 <section><h2>What you can do</h2><p>${escape(problem.task)}</p></section>
@@ -161,13 +167,13 @@ function renderProblem(problem, origin) {
 <textarea class="sr-only" tabindex="-1" aria-label="Problem brief" id="problem-brief" readonly>${escape(contributionBrief(problem, origin))}</textarea>
 <div class="contribution-actions">${copyButton('problem-brief', 'Copy problem brief')}
 <a class="action filled" href="${escape(draft.github_issue_url)}">Draft GitHub contribution</a></div>
-<a class="text-link" href="/connect/">Connect with MCP</a>
-</aside></div></article>`, { active: 'problems', description: problem.summary });
+<a class="text-link" href="/connect/?project=${escape(problem.id)}">Connect with MCP</a>
+</aside></div></article>`, { active: 'problems', origin, sharePath: routeFor(problem), description: problem.summary });
 }
 
-function renderConnect(origin) {
+function renderConnect(origin, selected) {
   const endpoint = origin + '/api/mcp';
-  return page('Connect MCP', `<article class="detail connect">
+  return page(selected ? 'MCP setup for ' + selected.title : 'Connect MCP', `<article class="detail connect">
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="${browsePath}">Problems</a><span aria-hidden="true">/</span><span>Connect MCP</span></nav>
 <header class="detail-heading"><h1>Bring your own AI.</h1><p class="lede">Give your MCP client this URL to browse the same problems and prepare a contribution for review.</p></header>
 <section class="endpoint"><label for="endpoint">Server URL</label><div><input type="url" id="endpoint" value="${escape(endpoint)}" readonly>${copyButton('endpoint', 'Copy URL')}</div><p>Streamable HTTP. Public access.</p></section>
@@ -177,7 +183,7 @@ function renderConnect(origin) {
 ${copyButton('codex-command', 'Copy command')}</section>
 <section><h2>Try it</h2><p>Ask your AI to find the free Photoshop alternative and suggest a small contribution. It can read the brief, explain what a reviewer needs, and prepare a GitHub draft for you to open.</p></section>
 <section><h2>Available tools</h2><dl class="tool-list">${tools.map(tool => ' <div><dt><code>' + tool.name + '</code></dt><dd>' + escape(tool.description) + '</dd></div>').join('')}</dl></section>
-</div></article>`, { active: 'connect' });
+</div></article>`, { active: 'connect', origin, sharePath: selected ? '/connect/?project=' + selected.id : '/connect/', description: selected ? 'Connect your AI to work on this problem. ' + selected.summary : 'Connect your AI to browse open problems, read project briefs, and prepare a contribution.' });
 }
 
 const string = (description, maxLength, minLength = 0) => ({ type: 'string', description, maxLength, minLength });
@@ -313,6 +319,10 @@ export default {
     const path = url.pathname.replace(/\/+$/, '') || '/';
     if (path === '/mcp' || path === '/api/mcp') return rpc(request, url.origin);
     if (!['GET', 'HEAD'].includes(request.method)) return send(null, 405, { Allow: 'GET, HEAD' });
+    if (path === '/sitemap.xml') return shareSitemap(url.origin);
+    if (path === '/robots.txt') return send('User-agent: *\nAllow: /\nSitemap: ' + url.origin + '/sitemap.xml\n', 200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    const card = shareCards.byImage.get(path);
+    if (card) return shareImageResponse(request, card);
     if (path === '/media/richat.jpg') {
       return send(Uint8Array.from(atob(assets.richat), char => char.charCodeAt(0)), 200, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400' });
     }
@@ -329,7 +339,15 @@ export default {
     if (path === '/api/problems') return json(catalog);
     if (path === '/') return url.searchParams.has('q') ? renderIndex(url, {}) : renderHome(url.origin);
     if (path === '/problems') return renderIndex(url, {});
-    if (path === '/connect') return renderConnect(url.origin);
+    if (path === '/connect') return renderConnect(url.origin, problemsById.get(url.searchParams.get('project')));
+    if (path === '/about' || path === '/how-it-works') {
+      const section = path.slice(1);
+      return page(section === 'about' ? 'About' : 'How it works', renderSiteInfo({ section, repoUrl: config.repository }), {
+        active: section, origin: url.origin, sharePath: path + '/', description: section === 'about'
+          ? 'Why Jacob Gordon started Collective Intelligence and how its public catalog works.'
+          : 'Choose an open problem, try a small contribution, and share results that others can check.'
+      });
+    }
     const parts = path.split('/');
     if (parts.length === 3 && parts[1] === 'categories' && categoriesById.has(parts[2])) {
       return renderIndex(url, { category: categoriesById.get(parts[2]) });
